@@ -40,12 +40,12 @@ As long as ships have > 0 health, they can always move at a default speed, and c
     - /state?token={playerToken} => returns the game state
       ```json
       {
-        "state": "joining", //other values: playing, gameOver  
+        "state": "joining (or 'playing', or 'gameOver')",  
         "location": {
             "x": 123,
             "y": 234
         },
-        "orientation": {something},
+        "orientation": {something...degrees or cardinal directions???},
         "ship": {
             "health": 95,
             "speed": 89,
@@ -60,7 +60,7 @@ As long as ships have > 0 health, they can always move at a default speed, and c
                         },
                         {
                             "maxDistance": 10,
-                            "effectiveness": .50
+                            "effectiveness": ".50"
                         }
                     ],
                     "power": 25,
@@ -73,15 +73,15 @@ As long as ships have > 0 health, they can always move at a default speed, and c
                     "range": [
                         {
                             "maxDistance": 50,
-                            "effectiveness": 1.00
+                            "effectiveness": "1.00"
                         },
                         {
                             "maxDistance": 90,
-                            "effectiveness": .75
+                            "effectiveness": ".75"
                         },
                         {
                             "maxDistance": 150,
-                            "effectiveness": .4
+                            "effectiveness": ".4"
                         }
                     ],
                     "power": 40,
@@ -104,3 +104,5 @@ As long as ships have > 0 health, they can always move at a default speed, and c
       |purchase|weaponName|
       |upgrade|upgradeName|
       |reload|weaponName|
+    - /clearQueue?token={playerToken}
+    
