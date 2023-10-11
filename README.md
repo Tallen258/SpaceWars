@@ -30,9 +30,20 @@ As long as ships have > 0 health, they can always move at a default speed, and c
     - UpgradeCredits (how many bonus credits you get)
     - RepairCredits (how many bonus credits you get)
 
-## Questions
-- [ ] Can we require O365 authentication?  We could get user names from the token.  We could even get role membership from the token claims.
-- [ ] 
+## Player Interaction
+
+Provide two parts to the standard client:
+
+1. A console program from a repo they can clone/fork.  This would have all the interfaces necessary for contestants to add their own logic, their own programmability.  This is what would listen to keyboard events and actually send the player's network requests to the server.
+  - Basic actions implemented (join game, send moves, etc.)
+  - Basic movements are available
+  - Make it easy to plug in custom functionality, something like subclass a 'GameShortcut' abstract class that requires a key / key combination, and has some method you can run to modify the player's action queue, or even have access to a raw HttpClient to send your own requests.
+2. A visual dashboard / heads-up-dispaly running in the browser.  A player would join the game from their console app, get a token, and then be able to use that token to open up _their_ dashboard/HUD.  The player's HUD would show:
+  - A more high-resolution of what is aroud their ship (this is how we implement the fog of war - the full map shown to everyone up on the projectors is just a rough/inaccurate map, if you want to make good moves you'll base that off of the map in your HUD).
+  - The status of your ship, weapons, all your counters, etc.
+  - More?
+
+
      
 ## API Endpoints
 - /game
@@ -117,13 +128,15 @@ As long as ships have > 0 health, they can always move at a default speed, and c
         ]
       }```
 
-## Competition ideas
+## Additional ideas
 
-- Two events, a low stakes and a whole-enchilada (maybe a third event right at the beginning of the semester to whet peopele's appetites / show off what's possible?)
-- Additional prize, coolest / most fun implementation, as judged by faculty
+- Only run two events, a low stakes and a whole-enchilada (maybe insert a preliminary event right at the beginning of the semester to whet peopele's appetites / show off what's possible?)
 - Don't add major features between runs, only minor adjustments/tweaks to protect quality of play for all participants.
+- Additional prize, coolest / most fun implementation, as judged by faculty
 - Have a few bad guy bots alive in the practice environment, so there's something to practice against.
+- Make everyone test their clients in the same environment (don't host multiple concurrent games (like last year), don't go out of your way to make it easy for people to host their own server)
 - Maybe don't charge for ammo? just recharge time?
 - Three ticks a second (?)
-- Make available position and orientation of all players, updated every tic
-- Rate limit for all players at 2x tick rate?
+- Make available position and orientation of all players, updated every tick
+- Rate limit for all players at 2x tick rate? 3x tick rate?  What is reasonable?
+
