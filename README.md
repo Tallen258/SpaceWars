@@ -105,14 +105,25 @@ As long as ships have > 0 health, they can always move at a default speed, and c
       |upgrade|upgradeName|
       |reload|weaponName|
     - /clearQueue?token={playerToken}
+    - POST /enqueueMany
+      ```json
+      {
+        "token": "{playerToken"},
+        "actions": [
+            {
+                "action": "{action from list above}",
+                "subAction": "{sub-action from list above}"
+            }
+        ]
+      }```
 
 ## Competition ideas
 
-- Two events, a low stakes and a whole-enchilada
-- Additional prize, coolest /most fun implementation, as jusged by faculty
-- Don't add major features between runs, only to protect quality of play for all participants.
-- Have a few bad guy bots, so there's something to practice against.
-- maybe don't charge for ammo? just recharge time?
-- three ticks a second
-- make available position and orientation of all players
-- 
+- Two events, a low stakes and a whole-enchilada (maybe a third event right at the beginning of the semester to whet peopele's appetites / show off what's possible?)
+- Additional prize, coolest / most fun implementation, as judged by faculty
+- Don't add major features between runs, only minor adjustments/tweaks to protect quality of play for all participants.
+- Have a few bad guy bots alive in the practice environment, so there's something to practice against.
+- Maybe don't charge for ammo? just recharge time?
+- Three ticks a second (?)
+- Make available position and orientation of all players, updated every tic
+- Rate limit for all players at 2x tick rate?
