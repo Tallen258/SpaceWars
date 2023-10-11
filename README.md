@@ -105,4 +105,14 @@ As long as ships have > 0 health, they can always move at a default speed, and c
       |upgrade|upgradeName|
       |reload|weaponName|
     - /clearQueue?token={playerToken}
-    
+
+## Competition ideas
+
+- Two events, a low stakes and a whole-enchilada
+- Additional prize, coolest /most fun implementation, as jusged by faculty
+- Don't add major features between runs, only to protect quality of play for all participants.
+- Have a few bad guy bots, so there's something to practice against.
+- maybe don't charge for ammo? just recharge time?
+- three ticks a second
+- make available position and orientation of all players
+- 
