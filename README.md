@@ -18,6 +18,8 @@ As long as ships have > 0 health, they can always move at a default speed, and c
     - Speed (1-100) (how far you can move in any given tick.  Starts off at 1 but can be upgraded)
     - Shield (0-100) (hits first take out the shield, once the shield is at 0 then remaining hit points go against the ship health)
     - Weapons (a list of available weapons)
+    - RepairCreditBalance
+    - UpgradeCreditBalance
 - Weapon
     - Name
     - Range (a list of distance and effectiveness, i.e. within 5 distance the weapon is 100% effective, from 5-10 it's 60% effective, 10-12 it's 20% effective, 12+ 0% effective)
@@ -43,6 +45,12 @@ Provide two parts to the standard client:
   - The status of your ship, weapons, all your counters, etc.
   - More?
 
+## Questions for discussion
+
+- Repair cost / repair rate - spend $$$ to repair quickly, spend $ to repair slowly?
+- Is there a self-healing rate, where you are rewarded x repair value every y ticks?
+- How much repair & upgrade credits do you get when you kill someone?  (all of their credits + what else?)
+- 
 
      
 ## API Endpoints
