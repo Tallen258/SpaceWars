@@ -1,4 +1,4 @@
-﻿namespace SpaceWars.Tests.Game;
+﻿namespace SpaceWars.Tests.Game.EntityTests;
 
 public class WeaponTests
 {
