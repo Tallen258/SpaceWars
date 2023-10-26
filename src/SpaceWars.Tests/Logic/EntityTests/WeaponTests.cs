@@ -1,4 +1,4 @@
-﻿namespace SpaceWars.Tests.Game.EntityTests;
+﻿namespace SpaceWars.Tests.Logic.EntityTests;
 
 public class WeaponTests
 {
@@ -7,7 +7,7 @@ public class WeaponTests
     {
         var weapon = new Weapon("Cannon")
         {
-            Ranges = [new Range(20, 100)],
+            Ranges = [new WeaponRange(20, 100)],
             Power = 50,
             Cost = 200,
             ShotCost = 25,
@@ -45,7 +45,7 @@ public class WeaponTests
         {
             var weapon = new Weapon("Cannon")
             {
-                Ranges = Array.Empty<Range>(),
+                Ranges = Array.Empty<WeaponRange>(),
             };
         };
         act.Should().Throw<ArgumentException>();
@@ -58,8 +58,8 @@ public class WeaponTests
         var weapon = new Weapon("Cannon")
         {
             Ranges = [
-                new Range(2, 100),
-                new Range(5, 90),
+                new WeaponRange(2, 100),
+                new WeaponRange(5, 90),
             ],
         };
 
@@ -69,8 +69,8 @@ public class WeaponTests
             var weapon = new Weapon("Cannon")
             {
                 Ranges = [
-                    new Range(5, 100),
-                    new Range(2, 90)
+                    new WeaponRange(5, 100),
+                    new WeaponRange(2, 90)
                 ],
             };
         };
@@ -85,8 +85,8 @@ public class WeaponTests
             var weapon = new Weapon("Cannon")
             {
                 Ranges = [
-                    new Range(5, 90),
-                    new Range(10, 100)
+                    new WeaponRange(5, 90),
+                    new WeaponRange(10, 100)
                 ],
             };
         };
@@ -100,7 +100,7 @@ public class WeaponTests
         {
             var weapon = new Weapon("Cannon")
             {
-                Ranges = [new Range(20, 100)],
+                Ranges = [new WeaponRange(20, 100)],
                 Power = 0,
             };
         };
@@ -114,7 +114,7 @@ public class WeaponTests
         {
             var weapon = new Weapon("Cannon")
             {
-                Ranges = [new Range(20, 100)],
+                Ranges = [new WeaponRange(20, 100)],
                 Cost = -1,
             };
         };
@@ -128,7 +128,7 @@ public class WeaponTests
         {
             var weapon = new Weapon("Cannon")
             {
-                Ranges = [new Range(20, 100)],
+                Ranges = [new WeaponRange(20, 100)],
                 ShotCost = -1,
             };
         };
@@ -142,7 +142,7 @@ public class WeaponTests
         {
             var weapon = new Weapon("Cannon")
             {
-                Ranges = [new Range(20, 100)],
+                Ranges = [new WeaponRange(20, 100)],
                 ChargeTurns = -1,
             };
         };

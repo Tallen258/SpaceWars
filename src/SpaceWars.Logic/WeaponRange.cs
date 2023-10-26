@@ -1,8 +1,8 @@
-﻿namespace SpaceWars.Game;
+﻿namespace SpaceWars.Logic;
 
-public record Range
+public record WeaponRange
 {
-    public Range(int distance, int effectiveness)
+    public WeaponRange(int distance, int effectiveness)
     {
         if (distance <= 0)
             throw new ArgumentOutOfRangeException(nameof(Distance), "Distance must be greater than 0.");

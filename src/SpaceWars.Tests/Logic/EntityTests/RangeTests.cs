@@ -1,4 +1,4 @@
-﻿namespace SpaceWars.Tests.Game.EntityTests;
+﻿namespace SpaceWars.Tests.Logic.EntityTests;
 
 public class RangeTests
 {
@@ -7,7 +7,7 @@ public class RangeTests
     [InlineData(0)]
     public void Range_DistanceMustBeGreaterThan0(int distance)
     {
-        Action act = () => new Range(distance, 100);
+        Action act = () => new WeaponRange(distance, 100);
         act.Should().Throw<ArgumentException>();
     }
 
@@ -16,7 +16,7 @@ public class RangeTests
     [InlineData(101)]
     public void Range_EffectivenessMustBeBetween0And100(int effectiveness)
     {
-        Action act = () => new Range(20, effectiveness);
+        Action act = () => new WeaponRange(20, effectiveness);
         act.Should().Throw<ArgumentException>();
     }
 }

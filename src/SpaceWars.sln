@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceWars.Game", "SpaceWars.Game\SpaceWars.Game.csproj", "{B3F4A6F3-D014-4CC8-925F-06A9B2722067}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceWars.Tests", "SpaceWars.Tests\SpaceWars.Tests.csproj", "{79B630B7-9278-436E-A688-B8C7F63C0547}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceWars.Web", "SpaceWars.Web\SpaceWars.Web.csproj", "{9DB0C0D8-2541-4798-8AE1-6CDB9D4438C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceWars.Logic", "SpaceWars.Logic\SpaceWars.Logic.csproj", "{8F56D7BB-4F0B-43C7-B258-5FF802D6CF57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B3F4A6F3-D014-4CC8-925F-06A9B2722067}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3F4A6F3-D014-4CC8-925F-06A9B2722067}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3F4A6F3-D014-4CC8-925F-06A9B2722067}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3F4A6F3-D014-4CC8-925F-06A9B2722067}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79B630B7-9278-436E-A688-B8C7F63C0547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79B630B7-9278-436E-A688-B8C7F63C0547}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79B630B7-9278-436E-A688-B8C7F63C0547}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{9DB0C0D8-2541-4798-8AE1-6CDB9D4438C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DB0C0D8-2541-4798-8AE1-6CDB9D4438C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DB0C0D8-2541-4798-8AE1-6CDB9D4438C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F56D7BB-4F0B-43C7-B258-5FF802D6CF57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F56D7BB-4F0B-43C7-B258-5FF802D6CF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F56D7BB-4F0B-43C7-B258-5FF802D6CF57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F56D7BB-4F0B-43C7-B258-5FF802D6CF57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

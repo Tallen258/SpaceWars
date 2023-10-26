@@ -1,4 +1,4 @@
-﻿namespace SpaceWars.Tests.Game.EntityTests;
+﻿namespace SpaceWars.Tests.Logic.EntityTests;
 
 public class ShipTests
 {
@@ -13,8 +13,8 @@ public class ShipTests
     public void Ship_OrentationMustBeBetween0And359()
     {
         var ship = new Ship();
-        Assert.Throws<ArgumentOutOfRangeException>(() => ship.Orientation = -1);
-        Assert.Throws<ArgumentOutOfRangeException>(() => ship.Orientation = 360);
+        Assert.Throws<ArgumentOutOfRangeException>(() => ship.Heading = -1);
+        Assert.Throws<ArgumentOutOfRangeException>(() => ship.Heading = 360);
     }
 
     [Fact]
@@ -26,10 +26,11 @@ public class ShipTests
     }
 
     [Fact]
-    public void Ship_SpeedMustBeBetween0And10()
+    public void Ship_SpeedMustBeBetween1And10()
     {
         var ship = new Ship();
         Assert.Throws<ArgumentOutOfRangeException>(() => ship.Speed = -1);
+        Assert.Throws<ArgumentOutOfRangeException>(() => ship.Speed = 0);
         Assert.Throws<ArgumentOutOfRangeException>(() => ship.Speed = 11);
     }
 

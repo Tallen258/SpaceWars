@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpaceWars.Game\SpaceWars.Game.csproj" />
+    <ProjectReference Include="..\SpaceWars.Logic\SpaceWars.Logic.csproj" />
     <ProjectReference Include="..\SpaceWars.Web\SpaceWars.Web.csproj" />
   </ItemGroup>
 

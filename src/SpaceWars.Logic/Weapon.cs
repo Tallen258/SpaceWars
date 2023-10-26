@@ -1,10 +1,10 @@
-﻿namespace SpaceWars.Game;
+﻿namespace SpaceWars.Logic;
 
 
 public record Weapon
 {
     private string name;
-    private IEnumerable<Range> ranges;
+    private IEnumerable<WeaponRange> ranges;
     private int power;
     private int cost;
     private int shotCost;
@@ -19,7 +19,7 @@ public record Weapon
 
     public string Name { get; }
 
-    public IEnumerable<Range> Ranges
+    public IEnumerable<WeaponRange> Ranges
     {
         get { return ranges; }
         init
@@ -32,7 +32,7 @@ public record Weapon
         }
     }
 
-    private bool rangesAreInvalid(IEnumerable<Range> value)
+    private bool rangesAreInvalid(IEnumerable<WeaponRange> value)
     {
         var previousDistance = 0;
         var previousEffectiveness = int.MaxValue;
@@ -60,7 +60,8 @@ public record Weapon
     }
     public int Cost
     {
-        get => cost; init
+        get => cost;
+        init
         {
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(Cost), "Cost must be greater than or equal to 0.");
@@ -69,7 +70,8 @@ public record Weapon
     }
     public int ShotCost
     {
-        get => shotCost; init
+        get => shotCost;
+        init
         {
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(ShotCost), "ShotCost must be greater than or equal to 0.");
@@ -78,7 +80,8 @@ public record Weapon
     }
     public int ChargeTurns
     {
-        get => chargeTurns; init
+        get => chargeTurns;
+        init
         {
             if (value < 0)
                 throw new ArgumentOutOfRangeException(nameof(ChargeTurns), "ChargeTurns must be greater than or equal to 0.");

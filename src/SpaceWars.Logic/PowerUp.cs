@@ -1,4 +1,4 @@
-﻿namespace SpaceWars.Game;
+﻿namespace SpaceWars.Logic;
 
 public class PowerUp
 {
