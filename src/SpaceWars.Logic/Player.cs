@@ -14,6 +14,9 @@ public class Player
 
     public string Name { get; }
 
+    //token (is this only a concern on the api?)
+    //hud url (is this only a concern on the api?)
+
     public Ship Ship { get; }
 
     public void EnqueueAction(GamePlayAction action)

@@ -55,4 +55,22 @@ public class ShipTests
         var ship = new Ship();
         Assert.Throws<ArgumentOutOfRangeException>(() => ship.UpgradeCreditBalance = -1);
     }
+
+    [Theory]
+    [InlineData(100, 100, 50, 50, 100)]
+    [InlineData(50, 100, 50, 0, 100)]
+    [InlineData(25, 100, 50, 0, 75)]
+    [InlineData(25, 25, 50, 0, 0)]
+    public void Ship_TakesHit(int startingShield, int startingHealth, int shotPower, int endingShield, int endingHealth)
+    {
+        var ship = new Ship()
+        {
+            Shield = startingShield,
+            Health = startingHealth
+        };
+        ship.TakeHit(shotPower);
+        ship.Shield.Should().Be(endingShield);
+        ship.Health.Should().Be(endingHealth);
+    }
+
 }

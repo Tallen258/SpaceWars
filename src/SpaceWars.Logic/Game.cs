@@ -13,11 +13,23 @@ public class Game
 
     public void Tick()
     {
-        players.Select(p => new PlayerAction(p, p.DequeueAction()))
+        var playerActions = players.Select(p => new PlayerAction(p, p.DequeueAction()))
             .Where(playerAction => playerAction.Action != null)
             .OrderBy(playerAction => playerAction.Action!.Priority)
-            .ToList()//materialize the list
-            .ForEach((pa) => pa.Action!.Execute(pa.Player));
+            .ToList();
+
+        GameMap map = null;
+
+        foreach (var playerAction in playerActions)
+        {
+            bool allMovesAreComplete = playerAction.Action.Priority is not 1;
+            if (allMovesAreComplete && map is null)
+            {
+                map = new GameMap(players);//initialize that here
+            }
+
+            playerAction.Action.Execute(playerAction.Player, map);
+        }
     }
 }
 
