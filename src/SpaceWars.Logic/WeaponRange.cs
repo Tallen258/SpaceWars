@@ -16,4 +16,20 @@ public record WeaponRange
     public int Distance { get; }
 
     public int Effectiveness { get; }
+
+    public static bool RangesAreValid(IEnumerable<WeaponRange> value)
+    {
+        var previousDistance = 0;
+        var previousEffectiveness = int.MaxValue;
+
+        foreach (var range in value)
+        {
+            if (range.Distance <= previousDistance || range.Effectiveness >= previousEffectiveness)
+                return false;
+            previousDistance = range.Distance;
+            previousEffectiveness = range.Effectiveness;
+        }
+
+        return true;
+    }
 }

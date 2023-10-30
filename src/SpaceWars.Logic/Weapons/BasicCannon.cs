@@ -1,20 +1,37 @@
-﻿namespace SpaceWars.Logic.Actions;
+﻿namespace SpaceWars.Logic.Weapons;
 
-public class Shoot(Weapon weapon) : GamePlayAction
+public class BasicCannon : Weapon
 {
-    public Weapon Weapon { get; } = weapon;
-    public override int Priority => 2;
-    public override ActionResult Execute(Player player, GameMap map)
+    public BasicCannon() : base("Basic Cannon")
     {
-        if (!player.Ship.Weapons.Contains(Weapon))
-            return new ActionResult(false, $"You do not have the {Weapon.Name}");
+        Ranges = [new WeaponRange(20, 100)];
+        Power = 50;
+        Cost = 200;
+        ShotCost = 25;
+        ChargeTurns = 1;
+    }
 
-        if (map.TryHit(player, out var hitResult))
+    public override void Fire(Player player, GameMap map)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+/*
+    public bool TryHit(Player player, out (Player hitPlayer, int distance)? result)
+    {
+        Vector2 pLocation = new Vector2(player.Ship.Location.X, player.Ship.Location.Y);
+        Vector2 pHeading = new Vector2((float)Math.Cos(player.Ship.Heading), (float)Math.Sin(player.Ship.Heading));
+        foreach (var otherPlayer in players)
         {
-            hitResult!.Value.hitPlayer.Ship.TakeHit(Weapon.Power);
+            var otherLocation = new Vector2(otherPlayer.Ship.Location.X, otherPlayer.Ship.Location.Y);
+            var distance = (int)Vector2.Distance(pLocation, otherLocation);
         }
 
-        return new ActionResult(true, $"You fired the {Weapon.Name}");
+        result = null;
+        return false;
+    }
+
 
         //Vector2 heading = new Vector2((float)Math.Cos((double)player.Ship.Heading), (float)Math.Sin((double)player.Ship.Heading));
         //Vector2 toOtherShip = new Vector2 otherShip.Position - player.Ship.Position;
@@ -54,3 +71,5 @@ public class Shoot(Weapon weapon) : GamePlayAction
     //    return s <= thickness * thickness;
     //}
 }
+
+*/

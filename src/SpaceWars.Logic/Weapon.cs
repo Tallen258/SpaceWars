@@ -1,7 +1,7 @@
 ﻿namespace SpaceWars.Logic;
 
 
-public record Weapon
+public abstract class Weapon
 {
     private string name;
     private IEnumerable<WeaponRange> ranges;
@@ -26,27 +26,13 @@ public record Weapon
         {
             if (value == null || !value.Any())
                 throw new ArgumentException("Weapon must have at least one range.");
-            if (rangesAreInvalid(value))
+            if (!WeaponRange.RangesAreValid(value))
                 throw new ArgumentException("Ranges must be in increasing distance and decreasing power.");
             ranges = value;
         }
     }
 
-    private bool rangesAreInvalid(IEnumerable<WeaponRange> value)
-    {
-        var previousDistance = 0;
-        var previousEffectiveness = int.MaxValue;
-
-        foreach (var range in value)
-        {
-            if (range.Distance <= previousDistance || range.Effectiveness >= previousEffectiveness)
-                return true;
-            previousDistance = range.Distance;
-            previousEffectiveness = range.Effectiveness;
-        }
-
-        return false;
-    }
+    public abstract void Fire(Player player, GameMap map);
 
     public int Power
     {

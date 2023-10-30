@@ -1,7 +1,4 @@
-﻿
-using System.Numerics;
-
-namespace SpaceWars.Logic;
+﻿namespace SpaceWars.Logic;
 
 public class GameMap
 {
@@ -18,17 +15,8 @@ public class GameMap
     private Dictionary<Location, Player> playerLocations = new Dictionary<Location, Player>();
     private readonly IEnumerable<Player> players;
 
-    public bool TryHit(Player player, out (Player hitPlayer, int distance)? result)
-    {
-        Vector2 pLocation = new Vector2(player.Ship.Location.X, player.Ship.Location.Y);
-        Vector2 pHeading = new Vector2((float)Math.Cos(player.Ship.Heading), (float)Math.Sin(player.Ship.Heading));
-        foreach (var otherPlayer in players)
-        {
-            var otherLocation = new Vector2(otherPlayer.Ship.Location.X, otherPlayer.Ship.Location.Y);
-            var distance = (int)Vector2.Distance(pLocation, otherLocation);
-        }
+    //support for wrapping?
 
-        result = null;
-        return false;
-    }
+    //edges that do damage?  5 rows or something that take 10% damage every tick that you're there
+
 }

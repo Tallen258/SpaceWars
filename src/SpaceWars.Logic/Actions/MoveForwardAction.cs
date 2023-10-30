@@ -1,10 +1,10 @@
 ﻿namespace SpaceWars.Logic.Actions;
 
-public class MoveForward : GamePlayAction
+public class MoveForwardAction : GamePlayAction
 {
     private readonly int? newHeading;
 
-    public MoveForward(int? newHeading = null)
+    public MoveForwardAction(int? newHeading = null)
     {
         if (newHeading != null && (newHeading < 0 || newHeading >= 360))
         {

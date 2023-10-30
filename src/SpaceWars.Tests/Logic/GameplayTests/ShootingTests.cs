@@ -1,4 +1,7 @@
-﻿namespace SpaceWars.Tests.Logic.GameplayTests;
+﻿using Moq;
+using SpaceWars.Logic.Weapons;
+
+namespace SpaceWars.Tests.Logic.GameplayTests;
 
 public class ShootingTests
 {
@@ -10,27 +13,13 @@ public class ShootingTests
             Heading = 0
         });
 
-        var basicCannon = new Weapon("Basic Cannon")
-        {
-            ChargeTurns = 0,
-            Cost = 0,
-            Power = 1,
-            Ranges = [new WeaponRange(5, 100)],
-            ShotCost = 0,
-        };
-
-        var fancyLaser = new Weapon("Fancy Laser")
-        {
-            ChargeTurns = 2,
-            Cost = 3,
-            Power = 20,
-            Ranges = [new WeaponRange(200, 100)],
-            ShotCost = 0,
-        };
+        var basicCannon = new BasicCannon();
+        var fancyLaserMock = new Mock<Weapon>();
+        fancyLaserMock.Setup(m => m.Name).Returns("Fancy Laser");
 
         p1.Ship.Weapons.Add(basicCannon);
 
-        var fireAction = new Shoot(fancyLaser);
+        var fireAction = new FireWeaponAction(fancyLaserMock.Object);
         var map = new GameMap([p1]);
 
         fireAction.Execute(p1, map).Should().Be(new ActionResult(false, "You do not have the Fancy Laser"));
@@ -50,19 +39,12 @@ public class ShootingTests
             Heading = 90,
         });
 
-        var basicCannon = new Weapon("Basic Cannon")
-        {
-            ChargeTurns = 0,
-            Cost = 0,
-            Power = 1,
-            Ranges = [new WeaponRange(5, 100)],
-            ShotCost = 0,
-        };
+        var basicCannon = new BasicCannon();
 
         p1.Ship.Weapons.Add(basicCannon);
         p2.Ship.Weapons.Add(basicCannon);
 
-        p1.EnqueueAction(new Shoot(p1.Ship.Weapons.First()));
+        p1.EnqueueAction(new FireWeaponAction(p1.Ship.Weapons.First()));
 
         var game = new Game([p1, p2]);
 
@@ -91,20 +73,13 @@ public class ShootingTests
             Heading = 180,
         });
 
-        var basicCannon = new Weapon("Basic Cannon")
-        {
-            ChargeTurns = 0,
-            Cost = 0,
-            Power = 1,
-            Ranges = [new WeaponRange(5, 100)],
-            ShotCost = 0,
-        };
+        var basicCannon = new BasicCannon();
 
         p1.Ship.Weapons.Add(basicCannon);
         p2.Ship.Weapons.Add(basicCannon);
 
-        p1.EnqueueAction(new Shoot(p1.Ship.Weapons.First()));
-        p2.EnqueueAction(new Shoot(p1.Ship.Weapons.First()));
+        p1.EnqueueAction(new FireWeaponAction(p1.Ship.Weapons.First()));
+        p2.EnqueueAction(new FireWeaponAction(p1.Ship.Weapons.First()));
 
         var game = new Game([p1, p2]);
 

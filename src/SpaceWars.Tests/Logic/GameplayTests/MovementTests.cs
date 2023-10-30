@@ -29,7 +29,7 @@ public class MovementTests
         //Arrange
         var ship = new Ship(new Location(0, 0));
         var player = new Player("Player 1", ship);
-        player.EnqueueAction(new MoveForward(heading));
+        player.EnqueueAction(new MoveForwardAction(heading));
         var game = new Game(new[] { player });
 
         //Act
