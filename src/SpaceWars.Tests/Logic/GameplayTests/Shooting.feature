@@ -3,10 +3,20 @@
 How ships can shoot each other
 
 Background:
-	Given the following weapons
-	| Weapon Name  | Range(s) | Damage(s) |
-	| Basic Cannon | 5        | 10        |
-	| Super Cannon | 10,20    | 20,10     |
+
+Scenario: Shoot a ship directly in front of you within range three times
+	Given the following game state
+	| Player Name | X | Y | Heading | Shield | Health |
+	| Player 1    | 0 | 0 | 0       | 100    | 100    |
+	| Player 2    | 0 | 3 | 90      | 100    | 100    |
+	When Player 1 shoots the Basic Cannon
+	And Player 1 shoots the Basic Cannon
+	And Player 1 shoots the Basic Cannon
+	Then I have the following game state
+	| Player Name | X | Y | Heading | Shield | Health |
+	| Player 1    | 0 | 0 | 0       | 100    | 100    |
+	| Player 2    | 0 | 3 | 90      | 0      | 50     |
+
 
 
 @tag1
@@ -19,14 +29,41 @@ Scenario: Shoot a ship directly in front of you within range
 	Then I have the following game state
 	| Player Name | X | Y | Heading | Shield | Health |
 	| Player 1    | 0 | 0 | 0       | 100    | 100    |
-	| Player 2    | 0 | 3 | 90      | 90     | 100    |
+	| Player 2    | 0 | 3 | 90      | 50     | 100    |
+
+Scenario: shoot twice
+	Given the following game state
+	| Player Name | X | Y | Heading | Shield | Health |
+	| Player 1    | 0 | 0 | 0       | 100    | 100    |
+	| Player 2    | 0 | 3 | 90      | 100    | 100    |
 	When Player 1 shoots the Basic Cannon
 	Then I have the following game state
 	| Player Name | X | Y | Heading | Shield | Health |
 	| Player 1    | 0 | 0 | 0       | 100    | 100    |
-	| Player 2    | 0 | 3 | 90      | 80     | 100    |
-	When Player 1 shoots the Super Cannon
+	| Player 2    | 0 | 3 | 90      | 50     | 100    |
+	When Player 1 shoots the Basic Cannon
 	Then I have the following game state
 	| Player Name | X | Y | Heading | Shield | Health |
 	| Player 1    | 0 | 0 | 0       | 100    | 100    |
-	| Player 2    | 0 | 3 | 90      | 60     | 100    |
+	| Player 2    | 0 | 3 | 90      | 0      | 100    |
+
+Scenario: shoot thrice
+	Given the following game state
+	| Player Name | X | Y | Heading | Shield | Health |
+	| Player 1    | 0 | 0 | 0       | 100    | 100    |
+	| Player 2    | 0 | 3 | 90      | 100    | 100    |
+	When Player 1 shoots the Basic Cannon
+	Then I have the following game state
+	| Player Name | X | Y | Heading | Shield | Health |
+	| Player 1    | 0 | 0 | 0       | 100    | 100    |
+	| Player 2    | 0 | 3 | 90      | 50     | 100    |
+	When Player 1 shoots the Basic Cannon
+	Then I have the following game state
+	| Player Name | X | Y | Heading | Shield | Health |
+	| Player 1    | 0 | 0 | 0       | 100    | 100    |
+	| Player 2    | 0 | 3 | 90      | 0      | 100    |
+	When Player 1 shoots the Basic Cannon
+	Then I have the following game state
+	| Player Name | X | Y | Heading | Shield | Health |
+	| Player 1    | 0 | 0 | 0       | 100    | 100    |
+	| Player 2    | 0 | 3 | 90      | 0      | 50     |

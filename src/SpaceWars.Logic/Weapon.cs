@@ -1,10 +1,11 @@
-﻿namespace SpaceWars.Logic;
+﻿
+namespace SpaceWars.Logic;
 
 
-public abstract class Weapon
+public abstract class Weapon : IWeapon, IEquatable<Weapon?>
 {
     private string name;
-    private IEnumerable<WeaponRange> ranges;
+    private List<WeaponRange> ranges;
     private int power;
     private int cost;
     private int shotCost;
@@ -28,11 +29,51 @@ public abstract class Weapon
                 throw new ArgumentException("Weapon must have at least one range.");
             if (!WeaponRange.RangesAreValid(value))
                 throw new ArgumentException("Ranges must be in increasing distance and decreasing power.");
-            ranges = value;
+            ranges = new(value);
         }
     }
 
     public abstract void Fire(Player player, GameMap map);
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as Weapon);
+    }
+
+    public bool Equals(Weapon? other)
+    {
+        return other is not null &&
+               name == other.name &&
+               EqualityComparer<IEnumerable<WeaponRange>>.Default.Equals(ranges, other.ranges) &&
+               power == other.power &&
+               cost == other.cost &&
+               shotCost == other.shotCost &&
+               chargeTurns == other.chargeTurns &&
+               Name == other.Name &&
+               EqualityComparer<IEnumerable<WeaponRange>>.Default.Equals(Ranges, other.Ranges) &&
+               Power == other.Power &&
+               Cost == other.Cost &&
+               ShotCost == other.ShotCost &&
+               ChargeTurns == other.ChargeTurns;
+    }
+
+    public override int GetHashCode()
+    {
+        HashCode hash = new HashCode();
+        hash.Add(name);
+        hash.Add(ranges);
+        hash.Add(power);
+        hash.Add(cost);
+        hash.Add(shotCost);
+        hash.Add(chargeTurns);
+        hash.Add(Name);
+        hash.Add(Ranges);
+        hash.Add(Power);
+        hash.Add(Cost);
+        hash.Add(ShotCost);
+        hash.Add(ChargeTurns);
+        return hash.ToHashCode();
+    }
 
     public int Power
     {
@@ -73,5 +114,15 @@ public abstract class Weapon
                 throw new ArgumentOutOfRangeException(nameof(ChargeTurns), "ChargeTurns must be greater than or equal to 0.");
             chargeTurns = value;
         }
+    }
+
+    public static bool operator ==(Weapon? left, Weapon? right)
+    {
+        return EqualityComparer<Weapon>.Default.Equals(left, right);
+    }
+
+    public static bool operator !=(Weapon? left, Weapon? right)
+    {
+        return !(left == right);
     }
 }

@@ -4,11 +4,11 @@ namespace SpaceWars.Logic;
 
 public class Game
 {
-    private readonly IEnumerable<Player> players;
+    private readonly List<Player> players;
 
     public Game(IEnumerable<Player> players)
     {
-        this.players = players;
+        this.players = new(players);
     }
 
     public void Tick()
@@ -31,6 +31,8 @@ public class Game
             playerAction.Action.Execute(playerAction.Player, map);
         }
     }
+
+    public IEnumerable<Player> Players => players;
 }
 
 record PlayerAction(Player Player, GamePlayAction? Action);

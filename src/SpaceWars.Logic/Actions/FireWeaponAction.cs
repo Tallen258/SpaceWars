@@ -1,16 +1,26 @@
 ﻿namespace SpaceWars.Logic.Actions;
 
-public class FireWeaponAction(Weapon weapon) : GamePlayAction
+public class FireWeaponAction : GamePlayAction
 {
-    public Weapon Weapon { get; } = weapon;
+    public FireWeaponAction(string weaponName)
+    {
+        this.weaponName = weaponName;
+    }
+
+    public FireWeaponAction(IWeapon weapon)
+    {
+        this.weaponName = weapon.Name;
+    }
+    private string weaponName;
     public override int Priority => 2;
     public override ActionResult Execute(Player player, GameMap map)
     {
-        if (!player.Ship.Weapons.Contains(Weapon))
-            return new ActionResult(false, $"You do not have the {Weapon.Name}");
+        var playerWeapon = player.Ship.Weapons.FirstOrDefault(w => w.Name == weaponName);
+        if (playerWeapon is null)
+            return new ActionResult(false, $"You do not have the {weaponName}");
 
-        Weapon.Fire(player, map);
+        playerWeapon.Fire(player, map);
 
-        return new ActionResult(true, $"You fired the {Weapon.Name}");
+        return new ActionResult(true, $"You fired the {weaponName}");
     }
 }

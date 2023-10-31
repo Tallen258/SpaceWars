@@ -79,21 +79,6 @@ namespace SpaceWars.Tests.Logic.GameplayTests
         {
 #line 5
 #line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Weapon Name",
-                        "Range(s)",
-                        "Damage(s)"});
-            table1.AddRow(new string[] {
-                        "Basic Cannon",
-                        "5",
-                        "10"});
-            table1.AddRow(new string[] {
-                        "Super Cannon",
-                        "10,20",
-                        "20,10"});
-#line 6
- testRunner.Given("the following weapons", ((string)(null)), table1, "Given ");
-#line hidden
         }
         
         void System.IDisposable.Dispose()
@@ -101,17 +86,15 @@ namespace SpaceWars.Tests.Logic.GameplayTests
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Shoot a ship directly in front of you within range")]
+        [Xunit.SkippableFactAttribute(DisplayName="Shoot a ship directly in front of you within range three times")]
         [Xunit.TraitAttribute("FeatureTitle", "Shooting")]
-        [Xunit.TraitAttribute("Description", "Shoot a ship directly in front of you within range")]
-        [Xunit.TraitAttribute("Category", "tag1")]
-        public void ShootAShipDirectlyInFrontOfYouWithinRange()
+        [Xunit.TraitAttribute("Description", "Shoot a ship directly in front of you within range three times")]
+        public void ShootAShipDirectlyInFrontOfYouWithinRangeThreeTimes()
         {
-            string[] tagsOfScenario = new string[] {
-                    "tag1"};
+            string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Shoot a ship directly in front of you within range", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 13
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Shoot a ship directly in front of you within range three times", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 7
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -123,6 +106,39 @@ this.ScenarioInitialize(scenarioInfo);
                 this.ScenarioStart();
 #line 5
 this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Player Name",
+                            "X",
+                            "Y",
+                            "Heading",
+                            "Shield",
+                            "Health"});
+                table1.AddRow(new string[] {
+                            "Player 1",
+                            "0",
+                            "0",
+                            "0",
+                            "100",
+                            "100"});
+                table1.AddRow(new string[] {
+                            "Player 2",
+                            "0",
+                            "3",
+                            "90",
+                            "100",
+                            "100"});
+#line 8
+ testRunner.Given("the following game state", ((string)(null)), table1, "Given ");
+#line hidden
+#line 12
+ testRunner.When("Player 1 shoots the Basic Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 13
+ testRunner.And("Player 1 shoots the Basic Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 14
+ testRunner.And("Player 1 shoots the Basic Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "Player Name",
@@ -143,13 +159,37 @@ this.FeatureBackground();
                             "0",
                             "3",
                             "90",
-                            "100",
-                            "100"});
-#line 14
- testRunner.Given("the following game state", ((string)(null)), table2, "Given ");
+                            "0",
+                            "50"});
+#line 15
+ testRunner.Then("I have the following game state", ((string)(null)), table2, "Then ");
 #line hidden
-#line 18
- testRunner.When("Player 1 shoots the Basic Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Shoot a ship directly in front of you within range")]
+        [Xunit.TraitAttribute("FeatureTitle", "Shooting")]
+        [Xunit.TraitAttribute("Description", "Shoot a ship directly in front of you within range")]
+        [Xunit.TraitAttribute("Category", "tag1")]
+        public void ShootAShipDirectlyInFrontOfYouWithinRange()
+        {
+            string[] tagsOfScenario = new string[] {
+                    "tag1"};
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Shoot a ship directly in front of you within range", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 23
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 5
+this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "Player Name",
@@ -170,12 +210,12 @@ this.FeatureBackground();
                             "0",
                             "3",
                             "90",
-                            "90",
+                            "100",
                             "100"});
-#line 19
- testRunner.Then("I have the following game state", ((string)(null)), table3, "Then ");
+#line 24
+ testRunner.Given("the following game state", ((string)(null)), table3, "Given ");
 #line hidden
-#line 23
+#line 28
  testRunner.When("Player 1 shoots the Basic Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -197,13 +237,35 @@ this.FeatureBackground();
                             "0",
                             "3",
                             "90",
-                            "80",
+                            "50",
                             "100"});
-#line 24
+#line 29
  testRunner.Then("I have the following game state", ((string)(null)), table4, "Then ");
 #line hidden
-#line 28
- testRunner.When("Player 1 shoots the Super Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="shoot twice")]
+        [Xunit.TraitAttribute("FeatureTitle", "Shooting")]
+        [Xunit.TraitAttribute("Description", "shoot twice")]
+        public void ShootTwice()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("shoot twice", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 34
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 5
+this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "Player Name",
@@ -224,10 +286,194 @@ this.FeatureBackground();
                             "0",
                             "3",
                             "90",
-                            "60",
+                            "100",
                             "100"});
-#line 29
- testRunner.Then("I have the following game state", ((string)(null)), table5, "Then ");
+#line 35
+ testRunner.Given("the following game state", ((string)(null)), table5, "Given ");
+#line hidden
+#line 39
+ testRunner.When("Player 1 shoots the Basic Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Player Name",
+                            "X",
+                            "Y",
+                            "Heading",
+                            "Shield",
+                            "Health"});
+                table6.AddRow(new string[] {
+                            "Player 1",
+                            "0",
+                            "0",
+                            "0",
+                            "100",
+                            "100"});
+                table6.AddRow(new string[] {
+                            "Player 2",
+                            "0",
+                            "3",
+                            "90",
+                            "50",
+                            "100"});
+#line 40
+ testRunner.Then("I have the following game state", ((string)(null)), table6, "Then ");
+#line hidden
+#line 44
+ testRunner.When("Player 1 shoots the Basic Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Player Name",
+                            "X",
+                            "Y",
+                            "Heading",
+                            "Shield",
+                            "Health"});
+                table7.AddRow(new string[] {
+                            "Player 1",
+                            "0",
+                            "0",
+                            "0",
+                            "100",
+                            "100"});
+                table7.AddRow(new string[] {
+                            "Player 2",
+                            "0",
+                            "3",
+                            "90",
+                            "0",
+                            "100"});
+#line 45
+ testRunner.Then("I have the following game state", ((string)(null)), table7, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="shoot thrice")]
+        [Xunit.TraitAttribute("FeatureTitle", "Shooting")]
+        [Xunit.TraitAttribute("Description", "shoot thrice")]
+        public void ShootThrice()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("shoot thrice", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 50
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 5
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Player Name",
+                            "X",
+                            "Y",
+                            "Heading",
+                            "Shield",
+                            "Health"});
+                table8.AddRow(new string[] {
+                            "Player 1",
+                            "0",
+                            "0",
+                            "0",
+                            "100",
+                            "100"});
+                table8.AddRow(new string[] {
+                            "Player 2",
+                            "0",
+                            "3",
+                            "90",
+                            "100",
+                            "100"});
+#line 51
+ testRunner.Given("the following game state", ((string)(null)), table8, "Given ");
+#line hidden
+#line 55
+ testRunner.When("Player 1 shoots the Basic Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Player Name",
+                            "X",
+                            "Y",
+                            "Heading",
+                            "Shield",
+                            "Health"});
+                table9.AddRow(new string[] {
+                            "Player 1",
+                            "0",
+                            "0",
+                            "0",
+                            "100",
+                            "100"});
+                table9.AddRow(new string[] {
+                            "Player 2",
+                            "0",
+                            "3",
+                            "90",
+                            "50",
+                            "100"});
+#line 56
+ testRunner.Then("I have the following game state", ((string)(null)), table9, "Then ");
+#line hidden
+#line 60
+ testRunner.When("Player 1 shoots the Basic Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Player Name",
+                            "X",
+                            "Y",
+                            "Heading",
+                            "Shield",
+                            "Health"});
+                table10.AddRow(new string[] {
+                            "Player 1",
+                            "0",
+                            "0",
+                            "0",
+                            "100",
+                            "100"});
+                table10.AddRow(new string[] {
+                            "Player 2",
+                            "0",
+                            "3",
+                            "90",
+                            "0",
+                            "100"});
+#line 61
+ testRunner.Then("I have the following game state", ((string)(null)), table10, "Then ");
+#line hidden
+#line 65
+ testRunner.When("Player 1 shoots the Basic Cannon", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Player Name",
+                            "X",
+                            "Y",
+                            "Heading",
+                            "Shield",
+                            "Health"});
+                table11.AddRow(new string[] {
+                            "Player 1",
+                            "0",
+                            "0",
+                            "0",
+                            "100",
+                            "100"});
+                table11.AddRow(new string[] {
+                            "Player 2",
+                            "0",
+                            "3",
+                            "90",
+                            "0",
+                            "50"});
+#line 66
+ testRunner.Then("I have the following game state", ((string)(null)), table11, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

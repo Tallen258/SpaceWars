@@ -2,12 +2,13 @@
 
 namespace SpaceWars.Logic.Weapons;
 
-public class BasicCannon : Weapon
+public class BasicCannon : Weapon, IEquatable<BasicCannon?>
 {
     public BasicCannon() : base("Basic Cannon")
     {
         Ranges = [
             new WeaponRange(200, 100),
+            new WeaponRange(300, 50)
         ];
         Power = 50;
         Cost = 200;
@@ -15,15 +16,38 @@ public class BasicCannon : Weapon
         ChargeTurns = 1;
     }
 
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as BasicCannon);
+    }
+
+    public bool Equals(BasicCannon? other)
+    {
+        return other is not null &&
+               base.Equals(other) &&
+               Name == other.Name &&
+               EqualityComparer<IEnumerable<WeaponRange>>.Default.Equals(Ranges, other.Ranges) &&
+               Power == other.Power &&
+               Cost == other.Cost &&
+               ShotCost == other.ShotCost &&
+               ChargeTurns == other.ChargeTurns;
+    }
+
     public override void Fire(Player player, GameMap map)
     {
         var maxWeaponRange = Ranges.Last().Distance;
         var playersInRange = map.GetPlayersInRange(player, maxWeaponRange);
-        if (TryHit(player, playersInRange, out var result))
+        if (TryHit(player, playersInRange, out var result) && result is not null)
         {
             var (hitPlayer, distance) = result.Value;
-            hitPlayer.Ship.Health -= Power;
+            var damage = (int)(Ranges.First(r => r.Distance >= distance).Effectiveness / 100.0 * Power);
+            hitPlayer.Ship.TakeDamage(damage);
         }
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(base.GetHashCode(), Name, Ranges, Power, Cost, ShotCost, ChargeTurns);
     }
 
     public bool TryHit(Player player, IEnumerable<Player> playersInRange, out (Player hitPlayer, int distance)? result)
@@ -84,6 +108,16 @@ public class BasicCannon : Weapon
         }
 
         return true;
+    }
+
+    public static bool operator ==(BasicCannon? left, BasicCannon? right)
+    {
+        return EqualityComparer<BasicCannon>.Default.Equals(left, right);
+    }
+
+    public static bool operator !=(BasicCannon? left, BasicCannon? right)
+    {
+        return !(left == right);
     }
 }
 

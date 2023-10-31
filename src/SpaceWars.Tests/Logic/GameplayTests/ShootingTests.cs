@@ -14,7 +14,7 @@ public class ShootingTests
         });
 
         var basicCannon = new BasicCannon();
-        var fancyLaserMock = new Mock<Weapon>();
+        var fancyLaserMock = new Mock<IWeapon>();
         fancyLaserMock.Setup(m => m.Name).Returns("Fancy Laser");
 
         p1.Ship.Weapons.Add(basicCannon);
@@ -31,12 +31,14 @@ public class ShootingTests
         //Arrange
         var p1 = new Player("Player 1", new Ship(new Location(0, 0))
         {
-            Heading = 0
+            Heading = 0,
+            Health = 100,
         });
 
         var p2 = new Player("Player 2", new Ship(new Location(0, 3))
         {
             Heading = 90,
+            Health = 100,
         });
 
         var basicCannon = new BasicCannon();
@@ -52,7 +54,39 @@ public class ShootingTests
         game.Tick();
 
         //Assert
-        p2.Ship.Health.Should().Be(99);
+        p2.Ship.Health.Should().Be(50);
+    }
+
+    [Fact]
+    public void HitDamageDecreasesAsRangeIncreases()
+    {
+        //Arrange
+        var p1 = new Player("Player 1", new Ship(new Location(0, 0))
+        {
+            Heading = 0,
+            Health = 100,
+        });
+
+        var p2 = new Player("Player 2", new Ship(new Location(0, 250))
+        {
+            Heading = 90,
+            Health = 100,
+        });
+
+        var basicCannon = new BasicCannon();
+
+        p1.Ship.Weapons.Add(basicCannon);
+        p2.Ship.Weapons.Add(basicCannon);
+
+        p1.EnqueueAction(new FireWeaponAction(p1.Ship.Weapons.First()));
+
+        var game = new Game([p1, p2]);
+
+        //Act
+        game.Tick();
+
+        //Assert
+        p2.Ship.Health.Should().Be(75);
     }
 
     [Fact]

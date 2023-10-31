@@ -3,7 +3,7 @@
 
 
 
-public partial class Ship : ObservableObject
+public partial class Ship : ObservableObject, IEquatable<Ship?>
 {
     private int health;
     private int speed;
@@ -86,6 +86,50 @@ public partial class Ship : ObservableObject
         }
     }
 
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as Ship);
+    }
+
+    public bool Equals(Ship? other)
+    {
+        return other is not null &&
+               health == other.health &&
+               speed == other.speed &&
+               shield == other.shield &&
+               heading == other.heading &&
+               repairCreditBalance == other.repairCreditBalance &&
+               upgradeCreditBalance == other.upgradeCreditBalance &&
+               EqualityComparer<Location>.Default.Equals(Location, other.Location) &&
+               Heading == other.Heading &&
+               Health == other.Health &&
+               Speed == other.Speed &&
+               Shield == other.Shield &&
+               EqualityComparer<List<Weapon>>.Default.Equals(Weapons, other.Weapons) &&
+               RepairCreditBalance == other.RepairCreditBalance &&
+               UpgradeCreditBalance == other.UpgradeCreditBalance;
+    }
+
+    public override int GetHashCode()
+    {
+        HashCode hash = new HashCode();
+        hash.Add(health);
+        hash.Add(speed);
+        hash.Add(shield);
+        hash.Add(heading);
+        hash.Add(repairCreditBalance);
+        hash.Add(upgradeCreditBalance);
+        hash.Add(Location);
+        hash.Add(Heading);
+        hash.Add(Health);
+        hash.Add(Speed);
+        hash.Add(Shield);
+        hash.Add(Weapons);
+        hash.Add(RepairCreditBalance);
+        hash.Add(UpgradeCreditBalance);
+        return hash.ToHashCode();
+    }
+
     public void TakeHit(int power)
     {
         var shieldDecrease = Math.Min(power, Shield);
@@ -97,5 +141,28 @@ public partial class Ship : ObservableObject
 
         if (Health < 0)
             throw new Exception("Somehow you have to handle removing players from the game!");
+    }
+
+    internal void TakeDamage(int damage)
+    {
+        //first, decrease shield
+        var damageDealt = Math.Min(Shield, damage);
+        Shield -= damageDealt;
+
+        var remainingDamage = damage - damageDealt;
+        if (remainingDamage > 0)
+        {
+            Health -= Math.Min(Health, remainingDamage);
+        }
+    }
+
+    public static bool operator ==(Ship? left, Ship? right)
+    {
+        return EqualityComparer<Ship>.Default.Equals(left, right);
+    }
+
+    public static bool operator !=(Ship? left, Ship? right)
+    {
+        return !(left == right);
     }
 }
