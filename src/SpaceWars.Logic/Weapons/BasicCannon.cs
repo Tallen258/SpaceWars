@@ -82,8 +82,6 @@ public class BasicCannon : Weapon, IEquatable<BasicCannon?>
         return false;
     }
 
-
-
     private bool RayIntersectsAABB(Vector2 boxMin, Vector2 boxMax, Vector2 rayOrigin, Vector2 rayDirection)
     {
         var tMin = (boxMin.X - rayOrigin.X) / rayDirection.X;

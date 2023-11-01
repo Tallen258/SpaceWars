@@ -72,4 +72,34 @@ public class BasicCannonTest
         //Assert
         p2.Ship.Health.Should().Be(finalHealth);
     }
+
+    [Theory]
+    [InlineData(199, 50)]
+    [InlineData(200, 50)]
+    [InlineData(201, 75)]
+    [InlineData(299, 75)]
+    [InlineData(300, 75)]
+    [InlineData(301, 100)]
+    public void BasicCannon_HitPowerDecreasesAsDistanceIncreases(int distance, int finalHealth)
+    {
+        //Arrange
+        var p1 = new Player("Player 1", new Ship(new Location(0, 0))
+        {
+            Heading = 0,
+        });
+        var p2 = new Player("Player 2", new Ship(new Location(0, distance))
+        {
+            Heading = 90,
+            Health = 100,
+        });
+        var gameMap = new GameMap([p1, p2]);
+
+        var basicCannon = new BasicCannon();
+
+        //Act
+        basicCannon.Fire(p1, gameMap);
+
+        //Assert
+        p2.Ship.Health.Should().Be(finalHealth);
+    }
 }

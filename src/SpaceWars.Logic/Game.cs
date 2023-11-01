@@ -6,9 +6,16 @@ public class Game
 {
     private readonly List<Player> players;
 
-    public Game(IEnumerable<Player> players)
+    public Game()
     {
-        this.players = new(players);
+        this.players = new();
+    }
+
+    public GameJoinResult Join(string playerName)
+    {
+        var newPlayer = new Player(playerName, new Ship(new Location(0, 0)));
+        players.Add(newPlayer);
+        return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location);
     }
 
     public void Tick()
@@ -36,3 +43,4 @@ public class Game
 }
 
 record PlayerAction(Player Player, GamePlayAction? Action);
+public record GameJoinResult(PlayerToken Token, Location Location);
