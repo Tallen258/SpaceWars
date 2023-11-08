@@ -5,9 +5,8 @@ public class JoinGameTests
     [Fact]
     public void CanJoinGameAndGetUniqueToken()
     {
-        var game = new Game(new List<Player>());
-        var player = new Player("jonathan");
-        game.Join(player);
-        game.Players.Should().Contain(player);
+        var game = new Game();
+        game.Join("jonathan");
+        game.Players.Any(p => p.Name == "jonathan").Should().BeTrue();
     }
 }

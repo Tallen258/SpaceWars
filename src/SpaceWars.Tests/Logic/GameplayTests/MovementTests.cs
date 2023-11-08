@@ -28,9 +28,15 @@ public class MovementTests
     {
         //Arrange
         var ship = new Ship(new Location(0, 0));
-        var player = new Player("Player 1", ship);
-        player.EnqueueAction(new MoveForwardAction(heading));
-        var game = new Game(new[] { player });
+        var game = new Game();
+        var joinResult = game.Join("Player 1");
+        var player = game.Players
+
+        //option 1
+        game.EnqueueAction(token, new MoveForwardAction(heading));
+
+        //option 2
+        var player = game.GetPLayerByToken(token).EnqueueAction(...);
 
         //Act
         game.Tick();

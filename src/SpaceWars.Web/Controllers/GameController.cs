@@ -17,14 +17,21 @@ public partial class GameController(ILogger<GameController> logger, Game game) :
     {
         try
         {
-            var gameJoinResult = game.Join(name);
-            //var joinResult = gameManager.Game.Join(name);
-            return new JoinGameResponse(gameJoinResult.Token.Value, gameJoinResult.Location, "Joining");
+            return game.Join(name).ToResponse();
         }
         catch (TooManyPlayersException)
         {
             LogTooManyPlayers(name, logger);
             return Problem("Cannot join game, too many players.", statusCode: 400, title: "Too many players");
         }
+    }
+}
+
+public static class Extensions
+{
+    public static JoinGameResponse ToResponse(this GameJoinResult gameJoinResult)
+    {
+        var location = new SpaceWars.Web.Types.Location(gameJoinResult.Location.X, gameJoinResult.Location.Y);
+        return new JoinGameResponse(gameJoinResult.Token.Value, location, "Joining");
     }
 }
