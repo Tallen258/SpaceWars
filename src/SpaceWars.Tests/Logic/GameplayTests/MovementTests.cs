@@ -24,18 +24,23 @@ public class MovementTests
     [InlineData(337, -1, 1, "Up Left")]
     [InlineData(338, 0, 1, "Up")]
     [InlineData(359, 0, 1, "Up")]
-    public void ShipMovesForwardAt1xLocationIsUpdatedAccordingly(int heading, int x, int y, string because)
+    public void ShipMovesForwardAt1xLocationIsUpdatedAccordingly(int heading, int newX, int newY, string because)
     {
         //Arrange
         var ship = new Ship(new Location(0, 0));
         var player = new Player("Player 1", ship);
-        player.EnqueueAction(new MoveForwardAction(heading));
-        var game = new Game(new[] { player });
+
+        (var game, var joinResults) = GameTestHelpers.CreateGame(new[] { player });
+
+        game.EnqueueAction(joinResults.First().Token, new MoveForwardAction(heading));
 
         //Act
         game.Tick();
 
         //Assert
-        ship.Location.Should().Be(new Location(x, y), because);
+        var actualPlayer = game.GetPlayerByToken(joinResults.First().Token);
+        var actualLocation = actualPlayer.Ship.Location;
+        var expectedLocation = new Location(newX, newY);
+        actualLocation.Should().Be(expectedLocation, because);
     }
 }

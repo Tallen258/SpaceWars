@@ -19,7 +19,7 @@ public partial class GameController(ILogger<GameController> logger, Game game) :
         {
             var gameJoinResult = game.Join(name);
             //var joinResult = gameManager.Game.Join(name);
-            return new JoinGameResponse(gameJoinResult.Token.Value, gameJoinResult.Location, "Joining");
+            return new JoinGameResponse(gameJoinResult.Token.Value, new Types.Location(gameJoinResult.Location.X, gameJoinResult.Location.Y), "Joining");
         }
         catch (TooManyPlayersException)
         {

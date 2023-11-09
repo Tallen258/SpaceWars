@@ -1,5 +1,6 @@
 ﻿using SpaceWars.Logic.Weapons;
 using TechTalk.SpecFlow;
+using static SpaceWars.Tests.Logic.GameplayTests.GameTestHelpers;
 
 namespace SpaceWars.Tests.Logic.GameplayTests;
 
@@ -18,7 +19,14 @@ public class ShootingSteps
     {
         var players = playersFromTable(table);
         _scenarioContext.Set(players);
-        _scenarioContext.Set(new Game(players));
+        (var game, var joinResults) = CreateGame(players);
+        _scenarioContext.Set(game);
+        var playerTokens = new Dictionary<string, PlayerToken>();
+        for (var i = 0; i < players.Count(); i++)
+        {
+            playerTokens.Add(players.ElementAt(i).Name, joinResults.ElementAt(i).Token);
+        }
+        _scenarioContext.Set(playerTokens);
     }
 
     private IEnumerable<Player> playersFromTable(Table table)
@@ -36,7 +44,10 @@ public class ShootingSteps
     public void WhenPlayerShootsTheBasicCannon(string playerName, string weaponName)
     {
         var game = _scenarioContext.Get<Game>();
-        var player = game.Players.Single(p => p.Name == playerName);
+        var playerTokens = _scenarioContext.Get<Dictionary<string, PlayerToken>>();
+        var token = playerTokens[playerName];
+        var player = game.GetPlayerByToken(token);
+
         player.EnqueueAction(new FireWeaponAction(weaponName));
         game.Tick();
     }
@@ -44,8 +55,13 @@ public class ShootingSteps
     [Then(@"I have the following game state")]
     public void ThenIHaveTheFollowingGameState(Table table)
     {
+        var playerTokens = _scenarioContext.Get<Dictionary<string, PlayerToken>>();
         var expectedPlayerState = playersFromTable(table).ToList();
         var actualGame = _scenarioContext.Get<Game>();
-        Assert.Equivalent(expectedPlayerState, actualGame.Players);
+
+        foreach (var expectedPlayer in expectedPlayerState)
+        {
+            Assert.Equivalent(expectedPlayer, actualGame.GetPlayerByToken(playerTokens[expectedPlayer.Name]));
+        }
     }
 }

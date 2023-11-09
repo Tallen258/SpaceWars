@@ -4,23 +4,25 @@ namespace SpaceWars.Logic;
 
 public class Game
 {
-    private readonly List<Player> players;
+    private readonly Dictionary<PlayerToken, Player> players;
+    private readonly IInitialLocationProvider locationProvider;
 
-    public Game()
+    public Game(IInitialLocationProvider locationProvider)
     {
         this.players = new();
+        this.locationProvider = locationProvider;
     }
 
     public GameJoinResult Join(string playerName)
     {
-        var newPlayer = new Player(playerName, new Ship(new Location(0, 0)));
-        players.Add(newPlayer);
+        var newPlayer = new Player(playerName, new Ship(locationProvider.GetNewInitialLocation()));
+        players.Add(newPlayer.Token, newPlayer);
         return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location);
     }
 
     public void Tick()
     {
-        var playerActions = players.Select(p => new PlayerAction(p, p.DequeueAction()))
+        var playerActions = players.Values.Select(p => new PlayerAction(p, p.DequeueAction()))
             .Where(playerAction => playerAction.Action != null)
             .OrderBy(playerAction => playerAction.Action!.Priority)
             .ToList();
@@ -32,14 +34,16 @@ public class Game
             bool allMovesAreComplete = playerAction.Action.Priority is not 1;
             if (allMovesAreComplete && map is null)
             {
-                map = new GameMap(players);//initialize that here
+                map = new GameMap(players.Values);//initialize that here
             }
 
             playerAction.Action.Execute(playerAction.Player, map);
         }
     }
 
-    public IEnumerable<Player> Players => players;
+    public Player GetPlayerByToken(PlayerToken token) => players[token];
+
+    public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
 }
 
 record PlayerAction(Player Player, GamePlayAction? Action);
