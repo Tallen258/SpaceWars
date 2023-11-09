@@ -24,25 +24,23 @@ public class Game
     {
         var playerActions = players.Values.Select(p => new PlayerAction(p, p.DequeueAction()))
             .Where(playerAction => playerAction.Action != null)
-            .OrderBy(playerAction => playerAction.Action!.Priority)
-            .ToList();
+            .OrderBy(playerAction => playerAction.Action!.Priority);
 
-        GameMap map = null;
+        playerActions
+            .Where(a => a.Action.Priority == 1)
+            .ToList()
+            .ForEach(a => a.Action.Execute(a.Player, Map));
+        
+        Map = new GameMap(players.Values);//initialize that here
 
-        foreach (var playerAction in playerActions)
-        {
-            bool allMovesAreComplete = playerAction.Action.Priority is not 1;
-            if (allMovesAreComplete && map is null)
-            {
-                map = new GameMap(players.Values);//initialize that here
-            }
-
-            playerAction.Action.Execute(playerAction.Player, map);
-        }
+        playerActions
+            .Where(a => a.Action.Priority != 1)
+            .ToList()
+            .ForEach(a => a.Action.Execute(a.Player, Map));
     }
 
     public Player GetPlayerByToken(PlayerToken token) => players[token];
-
+    public GameMap Map { get; private set; }
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
 }
 
