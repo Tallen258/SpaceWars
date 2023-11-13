@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.AspNetCore.TestHost;
-using SpaceWars.Web.Types;
+﻿using SpaceWars.Web.Types;
 using System.Net.Http.Json;
 
 namespace SpaceWars.Tests.Web;
@@ -23,21 +20,17 @@ public class ApiTests : IClassFixture<SpaceWarsWebApplicationFactory>
         var result = await response.Content.ReadFromJsonAsync<JoinGameResponse>();
         result.GameState.Should().Be("Joining");
     }
-}
 
-public class SpaceWarsWebApplicationFactory : WebApplicationFactory<Program>
-{
-    public SpaceWarsWebApplicationFactory()
+    [Fact]
+    public async Task CanStartGameWithCorrectPassword()
     {
-
-    }
-
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
-    {
-        builder.ConfigureTestServices(services =>
-        {
-            // services.AddAuthentication("Test")
-            //     .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("Test", options => { });
-        });
+        var response = await httpClient.GetAsync("/game/start?password=password");
+        response.EnsureSuccessStatusCode();
+        //var gameState = await httpClient.GetFromJsonAsync<GameState>("/game/state");
+        //gameState.Should().BeEquivalentTo(new
+        //{
+        //    State="Joining",
+        //    Players = []
+        //});
     }
 }
