@@ -24,19 +24,20 @@ public class Game
     {
         var playerActions = players.Values.Select(p => new PlayerAction(p, p.DequeueAction()))
             .Where(playerAction => playerAction.Action != null)
-            .OrderBy(playerAction => playerAction.Action!.Priority);
+            .OrderBy(playerAction => playerAction.Action!.Priority)
+            .ToList();
 
-        playerActions
-            .Where(a => a.Action.Priority == 1)
-            .ToList()
-            .ForEach(a => a.Action.Execute(a.Player, Map));
-        
+        foreach (var gamePlayAction in playerActions.Where(a => a.Action.Priority == 1))
+        {
+            gamePlayAction.Action.Execute(gamePlayAction.Player, Map);
+        }
+
         Map = new GameMap(players.Values);//initialize that here
 
-        playerActions
-            .Where(a => a.Action.Priority != 1)
-            .ToList()
-            .ForEach(a => a.Action.Execute(a.Player, Map));
+        foreach (var gamePlayAction in playerActions.Where(a => a.Action.Priority != 1))
+        {
+            gamePlayAction.Action.Execute(gamePlayAction.Player, Map);
+        }
     }
 
     public Player GetPlayerByToken(PlayerToken token) => players[token];

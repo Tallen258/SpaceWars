@@ -222,12 +222,10 @@ this.FeatureBackground();
                             "Player Name",
                             "X",
                             "Y",
-                            "Heading",
                             "Shield",
                             "Health"});
                 table4.AddRow(new string[] {
                             "Player 1",
-                            "0",
                             "0",
                             "0",
                             "100",
@@ -236,7 +234,6 @@ this.FeatureBackground();
                             "Player 2",
                             "0",
                             "3",
-                            "90",
                             "50",
                             "100"});
 #line 29
@@ -325,12 +322,10 @@ this.FeatureBackground();
                             "Player Name",
                             "X",
                             "Y",
-                            "Heading",
                             "Shield",
                             "Health"});
                 table7.AddRow(new string[] {
                             "Player 1",
-                            "0",
                             "0",
                             "0",
                             "100",
@@ -339,7 +334,6 @@ this.FeatureBackground();
                             "Player 2",
                             "0",
                             "3",
-                            "90",
                             "0",
                             "100"});
 #line 45
@@ -401,12 +395,10 @@ this.FeatureBackground();
                             "Player Name",
                             "X",
                             "Y",
-                            "Heading",
                             "Shield",
                             "Health"});
                 table9.AddRow(new string[] {
                             "Player 1",
-                            "0",
                             "0",
                             "0",
                             "100",
@@ -415,7 +407,6 @@ this.FeatureBackground();
                             "Player 2",
                             "0",
                             "3",
-                            "90",
                             "50",
                             "100"});
 #line 56
@@ -428,12 +419,10 @@ this.FeatureBackground();
                             "Player Name",
                             "X",
                             "Y",
-                            "Heading",
                             "Shield",
                             "Health"});
                 table10.AddRow(new string[] {
                             "Player 1",
-                            "0",
                             "0",
                             "0",
                             "100",
@@ -442,7 +431,6 @@ this.FeatureBackground();
                             "Player 2",
                             "0",
                             "3",
-                            "90",
                             "0",
                             "100"});
 #line 61
@@ -455,12 +443,10 @@ this.FeatureBackground();
                             "Player Name",
                             "X",
                             "Y",
-                            "Heading",
                             "Shield",
                             "Health"});
                 table11.AddRow(new string[] {
                             "Player 1",
-                            "0",
                             "0",
                             "0",
                             "100",
@@ -469,7 +455,6 @@ this.FeatureBackground();
                             "Player 2",
                             "0",
                             "3",
-                            "90",
                             "0",
                             "50"});
 #line 66

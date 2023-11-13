@@ -27,18 +27,15 @@ public class MovementTests
     public void ShipMovesForwardAt1xLocationIsUpdatedAccordingly(int heading, int newX, int newY, string because)
     {
         //Arrange
-        var ship = new Ship(new Location(0, 0));
-        var player = new Player("Player 1", ship);
-
-        (var game, var joinResults) = GameTestHelpers.CreateGame(new[] { player });
-
-        game.EnqueueAction(joinResults.First().Token, new MoveForwardAction(heading));
+        (var game, _) = GameTestHelpers.CreateGame();
+        var result = game.Join("Player 1");
+        game.EnqueueAction(result.Token, new MoveForwardAction(heading));
 
         //Act
         game.Tick();
 
         //Assert
-        var actualPlayer = game.GetPlayerByToken(joinResults.First().Token);
+        var actualPlayer = game.GetPlayerByToken(result.Token);
         var actualLocation = actualPlayer.Ship.Location;
         var expectedLocation = new Location(newX, newY);
         actualLocation.Should().Be(expectedLocation, because);

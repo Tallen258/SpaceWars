@@ -32,4 +32,8 @@
     <ProjectReference Include="..\SpaceWars.Web\SpaceWars.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logic\GameplayTests\NewFolder\" />
+  </ItemGroup>
+
 </Project>

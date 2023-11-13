@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Serilog.Exceptions;
+using SpaceWars.Logic;
 using SpaceWars.Web.Components;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
@@ -18,6 +19,8 @@ builder.Services.AddOptions<GameConfig>()
     .BindConfiguration(nameof(GameConfig))
     .ValidateDataAnnotations()
     .ValidateOnStart();
+builder.Services.AddSingleton<Game>();
+builder.Services.AddSingleton<IInitialLocationProvider, DefaultInitialLocationProvider>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());

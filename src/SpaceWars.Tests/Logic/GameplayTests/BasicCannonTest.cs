@@ -21,7 +21,7 @@ public class BasicCannonTest
     [InlineData(6, 50)]
     [InlineData(7, 100)]
 
-    public void BasicCannon_TryHitIsTrueIfPlayerInFrontOfYou(int heading, int finalHealth)
+    public void BasicCannon_TryHitIsTrueIfPlayerInFrontOfYou(int heading, int finalShield)
     {
         //Arrange
         var p1 = new Player("Player 1", new Ship(new Location(0, 0))
@@ -41,7 +41,7 @@ public class BasicCannonTest
         basicCannon.Fire(p1, gameMap);
 
         //Assert
-        p2.Ship.Health.Should().Be(finalHealth);
+        p2.Ship.Shield.Should().Be(finalShield);
     }
 
     [Theory]
@@ -50,7 +50,7 @@ public class BasicCannonTest
     [InlineData(0, 50)]
     [InlineData(1, 50)]
     [InlineData(2, 100)]
-    public void BasicCannon_TryHitIsTrueIfPlayerInFrontOfYouButFarAway(int heading, int finalHealth)
+    public void BasicCannon_TryHitIsTrueIfPlayerInFrontOfYouButFarAway(int heading, int finalShield)
     {
         //Arrange
         var p1 = new Player("Player 1", new Ship(new Location(0, 0))
@@ -70,7 +70,7 @@ public class BasicCannonTest
         basicCannon.Fire(p1, gameMap);
 
         //Assert
-        p2.Ship.Health.Should().Be(finalHealth);
+        p2.Ship.Shield.Should().Be(finalShield);
     }
 
     [Theory]
@@ -80,7 +80,7 @@ public class BasicCannonTest
     [InlineData(299, 75)]
     [InlineData(300, 75)]
     [InlineData(301, 100)]
-    public void BasicCannon_HitPowerDecreasesAsDistanceIncreases(int distance, int finalHealth)
+    public void BasicCannon_HitPowerDecreasesAsDistanceIncreases(int distance, int finalShield)
     {
         //Arrange
         var p1 = new Player("Player 1", new Ship(new Location(0, 0))
@@ -100,6 +100,6 @@ public class BasicCannonTest
         basicCannon.Fire(p1, gameMap);
 
         //Assert
-        p2.Ship.Health.Should().Be(finalHealth);
+        p2.Ship.Shield.Should().Be(finalShield);
     }
 }

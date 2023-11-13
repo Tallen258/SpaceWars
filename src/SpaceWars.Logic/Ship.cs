@@ -1,4 +1,6 @@
-﻿namespace SpaceWars.Logic;
+﻿using SpaceWars.Logic.Weapons;
+
+namespace SpaceWars.Logic;
 
 
 
@@ -15,6 +17,10 @@ public partial class Ship : ObservableObject, IEquatable<Ship?>
     public Ship(Location? startingLocation = null)
     {
         Location = startingLocation ?? new Location(0, 0);
+        Health = 100;
+        Speed = 1;
+        Shield = 100;
+        Weapons = [new BasicCannon()];
     }
 
     public Location Location { get; set; }

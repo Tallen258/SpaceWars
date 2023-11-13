@@ -25,14 +25,27 @@ public static class GameTestHelpers
             }
         }
 
-        if (players is null && startingLocations is null)
+        if (locationQueue.Count == 0)
         {
-            throw new ArgumentException("Must provide either players or startingLocations");
+            for (int i = 0; i < 100; i++)
+            {
+                locationQueue.Enqueue(new Location(i, i));
+            }
         }
-        locationProviderMock.Setup(m => m.GetNewInitialLocation()).Returns(locationQueue.Dequeue());
+
+        locationProviderMock
+            .SetupSequence(m => m.GetNewInitialLocation())
+            .Returns(() => locationQueue.Dequeue())
+            .Returns(() => locationQueue.Dequeue())
+            .Returns(() => locationQueue.Dequeue())
+            .Returns(() => locationQueue.Dequeue())
+            .Returns(() => locationQueue.Dequeue())
+            .Returns(() => locationQueue.Dequeue())
+            .Returns(() => locationQueue.Dequeue())
+            .Returns(() => locationQueue.Dequeue());
 
         var g = new Game(locationProviderMock.Object);
-        var joinResults = players?.Select(p => g.Join(p.Name)) ?? [];
+        var joinResults = players?.Select(p => g.Join(p.Name)).ToList() ?? [];
 
         return new CreateGameResult(g, joinResults);
     }

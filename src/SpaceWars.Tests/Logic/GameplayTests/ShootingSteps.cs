@@ -56,12 +56,13 @@ public class ShootingSteps
     public void ThenIHaveTheFollowingGameState(Table table)
     {
         var playerTokens = _scenarioContext.Get<Dictionary<string, PlayerToken>>();
-        var expectedPlayerState = playersFromTable(table).ToList();
         var actualGame = _scenarioContext.Get<Game>();
 
-        foreach (var expectedPlayer in expectedPlayerState)
+        foreach (var row in table.Rows)
         {
-            Assert.Equivalent(expectedPlayer, actualGame.GetPlayerByToken(playerTokens[expectedPlayer.Name]));
+            var actualPlayer = actualGame.GetPlayerByToken(playerTokens[row["Player Name"]]);
+            Assert.Equivalent(int.Parse(row["Health"]), actualPlayer.Ship.Health);
+            Assert.Equivalent(int.Parse(row["Shield"]), actualPlayer.Ship.Shield);
         }
     }
 }

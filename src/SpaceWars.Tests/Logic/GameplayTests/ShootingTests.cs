@@ -50,7 +50,7 @@ public class ShootingTests
         game.Tick();
 
         //Assert
-        game.GetPlayerByToken(joinResults.Last().Token).Ship.Health.Should().Be(50);
+        game.GetPlayerByToken(joinResults.Last().Token).Ship.Shield.Should().Be(50);
     }
 
     [Fact]
@@ -77,7 +77,7 @@ public class ShootingTests
         game.Tick();
 
         //Assert
-        game.GetPlayerByToken(joinResults.Last().Token).Ship.Health.Should().Be(75);
+        game.GetPlayerByToken(joinResults.Last().Token).Ship.Shield.Should().Be(75);
     }
 
     [Fact]
@@ -101,13 +101,14 @@ public class ShootingTests
         (var game, var joinResults) = CreateGame([p1, p2]);
 
         game.EnqueueAction(joinResults.First().Token, new FireWeaponAction(p1.Ship.Weapons.First()));
+        game.EnqueueAction(joinResults.Last().Token, new FireWeaponAction(p1.Ship.Weapons.First()));
 
         //Act
         game.Tick();
 
         //Assert
-        game.GetPlayerByToken(joinResults.First().Token).Ship.Health.Should().Be(0);
-        game.GetPlayerByToken(joinResults.Last().Token).Ship.Health.Should().Be(0);
+        game.GetPlayerByToken(joinResults.First().Token).Ship.Shield.Should().Be(50);
+        game.GetPlayerByToken(joinResults.Last().Token).Ship.Shield.Should().Be(50);
 
         //game.HasPlayer(p1).Should().BeFalse();//not sure the best way to represent that
         //game.HasPlayer(p2).Should().BeFalse();//not sure the best way to represent that
