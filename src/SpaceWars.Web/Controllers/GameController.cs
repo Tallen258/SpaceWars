@@ -25,6 +25,30 @@ public partial class GameController(ILogger<GameController> logger, Game game) :
             return Problem("Cannot join game, too many players.", statusCode: 400, title: "Too many players");
         }
     }
+    
+    [HttpGet("start")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StartGameResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<JoinGameResponse>> StartGame(string password)
+    {
+        try
+        {
+            game.Start(password);
+            return Ok();
+        }
+        catch (InvalidPasswordException)
+        {
+            return Problem("Invalid password", statusCode: 400, title: "Invalid password");
+        }
+    }
+    
+    [HttpGet("state")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameState))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<GameState>> GetGameState()
+    {
+        return game.State;
+    }
 }
 
 public static class Extensions

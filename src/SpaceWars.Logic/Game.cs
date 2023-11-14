@@ -6,11 +6,24 @@ public class Game
 {
     private readonly Dictionary<PlayerToken, Player> players;
     private readonly IInitialLocationProvider locationProvider;
+    public GameState State { get; set; } = new();
 
     public Game(IInitialLocationProvider locationProvider)
     {
         this.players = new();
         this.locationProvider = locationProvider;
+    }
+    
+    public void Start(string password)
+    {
+        if (password != "password")
+        {
+            
+        }
+        else
+        {
+            State.State = "Joining";
+        }
     }
 
     public GameJoinResult Join(string playerName)

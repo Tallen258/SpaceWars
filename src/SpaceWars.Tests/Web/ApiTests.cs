@@ -26,11 +26,11 @@ public class ApiTests : IClassFixture<SpaceWarsWebApplicationFactory>
     {
         var response = await httpClient.GetAsync("/game/start?password=password");
         response.EnsureSuccessStatusCode();
-        //var gameState = await httpClient.GetFromJsonAsync<GameState>("/game/state");
-        //gameState.Should().BeEquivalentTo(new
-        //{
-        //    State="Joining",
-        //    Players = []
-        //});
+        var gameState = await httpClient.GetFromJsonAsync<GameState>("/game/state");
+        gameState.Should().BeEquivalentTo(new
+        {
+            State="Joining",
+            Players = new List<Player>()
+        });
     }
 }
