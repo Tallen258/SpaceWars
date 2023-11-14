@@ -6,7 +6,6 @@ public class Game
 {
     private readonly Dictionary<PlayerToken, Player> players;
     private readonly IInitialLocationProvider locationProvider;
-    private readonly String password;
 
     public Game(IInitialLocationProvider locationProvider)
     {
