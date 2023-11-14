@@ -34,12 +34,15 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     {
         if(gameConfig.Value.Password == password)
         {
+            //game.GameState.State = "Playing";
             return Ok();
         }
         return BadRequest();
     }
 
     [HttpGet("state")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameState))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<GameState> GameStateResponse()
     {
         return game.GetState();

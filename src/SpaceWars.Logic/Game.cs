@@ -21,6 +21,8 @@ public class Game
         return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location);
     }
 
+    public GameState GameState { get; set; } = new GameState();
+
 
     public void Tick()
     {
@@ -48,8 +50,7 @@ public class Game
 
     public GameState GetState()
     {
-        var state = new GameState();
-        return state;
+        return GameState;
     }
 }
 
