@@ -6,6 +6,7 @@ public class Game
 {
     private readonly Dictionary<PlayerToken, Player> players;
     private readonly IInitialLocationProvider locationProvider;
+    private readonly String password;
 
     public Game(IInitialLocationProvider locationProvider)
     {
@@ -19,6 +20,7 @@ public class Game
         players.Add(newPlayer.Token, newPlayer);
         return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location);
     }
+
 
     public void Tick()
     {
@@ -43,6 +45,12 @@ public class Game
     public Player GetPlayerByToken(PlayerToken token) => players[token];
     public GameMap Map { get; private set; }
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
+
+    public GameState GetState()
+    {
+        var state = new GameState();
+        return state;
+    }
 }
 
 record PlayerAction(Player Player, GamePlayAction? Action);
