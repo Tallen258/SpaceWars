@@ -41,11 +41,11 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     }
 
     [HttpGet("state")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameState))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameStateResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<GameState> GameStateResponse()
+    public async Task<GameStateResponse> GameStateResponse()
     {
-        return game.GetState();
+        return game.State.ToResponse();
     }
 }
 
@@ -57,4 +57,6 @@ public static class Extensions
         var location = new SpaceWars.Web.Types.Location(gameJoinResult.Location.X, gameJoinResult.Location.Y);
         return new JoinGameResponse(gameJoinResult.Token.Value, location, "Joining");
     }
+
+    public static GameStateResponse ToResponse(this GameState gameState) => new GameStateResponse(gameState.State);
 }

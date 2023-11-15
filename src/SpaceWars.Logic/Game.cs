@@ -46,11 +46,6 @@ public class Game
     public Player GetPlayerByToken(PlayerToken token) => players[token];
     public GameMap Map { get; private set; }
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
-
-    public GameState GetState()
-    {
-        return GameState;
-    }
 }
 
 record PlayerAction(Player Player, GamePlayAction? Action);
