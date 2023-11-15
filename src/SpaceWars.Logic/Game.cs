@@ -20,8 +20,22 @@ public class Game
         return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location);
     }
 
-    public GameState GameState { get; set; } = new GameState();
+    public void Start()
+    {
+        if(State != GameState.Joining)
+        {
+            throw new InvalidGameStateException();
+        }
 
+        //lock (gameStateLock)
+        {
+            state = GameState.Playing;//this feels like it will need to be locked eventually...
+        }
+    }
+
+    private GameState state;
+
+    public GameState State => state;
 
     public void Tick()
     {

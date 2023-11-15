@@ -1,7 +1,7 @@
 ﻿namespace SpaceWars.Logic;
-
-public class GameState
+public enum GameState
 {
-    public string State { get; set; } = "Joining";
-    public Player[] Players { get; set; } = [];
+    Joining,
+    Playing,
+    GameOver
 }

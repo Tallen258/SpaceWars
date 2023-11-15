@@ -34,7 +34,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     {
         if(gameConfig.Value.Password == password)
         {
-            //game.GameState.State = "Playing";
+            game.Start();
             return Ok();
         }
         return BadRequest();
@@ -58,5 +58,5 @@ public static class Extensions
         return new JoinGameResponse(gameJoinResult.Token.Value, location, "Joining");
     }
 
-    public static GameStateResponse ToResponse(this GameState gameState) => new GameStateResponse(gameState.State);
+    public static GameStateResponse ToResponse(this GameState gameState) => new GameStateResponse(gameState.ToString());
 }
