@@ -20,6 +20,9 @@ public class Game
         return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location);
     }
 
+    public GameState GameState { get; set; } = new GameState();
+
+
     public void Tick()
     {
         var playerActions = players.Values.Select(p => new PlayerAction(p, p.DequeueAction()))
