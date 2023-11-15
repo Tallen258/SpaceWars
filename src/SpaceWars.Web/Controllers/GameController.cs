@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using SpaceWars.Logic;
 using SpaceWars.Web.Types;
 
@@ -6,7 +7,7 @@ namespace SpaceWars.Web.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public partial class GameController(ILogger<GameController> logger, Game game) : ControllerBase
+public partial class GameController(ILogger<GameController> logger, Game game, IOptions<GameConfig> gameConfig) : ControllerBase
 {
     [LoggerMessage(6, LogLevel.Warning, "Player {name} failed to join game. Too many players")] partial void LogTooManyPlayers(string name, ILogger<GameController> logger);
 
@@ -25,29 +26,26 @@ public partial class GameController(ILogger<GameController> logger, Game game) :
             return Problem("Cannot join game, too many players.", statusCode: 400, title: "Too many players");
         }
     }
-    
+
     [HttpGet("start")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(StartGameResponse))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActionResult))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<JoinGameResponse>> StartGame(string password)
+    public async Task<ActionResult> StartGame(string password)
     {
-        try
+        if(gameConfig.Value.Password == password)
         {
-            game.Start(password);
+            //game.GameState.State = "Playing";
             return Ok();
         }
-        catch (InvalidPasswordException)
-        {
-            return Problem("Invalid password", statusCode: 400, title: "Invalid password");
-        }
+        return BadRequest();
     }
-    
+
     [HttpGet("state")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameState))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameStateResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<GameState>> GetGameState()
+    public async Task<GameStateResponse> GameStateResponse()
     {
-        return game.State;
+        return game.State.ToResponse();
     }
 }
 
@@ -58,4 +56,6 @@ public static class Extensions
         var location = new SpaceWars.Web.Types.Location(gameJoinResult.Location.X, gameJoinResult.Location.Y);
         return new JoinGameResponse(gameJoinResult.Token.Value, location, "Joining");
     }
+
+    public static GameStateResponse ToResponse(this GameState gameState) => new GameStateResponse(gameState.State);
 }
