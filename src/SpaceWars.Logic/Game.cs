@@ -30,10 +30,7 @@ public class Game
             throw new InvalidGameStateException();
         }
 
-        //lock (gameStateLock)
-        {
-            state = GameState.Playing;//this feels like it will need to be locked eventually...
-        }
+        state = GameState.Playing;
     }
 
     private GameState state;
