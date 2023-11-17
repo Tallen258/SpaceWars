@@ -7,10 +7,13 @@ public class Game
     private readonly Dictionary<PlayerToken, Player> players;
     private readonly IInitialLocationProvider locationProvider;
 
-    public Game(IInitialLocationProvider locationProvider)
+    public Game(IInitialLocationProvider locationProvider, int boardWidth = 2000, int boardHeight = 2000)
     {
         this.players = new();
         this.locationProvider = locationProvider;
+        BoardWidth = boardWidth;
+        BoardHeight = boardHeight;
+        state = GameState.Joining;
     }
 
     public GameJoinResult Join(string playerName)
@@ -22,7 +25,7 @@ public class Game
 
     public void Start()
     {
-        if(State != GameState.Joining)
+        if (State != GameState.Joining)
         {
             throw new InvalidGameStateException();
         }
@@ -36,6 +39,8 @@ public class Game
     private GameState state;
 
     public GameState State => state;
+
+    public IEnumerable<Location> PlayerLocations => players.Values.Select(p => p.Ship.Location);
 
     public void Tick()
     {
@@ -59,6 +64,9 @@ public class Game
 
     public Player GetPlayerByToken(PlayerToken token) => players[token];
     public GameMap Map { get; private set; }
+    public int BoardWidth { get; }
+    public int BoardHeight { get; }
+
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
 }
 

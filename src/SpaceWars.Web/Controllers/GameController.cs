@@ -18,12 +18,24 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     {
         try
         {
-            return game.Join(name).ToResponse();
+            var joinResult = game.Join(name);
+            return new JoinGameResponse(
+                joinResult.Token.ToString(),
+                joinResult.Location.ToApiLocation(),
+                game.State.ToString(),
+                game.BoardHeight,
+                game.BoardWidth
+            );
         }
         catch (TooManyPlayersException)
         {
             LogTooManyPlayers(name, logger);
             return Problem("Cannot join game, too many players.", statusCode: 400, title: "Too many players");
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error joining game");
+            return Problem("Error joining game", statusCode: 500, title: "Join Game Error");
         }
     }
 
@@ -32,7 +44,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> StartGame(string password)
     {
-        if(gameConfig.Value.Password == password)
+        if (gameConfig.Value.Password == password)
         {
             game.Start();
             return Ok();
@@ -45,18 +57,14 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<GameStateResponse> GameStateResponse()
     {
-        return game.State.ToResponse();
+        return new GameStateResponse(game.State.ToString(), game.PlayerLocations.Select(l => l.ToApiLocation()));
     }
 }
 
 
 public static class Extensions
 {
-    public static JoinGameResponse ToResponse(this GameJoinResult gameJoinResult)
-    {
-        var location = new SpaceWars.Web.Types.Location(gameJoinResult.Location.X, gameJoinResult.Location.Y);
-        return new JoinGameResponse(gameJoinResult.Token.Value, location, "Joining");
-    }
 
-    public static GameStateResponse ToResponse(this GameState gameState) => new GameStateResponse(gameState.ToString());
+    public static Types.Location ToApiLocation(this Logic.Location gameLocation) => new Types.Location(gameLocation.X, gameLocation.Y);
+
 }
