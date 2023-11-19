@@ -10,7 +10,7 @@ public class PlayerTests
     }
 
     [Fact]
-    public void Can_Enqueue_PlayerMessage()
+    public void Can_Get_PlayerMessages()
     {
         var player = new Player("Player 1", new Ship());
         player.EnqueueMessage(new PlayerMessage(PlayerMessageType.RadarSweepResult, "{test result 1}"));
@@ -20,6 +20,9 @@ public class PlayerTests
 
         Assert.Equal(2, messages.Count());
         Assert.Equal("{test result 1}", messages.First().Message);
+        Assert.Equal("RadarSweepResult", messages.First().Type.ToString());
         Assert.Equal("{test result 2}", messages.Last().Message);
+
+        Assert.False(player.GetMessages().Any());
     }
 }
