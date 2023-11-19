@@ -8,4 +8,18 @@ public class PlayerTests
         var player = new Player("Player 1", new Ship());
         Assert.Equal("Player 1", player.Name);
     }
+
+    [Fact]
+    public void Can_Enqueue_PlayerMessage()
+    {
+        var player = new Player("Player 1", new Ship());
+        player.EnqueueMessage(new PlayerMessage(PlayerMessageType.RadarSweepResult, "{test result 1}"));
+        player.EnqueueMessage(new PlayerMessage(PlayerMessageType.RadarSweepResult, "{test result 2}"));
+
+        var messages = player.GetMessages();
+
+        Assert.Equal(2, messages.Count());
+        Assert.Equal("{test result 1}", messages.First().Message);
+        Assert.Equal("{test result 2}", messages.Last().Message);
+    }
 }
