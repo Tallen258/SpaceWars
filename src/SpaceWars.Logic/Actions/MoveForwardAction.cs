@@ -16,7 +16,7 @@ public class MoveForwardAction : GamePlayAction
 
     public override int Priority => 1;
 
-    public override ActionResult Execute(Player player, GameMap _)
+    public override ActionResult Execute(Player player, GameMap map)
     {
         var ship = player.Ship;
 
@@ -24,10 +24,7 @@ public class MoveForwardAction : GamePlayAction
         {
             ship.Heading = newHeading.Value;
         }
-
-        //if speed is more than 1x call a different block of code to be more precise in the angles.
-
-        ship.Location = ship.Heading switch
+        var targetLocation = ship.Heading switch
         {
             > 337 or <= 22 => new Location(ship.Location.X, ship.Location.Y + 1), //up
             > 22 and <= 67 => new Location(ship.Location.X + 1, ship.Location.Y + 1), //up right
@@ -39,6 +36,14 @@ public class MoveForwardAction : GamePlayAction
             > 292 and <= 337 => new Location(ship.Location.X - 1, ship.Location.Y + 1), //up left
         };
 
+        if (targetLocation.X < 0 || targetLocation.Y < 0 || targetLocation.X > map.BoardWidth || targetLocation.Y > map.BoardHeight)
+        { 
+            return new ActionResult(false, "Cannot move off the board");
+        }
+
+        //if speed is more than 1x call a different block of code to be more precise in the angles.
+
+        ship.Location = targetLocation;
         return new ActionResult(true, "OK");
     }
 }

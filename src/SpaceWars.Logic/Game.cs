@@ -6,7 +6,6 @@ public class Game
 {
     private readonly Dictionary<PlayerToken, Player> players;
     private readonly IInitialLocationProvider locationProvider;
-    public GameState State { get; set; } = new();
 
     public Game(IInitialLocationProvider locationProvider, int boardWidth = 2000, int boardHeight = 2000)
     {
@@ -15,6 +14,7 @@ public class Game
         BoardWidth = boardWidth;
         BoardHeight = boardHeight;
         state = GameState.Joining;
+        this.Map = new GameMap([], BoardWidth, BoardHeight);
     }
     
     public void Start(string password)
@@ -25,7 +25,7 @@ public class Game
         }
         else
         {
-            State.State = "Joining";
+            state = GameState.Joining;
         }
     }
 
@@ -64,7 +64,7 @@ public class Game
             gamePlayAction.Action.Execute(gamePlayAction.Player, Map);
         }
 
-        Map = new GameMap(players.Values);//initialize that here
+        Map = new GameMap(players.Values, BoardWidth, BoardHeight);//initialize that here
 
         foreach (var gamePlayAction in playerActions.Where(a => a.Action.Priority != 1))
         {
@@ -73,9 +73,9 @@ public class Game
     }
 
     public Player GetPlayerByToken(PlayerToken token) => players[token];
-    public GameMap Map { get; private set; }
     public int BoardWidth { get; }
     public int BoardHeight { get; }
+    public GameMap Map { get; private set; }
 
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
 }

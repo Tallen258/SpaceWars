@@ -42,7 +42,7 @@ public class ShootingTests
         });
 
 
-        (var game, var joinResults) = CreateGame([p1, p2]);
+        (var game, var joinResults) = CreateGame(players: [p1, p2]);
 
         game.EnqueueAction(joinResults.First().Token, new FireWeaponAction(p1.Ship.Weapons.First()));
 
@@ -69,7 +69,7 @@ public class ShootingTests
             Health = 100,
         });
 
-        (var game, var joinResults) = CreateGame([p1, p2]);
+        (var game, var joinResults) = CreateGame(players: [p1, p2]);
 
         game.EnqueueAction(joinResults.First().Token, new FireWeaponAction(p1.Ship.Weapons.First()));
 
@@ -98,7 +98,7 @@ public class ShootingTests
             Heading = 180,
         });
 
-        (var game, var joinResults) = CreateGame([p1, p2]);
+        (var game, var joinResults) = CreateGame(players:[p1, p2]);
 
         game.EnqueueAction(joinResults.First().Token, new FireWeaponAction(p1.Ship.Weapons.First()));
         game.EnqueueAction(joinResults.Last().Token, new FireWeaponAction(p1.Ship.Weapons.First()));

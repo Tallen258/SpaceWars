@@ -5,7 +5,7 @@ namespace SpaceWars.Logic;
 
 public class GameMap
 {
-    public GameMap(IEnumerable<Player> players)
+    public GameMap(IEnumerable<Player> players, int boardWidth = 2000, int boardHeight = 2000)
     {
         foreach (var p in players)
         {
@@ -13,10 +13,16 @@ public class GameMap
         }
 
         this.players = players;
+        this.BoardWidth = boardWidth;
+        this.BoardHeight = boardHeight;
     }
 
     private Dictionary<Location, Player> playerLocations = new Dictionary<Location, Player>();
     private readonly IEnumerable<Player> players;
+    public readonly int BoardWidth;
+    public readonly int BoardHeight;
+
+    
 
     public IEnumerable<Player> GetPlayersInRange(Player player, int maxDistance)
     {
