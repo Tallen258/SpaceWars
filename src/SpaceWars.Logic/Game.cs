@@ -16,18 +16,6 @@ public class Game
         state = GameState.Joining;
         this.Map = new GameMap([], BoardWidth, BoardHeight);
     }
-    
-    public void Start(string password)
-    {
-        if (password != "password")
-        {
-            
-        }
-        else
-        {
-            state = GameState.Joining;
-        }
-    }
 
     public GameJoinResult Join(string playerName)
     {
