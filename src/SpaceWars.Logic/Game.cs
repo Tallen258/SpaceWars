@@ -70,6 +70,7 @@ public class Game
             gamePlayAction.Action.Execute(gamePlayAction.Player, Map);
         }
 
+        //Check for collisions here
         Map = new GameMap(players.Values);//initialize that here
 
         foreach (var gamePlayAction in playerActions.Where(a => a.Action.Priority != 1))
