@@ -8,10 +8,13 @@ public class Game
     private readonly IInitialLocationProvider locationProvider;
     public GameState State { get; set; } = new();
 
-    public Game(IInitialLocationProvider locationProvider)
+    public Game(IInitialLocationProvider locationProvider, int boardWidth = 2000, int boardHeight = 2000)
     {
         this.players = new();
         this.locationProvider = locationProvider;
+        BoardWidth = boardWidth;
+        BoardHeight = boardHeight;
+        state = GameState.Joining;
     }
     
     public void Start(string password)
@@ -33,8 +36,21 @@ public class Game
         return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location);
     }
 
-    public GameState GameState { get; set; } = new GameState();
+    public void Start()
+    {
+        if (State != GameState.Joining)
+        {
+            throw new InvalidGameStateException();
+        }
 
+        state = GameState.Playing;
+    }
+
+    private GameState state;
+
+    public GameState State => state;
+
+    public IEnumerable<Location> PlayerLocations => players.Values.Select(p => p.Ship.Location);
 
     public void Tick()
     {
@@ -58,6 +74,9 @@ public class Game
 
     public Player GetPlayerByToken(PlayerToken token) => players[token];
     public GameMap Map { get; private set; }
+    public int BoardWidth { get; }
+    public int BoardHeight { get; }
+
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
 }
 
