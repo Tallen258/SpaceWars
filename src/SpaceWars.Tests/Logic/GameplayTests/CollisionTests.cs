@@ -28,8 +28,8 @@ public class CollisionTests
         var actualPlayer1Health = actualPlayer1.Ship.Health;
         var actualPlayer2Health = actualPlayer2.Ship.Health;
 
-        var expectedPlayer1Location = new Location(1, 1);
-        var expectedPlayer2Location = new Location(1, 1);
+        var expectedPlayer1Location = new Location(0, 1);
+        var expectedPlayer2Location = new Location(2, 1);
 
         var expectedShield = 90;
         var expectedHealth = 100;
