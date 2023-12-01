@@ -44,7 +44,7 @@ public static class GameTestHelpers
             .Returns(() => locationQueue.Dequeue())
             .Returns(() => locationQueue.Dequeue());
 
-        var g = new Game(locationProviderMock.Object, borderWidth, borderHeight);
+        var g = new Game(locationProvider: locationProviderMock.Object, boardWidth: borderWidth, boardHeight: borderHeight);
         var joinResults = players?.Select(p => g.Join(p.Name)).ToList() ?? [];
 
         return new CreateGameResult(g, joinResults);

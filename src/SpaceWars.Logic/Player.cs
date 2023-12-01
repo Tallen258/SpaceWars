@@ -85,6 +85,7 @@ public record PlayerMessage (PlayerMessageType Type, string Message);
 public enum PlayerMessageType
 {
     RadarSweepResult,
+    BorderWarning,
 }
 
 public class PlayerToken : IEquatable<PlayerToken?>

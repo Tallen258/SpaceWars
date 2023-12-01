@@ -27,17 +27,19 @@ public class MovementTests
     public void ShipMovesForwardAt1xLocationIsUpdatedAccordingly(int heading, int newX, int newY, string because)
     {
         //Arrange
-        (var game, _) = GameTestHelpers.CreateGame();
-        var result = game.Join("Player 1");
-        game.EnqueueAction(result.Token, new MoveForwardAction(heading));
+        int originalX = 100;
+        int originalY = 100;
+        var ship = new Ship(new SpaceWars.Logic.Location(originalX, originalY));
+        (var game, var result) = GameTestHelpers.CreateGame(players: new List<Player> { new Player("Player 1", ship) });
+        game.EnqueueAction(result.First().Token, new MoveForwardAction(heading));
 
         //Act
         game.Tick();
 
         //Assert
-        var actualPlayer = game.GetPlayerByToken(result.Token);
+        var actualPlayer = game.GetPlayerByToken(result.First().Token);
         var actualLocation = actualPlayer.Ship.Location;
-        var expectedLocation = new Location(newX, newY);
+        var expectedLocation = new Location(originalX + newX, originalY + newY);
         actualLocation.Should().Be(expectedLocation, because);
     }
 }

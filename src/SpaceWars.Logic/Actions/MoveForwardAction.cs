@@ -38,6 +38,7 @@ public class MoveForwardAction : GamePlayAction
 
         if (targetLocation.X < 0 || targetLocation.Y < 0 || targetLocation.X > map.BoardWidth || targetLocation.Y > map.BoardHeight)
         { 
+            player.EnqueueMessage(new PlayerMessage(PlayerMessageType.BorderWarning,"Cannot move off the board"));
             return new ActionResult(false, "Cannot move off the board");
         }
 
