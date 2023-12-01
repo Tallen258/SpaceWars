@@ -1,4 +1,4 @@
-﻿namespace SpaceWars.Logic;
+namespace SpaceWars.Logic;
 public enum GameState
 {
     Joining,

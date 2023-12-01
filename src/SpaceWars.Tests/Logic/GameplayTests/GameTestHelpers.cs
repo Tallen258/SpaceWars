@@ -5,7 +5,7 @@ public record CreateGameResult(Game Game, IEnumerable<GameJoinResult> JoinResult
 
 public static class GameTestHelpers
 {
-    public static CreateGameResult CreateGame(IEnumerable<Player>? players = null, IEnumerable<Location>? startingLocations = null)
+    public static CreateGameResult CreateGame(int borderWidth = 2000, int borderHeight = 2000, IEnumerable<Player>? players = null, IEnumerable<Location>? startingLocations = null)
     {
         var locationProviderMock = new Mock<IInitialLocationProvider>();
         var locationQueue = new Queue<Location>();
@@ -44,7 +44,7 @@ public static class GameTestHelpers
             .Returns(() => locationQueue.Dequeue())
             .Returns(() => locationQueue.Dequeue());
 
-        var g = new Game(locationProviderMock.Object);
+        var g = new Game(locationProvider: locationProviderMock.Object, boardWidth: borderWidth, boardHeight: borderHeight);
         var joinResults = players?.Select(p => g.Join(p.Name)).ToList() ?? [];
 
         return new CreateGameResult(g, joinResults);
