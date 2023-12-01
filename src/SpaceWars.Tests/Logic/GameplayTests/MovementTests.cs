@@ -24,7 +24,7 @@ public class MovementTests
     [InlineData(337, -1, 1, "Up Left")]
     [InlineData(338, 0, 1, "Up")]
     [InlineData(359, 0, 1, "Up")]
-    public void ShipMovesForwardAt1xLocationIsUpdatedAccordingly(int heading, int newX, int newY, string because)
+    public void ShipMovesForwardAt1xLocationIsUpdatedAccordingly(int heading, int deltaX, int deltaY, string because)
     {
         //Arrange
         int originalX = 100;
@@ -39,7 +39,7 @@ public class MovementTests
         //Assert
         var actualPlayer = game.GetPlayerByToken(result.First().Token);
         var actualLocation = actualPlayer.Ship.Location;
-        var expectedLocation = new Location(originalX + newX, originalY + newY);
+        var expectedLocation = new Location(originalX + deltaX, originalY + deltaY);
         actualLocation.Should().Be(expectedLocation, because);
     }
 }

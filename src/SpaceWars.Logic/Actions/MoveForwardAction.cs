@@ -16,7 +16,7 @@ public class MoveForwardAction : GamePlayAction
 
     public override int Priority => 1;
 
-    public override ActionResult Execute(Player player, GameMap map)
+    public override Result Execute(Player player, GameMap map)
     {
         var ship = player.Ship;
 
@@ -38,13 +38,13 @@ public class MoveForwardAction : GamePlayAction
 
         if (targetLocation.X < 0 || targetLocation.Y < 0 || targetLocation.X > map.BoardWidth || targetLocation.Y > map.BoardHeight)
         { 
-            player.EnqueueMessage(new PlayerMessage(PlayerMessageType.BorderWarning,"Cannot move off the board"));
-            return new ActionResult(false, "Cannot move off the board");
+            player.EnqueueMessage(new PlayerMessage(PlayerMessageType.MovementFailed,"Cannot move off the board"));
+            return new Result(false, "Cannot move off the board");
         }
 
         //if speed is more than 1x call a different block of code to be more precise in the angles.
 
         ship.Location = targetLocation;
-        return new ActionResult(true, "OK");
+        return new Result(true, "OK");
     }
 }
