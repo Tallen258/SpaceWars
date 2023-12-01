@@ -68,7 +68,7 @@ public class ShipTests
             Shield = startingShield,
             Health = startingHealth
         };
-        ship.TakeHit(shotPower);
+        ship.TakeDamage(shotPower);
         ship.Shield.Should().Be(endingShield);
         ship.Health.Should().Be(endingHealth);
     }

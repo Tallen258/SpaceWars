@@ -94,10 +94,16 @@ public class Game
     {
         List<Player> collidedPlayers = new();
 
-        foreach (var player1 in players.Values)
+        for (int i = 0; i < players.Count; i++)
         {
-            foreach (var player2 in players.Values)
+            var player1 = players.Values.ElementAt(i);
+            if (collidedPlayers.Contains(player1)) { continue; }
+
+            for (int j = i+1; j < players.Count; j++)
             {
+                var player2 = players.Values.ElementAt(j);
+                if (collidedPlayers.Contains(player2)) { continue; }
+
                 var ship1Location = player1.Ship.Location;
                 var ship2Location = player2.Ship.Location;
 
@@ -113,16 +119,7 @@ public class Game
         {
             collidedPlayer.Ship.Location = bounceShip(collidedPlayer.Ship.Location);
 
-            var shield = collidedPlayer.Ship.Shield;
-
-            if (shield > 0)
-            {
-                collidedPlayer.Ship.Shield -= 10;
-            }
-            else
-            {
-                collidedPlayer.Ship.Health -= 10;
-            }
+            collidedPlayer.Ship.TakeDamage(10);
         }
     }
 
