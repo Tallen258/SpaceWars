@@ -7,7 +7,7 @@ public class JoinGameTests
     [Fact]
     public void CanJoinGameAndGetUniqueToken()
     {
-        (var game, var joinResults) = CreateGame([]);
+        (var game, var joinResults) = CreateGame(players:[]);
         var joinResult = game.Join("playerABC");
         joinResult.Token.Should().NotBeNull();
 

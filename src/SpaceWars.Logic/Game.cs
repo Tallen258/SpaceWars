@@ -21,6 +21,7 @@ public class Game
             timer = gameTimer;
             timer.RegisterAction(() => Tick());
         }
+        this.Map = new GameMap([], BoardWidth, BoardHeight);
     }
 
     public GameJoinResult Join(string playerName)
@@ -70,8 +71,7 @@ public class Game
             gamePlayAction.Action.Execute(gamePlayAction.Player, Map);
         }
 
-        //Check for collisions here
-        Map = new GameMap(players.Values);//initialize that here
+        Map = new GameMap(players.Values, BoardWidth, BoardHeight);//initialize that here
 
         foreach (var gamePlayAction in playerActions.Where(a => a.Action.Priority != 1))
         {
@@ -80,9 +80,9 @@ public class Game
     }
 
     public Player GetPlayerByToken(PlayerToken token) => players[token];
-    public GameMap Map { get; private set; }
     public int BoardWidth { get; }
     public int BoardHeight { get; }
+    public GameMap Map { get; private set; }
 
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
 }

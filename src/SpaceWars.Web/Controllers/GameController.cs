@@ -70,7 +70,6 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     }
 }
 
-
 public static class Extensions
 {
 

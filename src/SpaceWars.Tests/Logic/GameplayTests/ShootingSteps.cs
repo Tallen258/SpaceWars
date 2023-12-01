@@ -19,7 +19,7 @@ public class ShootingSteps
     {
         var players = playersFromTable(table);
         _scenarioContext.Set(players);
-        (var game, var joinResults) = CreateGame(players);
+        (var game, var joinResults) = CreateGame(players: players);
         _scenarioContext.Set(game);
         var playerTokens = new Dictionary<string, PlayerToken>();
         for (var i = 0; i < players.Count(); i++)

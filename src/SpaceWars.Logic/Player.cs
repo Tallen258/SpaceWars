@@ -85,6 +85,7 @@ public record PlayerMessage (PlayerMessageType Type, string Message);
 public enum PlayerMessageType
 {
     RadarSweepResult,
+    MovementFailed,
 }
 
 public class PlayerToken : IEquatable<PlayerToken?>
