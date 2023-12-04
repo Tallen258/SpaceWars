@@ -58,6 +58,7 @@ public class Game
     public GameState State => state;
 
     public IEnumerable<Location> PlayerLocations => players.Values.Select(p => p.Ship.Location);
+    
 
     public void Tick()
     {
@@ -70,6 +71,9 @@ public class Game
         {
             gamePlayAction.Action.Execute(gamePlayAction.Player, Map);
         }
+
+        //Check for collisions here
+        checkCollision();
 
         Map = new GameMap(players.Values, BoardWidth, BoardHeight);//initialize that here
 
@@ -85,6 +89,73 @@ public class Game
     public GameMap Map { get; private set; }
 
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
+
+    private void checkCollision()
+    {
+        List<Player> collidedPlayers = new();
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            var player1 = players.Values.ElementAt(i);
+            if (collidedPlayers.Contains(player1)) { continue; }
+
+            for (int j = i+1; j < players.Count; j++)
+            {
+                var player2 = players.Values.ElementAt(j);
+                if (collidedPlayers.Contains(player2)) { continue; }
+
+                var ship1Location = player1.Ship.Location;
+                var ship2Location = player2.Ship.Location;
+
+                if (player1 != player2 && ship1Location == ship2Location)
+                {
+                    if (!collidedPlayers.Contains(player1)) { collidedPlayers.Add(player1); }
+                    if (!collidedPlayers.Contains(player2)) { collidedPlayers.Add(player2); }
+                }
+            }
+        }
+
+        foreach (var collidedPlayer in collidedPlayers)
+        {
+            collidedPlayer.Ship.Location = bounceShip(collidedPlayer.Ship.Location);
+
+            collidedPlayer.Ship.TakeDamage(10);
+        }
+    }
+
+    private bool isSpotOpen(Location location)
+    {
+        foreach(var player in players)
+        {
+            if (player.Value.Ship.Location == location)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Location bounceShip(Location shipLocation)
+    {
+        Location[] directions = [new(shipLocation.X - 1, shipLocation.Y),
+            new(shipLocation.X + 1, shipLocation.Y),
+            new(shipLocation.X, shipLocation.Y + 1),
+            new(shipLocation.X, shipLocation.Y - 1),
+            new(shipLocation.X - 1, shipLocation.Y + 1),
+            new(shipLocation.X + 1, shipLocation.Y + 1),
+            new(shipLocation.X - 1, shipLocation.Y - 1),
+            new(shipLocation.X + 1, shipLocation.Y - 1)];
+
+        foreach (var direction in directions)
+        {
+            if (isSpotOpen(direction))
+            {
+                return direction;
+            }
+        }
+
+        return shipLocation;
+    }
 }
 
 record PlayerAction(Player Player, GamePlayAction? Action);

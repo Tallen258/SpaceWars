@@ -136,20 +136,7 @@ public partial class Ship : ObservableObject, IEquatable<Ship?>
         return hash.ToHashCode();
     }
 
-    public void TakeHit(int power)
-    {
-        var shieldDecrease = Math.Min(power, Shield);
-        Shield -= shieldDecrease;
-        power -= shieldDecrease;
-
-        var healthDecrease = Math.Min(power, Health);
-        Health -= healthDecrease;
-
-        if (Health < 0)
-            throw new Exception("Somehow you have to handle removing players from the game!");
-    }
-
-    internal void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         //first, decrease shield
         var damageDealt = Math.Min(Shield, damage);
