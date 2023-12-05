@@ -1,0 +1,11 @@
+﻿<div style="position: relative; width: 100px; height: 100px;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; border-radius: 50%; background-color: lightgray; display: flex; justify-content: center; align-items: center;">
+        <img src="arrow-up.svg" style="transform: rotate(@Heading deg); transition: transform 0.5s ease-in-out;" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Heading { get; set; }
+}
+

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceWars.Web", "SpaceWars.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceWars.Logic", "SpaceWars.Logic\SpaceWars.Logic.csproj", "{8F56D7BB-4F0B-43C7-B258-5FF802D6CF57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceWars.Web.Types", "SpaceWars.Web.Types\SpaceWars.Web.Types.csproj", "{9A32E12D-9CDA-445A-B19A-16DE2DAF9A09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceWars.Web.Types", "SpaceWars.Web.Types\SpaceWars.Web.Types.csproj", "{9A32E12D-9CDA-445A-B19A-16DE2DAF9A09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +36,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97B710DD-13EC-4A54-B553-F9797F9DF9AE}
 	EndGlobalSection
 EndGlobal

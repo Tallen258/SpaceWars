@@ -1,0 +1,10 @@
+﻿<div class="mb-2">
+    <label for="@Label.ToLower()" class="my-auto">@Label</label>
+    <progress id="@Label.ToLower()" max="100" class="ms-2 progress-custom" value="@Value"></progress>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Label { get; set; } = "";
+    [Parameter, EditorRequired] public decimal Value { get; set; }
+}
+

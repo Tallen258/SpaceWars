@@ -1,0 +1,30 @@
+﻿@using SpaceWars.Logic
+
+@if (Ship == null)
+{
+    <p>Ship not found</p>
+    return;
+}
+else
+{
+    <div class="container">
+        <div class="col-3">
+            <ProgressBar Label="Shield" Value="@Ship.Shield" />
+            <ProgressBar Label="Health" Value="@Ship.Health" />
+        </div>
+        <div class="col-6">
+            <!-- Radar sweep visualization would go here -->
+            <!-- This is a placeholder for the radar element -->
+        </div>
+        <div class="col-3">
+            <label for="heading">Heading</label>
+            <Compass Heading="@Ship.Heading" />
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Ship Ship { get; set; }
+
+}
+

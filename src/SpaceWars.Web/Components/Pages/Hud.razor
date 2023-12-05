@@ -1,0 +1,52 @@
+﻿@page "/hud"
+@using Microsoft.AspNetCore.WebUtilities
+@using SpaceWars.Logic
+@using SpaceWars.Web.Components.Hud
+@inject NavigationManager NavigationManager
+@inject Game Game
+
+<PageTitle>Space Wars | HUD</PageTitle>
+
+<h1>Player: @Player?.Name</h1>
+<ShipStatus Ship="@Player?.Ship" />
+
+
+@code {
+    public Player? Player;
+
+    protected override void OnInitialized()
+    {
+        GetPlayer();
+        if (Player == null)
+        {
+            throw new Exception("Player not found");
+        }
+    }
+
+    private void GetPlayer()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var query = QueryHelpers.ParseQuery(uri.Query);
+        PlayerToken? playerToken = null;
+
+        // var result = Game.Join("Test Player");
+        // playerToken = result.Token;
+
+         if (query.TryGetValue("token", out var token))
+         {
+             if (string.IsNullOrWhiteSpace(token))
+             {
+                 throw new Exception("Token is empty");
+             }
+             playerToken = new PlayerToken(token!);
+         }
+
+         if (playerToken == null)
+         {
+             throw new Exception("Player token not found");
+         }
+
+
+        Player = Game.GetPlayerByToken(playerToken);
+    }
+}
