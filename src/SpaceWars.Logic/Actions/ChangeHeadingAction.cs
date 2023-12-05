@@ -3,6 +3,7 @@
 public class ChangeHeadingAction : GamePlayAction
 {
     public int NewHeading { get; set; }
+    public override string Name => "Change Heading";
     public override int Priority => 1;
     public override Result Execute(Player player, GameMap _)
     {

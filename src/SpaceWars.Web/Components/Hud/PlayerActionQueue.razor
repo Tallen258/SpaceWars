@@ -1,0 +1,40 @@
+﻿@using SpaceWars.Logic
+@using SpaceWars.Logic.Actions
+@inject Game Game
+
+@if (Token == null)
+{
+    <p> Invalid Token </p>
+}
+else
+{
+    // show the player's actions
+    <div class="container">
+        <div class="col-12">
+            <h2>Actions</h2>
+            <ol>
+                @foreach (var action in PlayerActions)
+                {
+                    <li>@action.Name</li>
+                }
+            </ol>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public PlayerToken? Token { get; set; }
+    public List<GamePlayAction> PlayerActions { get; set; } = new List<GamePlayAction>();
+    
+    protected override void OnInitialized()
+    {
+        if (Token == null)
+        {
+            throw new Exception("Token is null");
+        }
+
+        Game.EnqueueAction(Token, new MoveForwardAction(10));
+        PlayerActions = Game.GetActionsForPlayer(Token).ToList();
+    }
+
+}

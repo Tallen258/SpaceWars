@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SpaceWars.Logic;
+using SpaceWars.Logic.Actions;
 using SpaceWars.Web.Types;
 
 namespace SpaceWars.Web.Controllers;
@@ -68,6 +69,55 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
         var player = game.GetPlayerByToken(new PlayerToken(token));
         return player.GetMessages().Select(m => new PlayerMessageResponse(m.Type.ToString(), m.Message));
     }
+
+
+    //POST /game/{token}/queue/[{type=move,request=250}]
+    //POST /game/{token}/queue/[{type=fire,request=BasicCannon}]
+    //POST /game/{token}/queue/[{type=repair,request=Null}]
+    //POST /game/{token}/queue/[{type=name,request=item}]
+    //POST /game/{token}/queue/[{type=name,request=item},{type=name,request=item}]
+    //POST /game/{token}/queue/clear
+    [HttpPost("{token}/queue")]
+    public async Task<QueueActionResponse> QueuePlayerAction(string token, IEnumerable<QueueActionRequest> actions)
+    {
+        var player = game.GetPlayerByToken(new PlayerToken(token));       
+        
+        if(player == null) { return new QueueActionResponse("Player token invalid"); }
+
+        foreach(var action in actions)
+        {
+            switch(action.Type)
+            {
+                case "move":
+                    if(action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
+                
+                    MoveForwardAction moveAction = new(Int32.Parse(action.Request));
+                    player.EnqueueAction(moveAction);
+                
+                    break;
+                case "fire":
+                    if (action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
+                
+                    FireWeaponAction fireAction = new(action.Request);
+                    player.EnqueueAction(fireAction);
+                
+                    break;
+                case "repair":
+                    RepairAction repairAction = new();
+                    player.EnqueueAction(repairAction);
+                    break;
+                case "clear":
+                    player.ClearActions();
+                    return new QueueActionResponse("Actions cleared");
+                default:
+                    return new QueueActionResponse("Failed to queue action");
+
+            }
+        }
+        return new QueueActionResponse("Action queued");
+
+    }
+
 }
 
 public static class Extensions

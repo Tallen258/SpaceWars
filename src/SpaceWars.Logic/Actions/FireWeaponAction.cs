@@ -13,6 +13,9 @@ public class FireWeaponAction : GamePlayAction
     }
     private string weaponName;
     public override int Priority => 2;
+
+    public override string Name => "Fire";
+
     public override Result Execute(Player player, GameMap map)
     {
         var playerWeapon = player.Ship.Weapons.FirstOrDefault(w => w.Name == weaponName);
