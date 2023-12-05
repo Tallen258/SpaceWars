@@ -16,6 +16,8 @@ public class MoveForwardAction : GamePlayAction
 
     public override int Priority => 1;
 
+    public override string Name => "Move Forward";
+
     public override Result Execute(Player player, GameMap map)
     {
         var ship = player.Ship;

@@ -86,6 +86,8 @@ public class Game
     public Player GetPlayerByToken(PlayerToken token) => players[token];
     public int BoardWidth { get; }
     public int BoardHeight { get; }
+
+    public IEnumerable<GamePlayAction> GetActionsForPlayer(PlayerToken playerToken) => players[playerToken].GetActions();
     public GameMap Map { get; private set; }
 
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
