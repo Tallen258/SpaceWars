@@ -89,6 +89,7 @@ public class Game
     public GameMap Map { get; private set; }
 
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
+    public void ClearActions(PlayerToken token) => players[token].ClearActions();
 
     private void checkCollision()
     {

@@ -36,6 +36,11 @@ public class Player : IEquatable<Player?>
         return null;
     }
 
+    public void ClearActions()
+    {
+        actions.Clear();
+    }
+
     public void EnqueueMessage(PlayerMessage message)
     {
         playerMessages.Enqueue(message);

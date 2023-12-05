@@ -97,4 +97,25 @@ public class ApiTests : IClassFixture<SpaceWarsWebApplicationFactory>
         var result = await queueResponse.Content.ReadFromJsonAsync<QueueActionResponse>();
         result.Message.Should().Be("Action queued");
     }
+
+    [Fact]
+    public async Task ClearActionsQueueForPlayer()
+    {
+        List<QueueActionRequest> moveRequest = [new("move", "250")];
+        List<QueueActionRequest> clearRequest = [new("clear", null)];
+
+        var response = await httpClient.GetAsync("/game/join?name=zack");
+        response.EnsureSuccessStatusCode();
+        var gameResponse = await response.Content.ReadFromJsonAsync<JoinGameResponse>();
+
+        string url = $"/game/{gameResponse.Token}/queue";
+        var queueResponse = await httpClient.PostAsJsonAsync(url, moveRequest);
+        queueResponse.EnsureSuccessStatusCode();
+
+        queueResponse = await httpClient.PostAsJsonAsync(url, clearRequest);
+        queueResponse.EnsureSuccessStatusCode();
+
+        var result = await queueResponse.Content.ReadFromJsonAsync<QueueActionResponse>();
+        result.Message.Should().Be("Actions cleared");
+    }
 }

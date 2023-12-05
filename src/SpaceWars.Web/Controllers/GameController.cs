@@ -76,7 +76,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     //POST /game/{token}/queue/[{type=repair,request=Null}]
     //POST /game/{token}/queue/[{type=name,request=item}]
     //POST /game/{token}/queue/[{type=name,request=item},{type=name,request=item}]
-    //GET /game/{token}/queue/clearqueue
+    //POST /game/{token}/queue/clear
     [HttpPost("{token}/queue")]
     public async Task<QueueActionResponse> QueuePlayerAction(string token, IEnumerable<QueueActionRequest> actions)
     {
@@ -106,6 +106,9 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
                     RepairAction repairAction = new();
                     player.EnqueueAction(repairAction);
                     break;
+                case "clear":
+                    player.ClearActions();
+                    return new QueueActionResponse("Actions cleared");
                 default:
                     return new QueueActionResponse("Failed to queue action");
 
