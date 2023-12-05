@@ -1,0 +1,44 @@
+﻿@using SpaceWars.Logic
+
+
+<div class="progress mb-1 rounded-0 bg-primary" style="height: 3px;">
+    <div class="progress-bar bg-dark rounded-0" role="progressbar" style="width: @(100-Player.Ship.Shield)%;"
+        aria-valuenow="@(100-Player.Ship.Shield)" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="progress bg-success rounded-0" style="height: 3px;">
+    <div class="progress-bar bg-dark" role="progressbar" style="width: @(100-Player.Ship.Health)%"
+        aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<div class="ship" style="@($"left: {Player.Ship.Location.X}px; bottom: {TranslateHeight(Player.Ship.Location.Y)}%;")">
+    <img src="./spaceship.svg" alt="" height="50" width="50" style="@($"rotate: {Player.Ship.Heading}deg;")">
+    <div>@Player.Name</div>
+</div>
+
+@code {
+    [Parameter]
+    public Player Player {get; set;}
+
+    [Parameter]
+    public GameMap Map {get; set;}
+
+    
+    public float TranslateHeight(float y)
+    {
+        if (Map is not null)
+        {
+            float translatedY = y / Map.BoardHeight * 100;
+            return translatedY;
+        }
+        return 0;
+    }
+
+    public float TranslateWidth(float x)
+    {
+        if (Map is not null)
+        {
+            float translatedY = x / Map.BoardWidth * 100;
+            return translatedY;
+        }
+        return 0;
+    }
+}
