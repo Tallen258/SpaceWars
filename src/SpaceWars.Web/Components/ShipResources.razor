@@ -1,0 +1,35 @@
+﻿@using SpaceWars.Logic
+
+@if (Ship == null)
+{
+    <p>Ship not found</p>
+    return;
+}
+else
+{
+    <div class="container mt-2">
+        <div class="row border border-3 rounded p-2 w-100">
+            <div class="col-6">
+                <label>Credit Balance</label>
+                <p>Repair: @Ship.RepairCreditBalance</p>
+                <p>Upgrade: @Ship.UpgradeCreditBalance</p>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12">
+                        <h4>Weapons</h4>
+                    </div>
+                    @foreach (var weapon in Ship.Weapons)
+                    {
+                        <div class="col-12">
+                            <p>@weapon.Name: Power: @weapon.Power Cost: @weapon.Cost </p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+@code {
+    [Parameter] public Ship Ship { get; set; }
+}

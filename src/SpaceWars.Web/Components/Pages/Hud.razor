@@ -1,6 +1,7 @@
 ﻿@page "/hud"
 @using Microsoft.AspNetCore.WebUtilities
 @using SpaceWars.Logic
+@using SpaceWars.Logic.Actions
 @using SpaceWars.Web.Components.Hud
 @inject NavigationManager NavigationManager
 @inject Game Game
@@ -9,7 +10,8 @@
 
 <h1>Player: @Player?.Name</h1>
 <ShipStatus Ship="@Player?.Ship" />
-<PlayerActionQueue Token="PlayerToken" />
+<ShipResources Ship="@Player?.Ship" />
+<PlayerActionQueue Player="Player" />
 
 <NearbyMap Game="@Game" CurrentPlayer="@Player" />
 
@@ -34,8 +36,13 @@
         var query = QueryHelpers.ParseQuery(uri.Query);
         PlayerToken = null;
 
-        var result = Game.Join("A");
-        result = Game.Join("B");
+        var result = Game.Join("Test Player");
+        result = Game.Join("Test Player 2");
+        result = Game.Join("Test Player 3");
+        result = Game.Join("Test Player 4");
+        Game.EnqueueAction(result.Token, new MoveForwardAction(10));
+        Game.EnqueueAction(result.Token, new MoveForwardAction(10));
+        Game.EnqueueAction(result.Token, new FireWeaponAction("Basic Cannon"));
         PlayerToken = result.Token;
 
          @* if (query.TryGetValue("token", out var token))
