@@ -23,9 +23,10 @@
 
 
    private string GetShipSvg()
-    {
-        int shipNumber = _random.Next(1, 19); 
-        return $"Ships/svg/{shipNumber}.svg";
-    }
+   {
+       int totalNumberOfShips = 18;
+       int shipNumber = (Math.Abs(Player.Name.GetHashCode()) % totalNumberOfShips) + 1;
+       return $"Ships/svg/{shipNumber}.svg";
+   }
 
 }
