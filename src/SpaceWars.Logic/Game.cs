@@ -6,7 +6,6 @@ public class Game
 {
     private readonly Dictionary<PlayerToken, Player> players;
     private readonly IInitialLocationProvider locationProvider;
-
     private ITimer? timer;
 
     public Game(IInitialLocationProvider locationProvider, ITimer gameTimer = null, int boardWidth = 2000, int boardHeight = 2000)
@@ -23,6 +22,8 @@ public class Game
         }
         this.Map = new GameMap([], BoardWidth, BoardHeight);
     }
+
+    public event EventHandler Ticked;
 
     public GameJoinResult Join(string playerName)
     {
@@ -80,6 +81,8 @@ public class Game
         {
             gamePlayAction.Action.Execute(gamePlayAction.Player, Map);
         }
+
+        Ticked?.Invoke(this, EventArgs.Empty);
     }
 
     public Player GetPlayerByToken(PlayerToken token) => players[token];
