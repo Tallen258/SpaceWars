@@ -6,20 +6,32 @@
 @inject NavigationManager NavigationManager
 @inject Game Game
 
-<PageTitle>Space Wars | HUD</PageTitle>
+@if (!IsValidToken)
+{
+    <EditForm Model="TokenModel" OnValidSubmit="VerifyProvidedToken" FormName="tokeForm">
+        <label for="token">Enter your token</label>
+        <InputText @bind-Value="TokenModel.TokenValue" />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+}
+else
+{
+    <PageTitle>Space Wars | HUD</PageTitle>
 
-<h1>Player: @Player?.Name</h1>
-<ShipStatus Ship="@Player?.Ship" />
-<ShipResources Ship="@Player?.Ship" />
-<PlayerActionQueue Player="Player" />
+    <h1>Player: @Player?.Name</h1>
+    <ShipStatus Ship="@Player?.Ship" />
+    <ShipResources Ship="@Player?.Ship" />
+    <PlayerActionQueue Player="Player" />
 
-<NearbyMap Game="@Game" CurrentPlayer="@Player" />
-
+    <NearbyMap Game="@Game" CurrentPlayer="@Player" />
+}
 
 @code {
     public Player? Player;
-
+    [SupplyParameterFromForm]
+    public PlayerTokenModel TokenModel { get; set; } = new PlayerTokenModel();
     public PlayerToken? PlayerToken = null;
+    public bool IsValidToken = false;
 
     protected override void OnInitialized()
     {
@@ -27,6 +39,35 @@
         if (Player == null)
         {
             throw new Exception("Player not found");
+        }
+    }
+
+    public void VerifyProvidedToken()
+    {
+        Player? player = null;
+        try
+        {
+            // var playerToken = new PlayerToken(TokenModel.TokenValue); umcomment this line to use the token from the form
+            var gameRes= Game.Join("YOU"); // this is to hot wire the game so we can test the UI Just click submit
+            var playerToken = gameRes.Token;
+            player = Game.GetPlayerByToken(playerToken);
+
+            if (player != null)
+            {
+                Player = player;
+                IsValidToken = true;
+                Game.EnqueueAction(playerToken, new MoveForwardAction(10));
+                Game.EnqueueAction(playerToken, new MoveForwardAction(10));
+                Game.EnqueueAction(playerToken, new FireWeaponAction("Basic Cannon"));
+            }
+            else
+            {
+                IsValidToken = false;
+            }
+        }
+        catch (KeyNotFoundException)
+        {
+            IsValidToken = false;
         }
     }
 
@@ -40,9 +81,7 @@
         result = Game.Join("Test Player 2");
         result = Game.Join("Test Player 3");
         result = Game.Join("Test Player 4");
-        Game.EnqueueAction(result.Token, new MoveForwardAction(10));
-        Game.EnqueueAction(result.Token, new MoveForwardAction(10));
-        Game.EnqueueAction(result.Token, new FireWeaponAction("Basic Cannon"));
+
         PlayerToken = result.Token;
 
          @* if (query.TryGetValue("token", out var token))
@@ -61,5 +100,9 @@
 
 
         Player = Game.GetPlayerByToken(PlayerToken);
+    }
+    public class PlayerTokenModel
+    {
+        public string TokenValue { get; set; }
     }
 }
