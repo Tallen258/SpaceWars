@@ -10,8 +10,14 @@ else
     <div class="container">
         <div class="row border border-3 rounded p-2 w-100">
             <div class="col-6">
-                <ProgressBar Label="Shield" Value="@Ship.Shield" />
-                <ProgressBar Label="Health" Value="@Ship.Health" />
+                <div class="mb-2">
+                    <h6>Shield</h6>
+                    <ProgressBar Value="@Ship.Shield" />
+                </div>
+                <div class="mb-2">
+                    <h6>Health</h6>
+                    <ProgressBar Value="@Ship.Health" Color="bg-primary" />
+                </div>
                 <p> Ship Location: (@Ship.Location.X, @Ship.Location.Y)</p>
             </div>
             <div class="col-6">
