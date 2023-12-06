@@ -34,10 +34,8 @@
         var query = QueryHelpers.ParseQuery(uri.Query);
         PlayerToken = null;
 
-        var result = Game.Join("Test Player");
-        result = Game.Join("Test Player 2");
-        result = Game.Join("Test Player 3");
-        result = Game.Join("Test Player 4");
+        var result = Game.Join("A");
+        result = Game.Join("B");
         PlayerToken = result.Token;
 
          @* if (query.TryGetValue("token", out var token))

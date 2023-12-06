@@ -1,0 +1,31 @@
+﻿@using SpaceWars.Logic
+
+<div class="ship" style="@($"position:absolute; left: {X}px; top: {Y}px;")">
+    <img src="@GetShipSvg()" alt="" height="50" width="50" style="@($"rotate: {Heading}deg;")">
+        <div style="font-size: 10px">@Player.Name</div>
+    <div class="progress mb-1 rounded-0 bg-primary" style="height: 3px;">
+        <div class="progress-bar bg-dark rounded-0" role="progressbar" style="width: @(100-Player.Ship.Shield)%;"
+             aria-valuenow="@(100-Player.Ship.Shield)" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="progress bg-success rounded-0" style="height: 3px;">
+        <div class="progress-bar bg-dark" role="progressbar" style="position:absolute; width: @(100-Player.Ship.Health)%"
+             aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+</div>
+
+@code {
+    private Random _random = new Random();
+    [Parameter, EditorRequired] public int Heading  {get; set;}
+    [Parameter, EditorRequired] public int X  {get; set;}
+    [Parameter, EditorRequired] public int Y  {get; set;}
+    [Parameter, EditorRequired] public Player Player {get; set;}
+    [Parameter, EditorRequired] public GameMap Map {get; set;}
+
+
+   private string GetShipSvg()
+    {
+        int shipNumber = _random.Next(1, 19); 
+        return $"Ships/svg/{shipNumber}.svg";
+    }
+
+}

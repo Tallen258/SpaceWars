@@ -58,7 +58,6 @@ public class Game
     public GameState State => state;
 
     public IEnumerable<Location> PlayerLocations => players.Values.Select(p => p.Ship.Location);
-    
 
     public void Tick()
     {
@@ -93,6 +92,8 @@ public class Game
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
     public void ClearActions(PlayerToken token) => players[token].ClearActions();
 
+    public IEnumerable<Player> GetPlayersInRange(Player player, int maxDistance) => Map.GetPlayersInRange(player, maxDistance);
+    public IEnumerable<Player> GetOtherPlayers(Player player) => players.Values.Where(p => p != player);
     private void checkCollision()
     {
         List<Player> collidedPlayers = new();

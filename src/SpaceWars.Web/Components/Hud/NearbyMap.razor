@@ -2,28 +2,27 @@
 @inject IJSRuntime JSRuntime
 @using System.IO
 
-<svg width="800" height="600" style="border:1px solid black;">
-    @foreach (var player in _game.PlayerLocations)
+<svg width="@_game.Map.BoardWidth" height="@_game.Map.BoardHeight" style="position: relative; border:1px solid black;">
+    @foreach (var player in _game.GetOtherPlayers(_currentPlayer))
     {
-        <image href="@GetShipSvg()"
-               x="@GetRelativeX(player.X) - 10" 
-               y="@GetRelativeY(player.Y) - 10"
-               height="100" 
-               width="100" />
+        <ShipSprite Player="player"
+                    X="@GetRelativeX(player.Ship.Location.X)"
+                    Y="@GetRelativeY(player.Ship.Location.Y)"
+                    Heading="@GetRelativeHeading(player.Ship.Heading)"
+                    Map="_game.Map" />
     }
-    <image href="@GetShipSvg()"
-               x="400" 
-               y="300"
-               height="100" 
-               width="100" />
-
+    <ShipSprite Player="@_currentPlayer"
+                X="@(SvgWidth / 2)"
+                Y="@(SvgHeight / 2)"
+                Heading="0"
+                Map="@_game.Map" />
 </svg>
 
 @code {
     private Game _game;
     private Player _currentPlayer;
-    private const int SvgWidth = 800;
-    private const int SvgHeight = 600;
+    private const int SvgWidth = 2000;
+    private const int SvgHeight = 2000;
     private Random _random = new Random();
 
     [Parameter, EditorRequired]
@@ -56,7 +55,7 @@
 
     private string GetShipSvg()
     {
-        int shipNumber = _random.Next(1, 19); 
+        int shipNumber = _random.Next(1, 19);
         return $"Ships/svg/{shipNumber}.svg";
     }
 
@@ -68,6 +67,13 @@
     private int GetRelativeY(int y)
     {
         return y - _currentPlayer.Ship.Location.Y + SvgHeight / 2;
+    }
+
+    private int GetRelativeHeading(int heading)
+    {
+        int relativeHeading = heading - _currentPlayer.Ship.Heading;
+        if (relativeHeading < 0) relativeHeading += 360;
+        return relativeHeading;
     }
 }
 
