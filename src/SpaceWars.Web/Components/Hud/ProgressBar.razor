@@ -1,10 +1,11 @@
-﻿<div class="mb-2">
-    <label for="@Label.ToLower()" class="my-auto">@Label</label>
-    <progress id="@Label.ToLower()" max="100" class="ms-2 progress-custom" value="@Value"></progress>
+﻿<div class="progress @Color rounded-0" style="height: 3px;">
+    <div class="progress-bar bg-dark" role="progressbar" style="position:absolute; width: @(100 - Value)%"
+         aria-valuenow="@(100-Value)" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
 
+
 @code {
-    [Parameter, EditorRequired] public string Label { get; set; } = "";
+    [Parameter] public string Color { get; set; } = "bg-success";
     [Parameter, EditorRequired] public decimal Value { get; set; }
 }
 

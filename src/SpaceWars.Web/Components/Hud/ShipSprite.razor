@@ -1,7 +1,7 @@
 ﻿@using SpaceWars.Logic
 
-<div class="ship" style="@($"position:absolute; left: {X}px; top: {Y}px;")">
-    <img src="@GetShipSvg()" alt="" height="50" width="50" style="@($"rotate: {Heading}deg;")">
+<div style="@($"position:absolute; right: {X}px; top: {Y}px;")">
+    <img src="@GetShipSvg()" alt="" height="80" width="80" style="@($"rotate: {Heading}deg;")">
         <div style="font-size: 10px">@Player.Name</div>
     <div class="progress mb-1 rounded-0 bg-primary" style="height: 3px;">
         <div class="progress-bar bg-dark rounded-0" role="progressbar" style="width: @(100-Player.Ship.Shield)%;"
@@ -23,9 +23,10 @@
 
 
    private string GetShipSvg()
-    {
-        int shipNumber = _random.Next(1, 19); 
-        return $"Ships/svg/{shipNumber}.svg";
-    }
+   {
+       int totalNumberOfShips = 18;
+       int shipNumber = (Math.Abs(Player.Name.GetHashCode()) % totalNumberOfShips) + 1;
+       return $"Ships/svg/{shipNumber}.svg";
+   }
 
 }
