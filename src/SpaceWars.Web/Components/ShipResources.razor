@@ -7,23 +7,14 @@
 }
 else
 {
-    <div class="container">
+    <div class="container mt-2">
         <div class="row border border-3 rounded p-2 w-100">
-            <div class="col-5">
-                <ProgressBar Label="Shield" Value="@Ship.Shield" />
-                <ProgressBar Label="Health" Value="@Ship.Health" />
-            </div>
-            <div class="col-4">
-                <label for="speed">Speed</label>
-                <h6>@Ship.Speed</h6>
-                <label for="heading">Heading</label>
-                <h6>@Ship.Heading&deg;</h6>
-                <Compass Heading="@Ship.Heading" />
-            </div>
-            <div class=" col-3">
+            <div class="col-6">
                 <label>Credit Balance</label>
                 <p>Repair: @Ship.RepairCreditBalance</p>
                 <p>Upgrade: @Ship.UpgradeCreditBalance</p>
+            </div>
+            <div class="col-6">
                 <div class="row">
                     <div class="col-12">
                         <h4>Weapons</h4>
@@ -38,9 +29,7 @@ else
             </div>
         </div>
     </div>
-}
-
+    }
 @code {
     [Parameter] public Ship Ship { get; set; }
-
 }

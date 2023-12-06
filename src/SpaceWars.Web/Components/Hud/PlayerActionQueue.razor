@@ -2,7 +2,7 @@
 @using SpaceWars.Logic.Actions
 @inject Game Game
 
-@if (Token == null)
+@if (Player == null)
 {
     <p> Invalid Token </p>
 }
@@ -30,20 +30,16 @@ else
 }
 
 @code {
-    [Parameter] public PlayerToken? Token { get; set; }
+    [Parameter] public Player? Player { get; set; }
     public List<GamePlayAction> PlayerActions { get; set; } = new List<GamePlayAction>();
 
     protected override void OnInitialized()
     {
-        if (Token == null)
+        if (Player == null)
         {
             throw new Exception("Token is null");
         }
 
-        Game.EnqueueAction(Token, new MoveForwardAction(10));
-        Game.EnqueueAction(Token, new MoveForwardAction(10));
-        Game.EnqueueAction(Token, new FireWeaponAction("Basic Cannon"));
-
-        PlayerActions = Game.GetActionsForPlayer(Token).ToList();
+        PlayerActions = Player.GetActions().ToList();
     }
 }
