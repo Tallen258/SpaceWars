@@ -1,0 +1,74 @@
+﻿@using SpaceWars.Logic
+@inject IJSRuntime JSRuntime
+@using System.IO
+
+<svg width="800" height="600" style="border:1px solid black;">
+    @foreach (var player in _game.PlayerLocations)
+    {
+        <image href="@GetShipSvg()"
+               x="@GetRelativeX(player.X) - 10" 
+               y="@GetRelativeY(player.Y) - 10"
+               height="100" 
+               width="100" />
+    }
+    <image href="@GetShipSvg()"
+               x="400" 
+               y="300"
+               height="100" 
+               width="100" />
+
+</svg>
+
+@code {
+    private Game _game;
+    private Player _currentPlayer;
+    private const int SvgWidth = 800;
+    private const int SvgHeight = 600;
+    private Random _random = new Random();
+
+    [Parameter, EditorRequired]
+    public Game Game
+    {
+        get => _game;
+        set
+        {
+            if (_game != value)
+            {
+                _game = value;
+                StateHasChanged();
+            }
+        }
+    }
+
+    [Parameter, EditorRequired]
+    public Player CurrentPlayer
+    {
+        get => _currentPlayer;
+        set
+        {
+            if (_currentPlayer != value)
+            {
+                _currentPlayer = value;
+                StateHasChanged();
+            }
+        }
+    }
+
+    private string GetShipSvg()
+    {
+        int shipNumber = _random.Next(1, 19); 
+        return $"Ships/svg/{shipNumber}.svg";
+    }
+
+    private int GetRelativeX(int x)
+    {
+        return x - _currentPlayer.Ship.Location.X + SvgWidth / 2;
+    }
+
+    private int GetRelativeY(int y)
+    {
+        return y - _currentPlayer.Ship.Location.Y + SvgHeight / 2;
+    }
+}
+
+

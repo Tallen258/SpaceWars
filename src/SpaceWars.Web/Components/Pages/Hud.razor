@@ -10,6 +10,8 @@
 <h1>Player: @Player?.Name</h1>
 <ShipStatus Ship="@Player?.Ship" />
 
+<NearbyMap Game="@Game" CurrentPlayer="@Player" />
+
 
 @code {
     public Player? Player;
@@ -29,10 +31,13 @@
         var query = QueryHelpers.ParseQuery(uri.Query);
         PlayerToken? playerToken = null;
 
-        // var result = Game.Join("Test Player");
-        // playerToken = result.Token;
+        var result = Game.Join("Test Player");
+        result = Game.Join("Test Player 2");
+        result = Game.Join("Test Player 3");
+        result = Game.Join("Test Player 4");
+        playerToken = result.Token;
 
-         if (query.TryGetValue("token", out var token))
+         @* if (query.TryGetValue("token", out var token))
          {
              if (string.IsNullOrWhiteSpace(token))
              {
@@ -44,7 +49,7 @@
          if (playerToken == null)
          {
              throw new Exception("Player token not found");
-         }
+         } *@
 
 
         Player = Game.GetPlayerByToken(playerToken);

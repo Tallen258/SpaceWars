@@ -8,17 +8,18 @@
 else
 {
     <div class="container">
-        <div class="col-3">
-            <ProgressBar Label="Shield" Value="@Ship.Shield" />
-            <ProgressBar Label="Health" Value="@Ship.Health" />
-        </div>
-        <div class="col-6">
-            <!-- Radar sweep visualization would go here -->
-            <!-- This is a placeholder for the radar element -->
-        </div>
-        <div class="col-3">
-            <label for="heading">Heading</label>
-            <Compass Heading="@Ship.Heading" />
+        <div class="row border border-3 rounded p-2 w-100">
+            <div class="col-6">
+                <ProgressBar Label="Shield" Value="@Ship.Shield" />
+                <ProgressBar Label="Health" Value="@Ship.Health" />
+            </div>
+            <div class="col-6">
+                <label for="speed">Speed</label>
+                <h6>@Ship.Speed</h6>
+                <label for="heading">Heading</label>
+                <h6>@Ship.Heading&deg;</h6>
+                <Compass Heading="@Ship.Heading" />
+            </div>
         </div>
     </div>
 }
@@ -27,4 +28,3 @@ else
     [Parameter] public Ship Ship { get; set; }
 
 }
-
