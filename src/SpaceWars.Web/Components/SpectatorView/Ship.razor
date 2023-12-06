@@ -1,0 +1,28 @@
+﻿@using SpaceWars.Logic
+
+
+<div class="ship text-center text-white" style="left: calc(@(ShipX)% - 25px); bottom: calc(@(ShipY) - 10px);">
+    <div class="progress mb-1 rounded-0 bg-primary" style="height: 3px;">
+        <div class="progress-bar bg-dark rounded-0" role="progressbar" style="width: @(100-Player.Ship.Shield)%;"
+            aria-valuenow="@(100-Player.Ship.Shield)" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="progress bg-success rounded-0" style="height: 3px;">
+        <div class="progress-bar bg-dark" role="progressbar" style="width: @(100-Player.Ship.Health)%"
+            aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div>
+        <img src="./spaceship.svg" alt="" height="50" width="50" style="rotate: @(Player.Ship.Heading)deg;">
+        <div>@Player.Name</div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Player Player { get; set; }
+
+    [Parameter]
+    public GameMap Map { get; set; }
+
+    public float ShipX => Player.Ship.Location.X * 100 / Map.BoardWidth;
+    public float ShipY => Player.Ship.Location.Y * 100 / Map.BoardHeight;
+}
