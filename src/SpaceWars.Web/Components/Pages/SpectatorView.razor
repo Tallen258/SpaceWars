@@ -10,12 +10,23 @@
     <div class="flex-grow-1 bg-dark text-dark map">
         @foreach (var player in Players)
         {
-            <Ship Player=@player Map=@Map/>
+            <Ship Player=@player Map=@Map />
         }
     </div>
-    <div class="border rounded text-light scoreboard bg-success"
-        style="position: fixed; top: 10px; right: 10px; width: 15em; height: 70ex;">
+    <div class="border border-3 rounded text-light scoreboard border-success bg-dark"
+         style="position: fixed; top: 10px; right: 10px; width: 15em; height: 70ex;">
         <div class="fs-5 text-center fw-bold">Scoreboard</div>
+        <div class="list-group">
+            @foreach (var player in Players)
+            {
+                <div class="list-group-item bg-dark">
+                    <div class="row text-white">
+                        <div class="col fw-bold">@player.Name</div>
+                        <div class="col-auto fw-bold">@CalculateScore(player)</div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 </div>
 
@@ -39,9 +50,9 @@
         opacity: 0.5;
     }
 
-    .scoreboard:hover {
-        opacity: 1;
-    }
+        .scoreboard:hover {
+            opacity: 1;
+        }
 </style>
 
 @code {
@@ -52,5 +63,11 @@
     {
         Map = Game.Map;
         Players = Map.Players;
+        Game.Tick();
+    }
+
+    public int CalculateScore(Player player)
+    {
+        return player.Ship.Health + player.Ship.Shield;
     }
 }

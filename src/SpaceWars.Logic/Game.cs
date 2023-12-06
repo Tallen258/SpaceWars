@@ -26,7 +26,7 @@ public class Game
 
     public GameJoinResult Join(string playerName)
     {
-        var newPlayer = new Player(playerName, new Ship(locationProvider.GetNewInitialLocation()));
+        var newPlayer = new Player(playerName, new Ship(locationProvider.GetNewInitialLocation(BoardWidth, BoardHeight)));
         players.Add(newPlayer.Token, newPlayer);
         return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location);
     }

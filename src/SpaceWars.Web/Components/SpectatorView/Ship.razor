@@ -11,8 +11,11 @@
             aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <div>
-        <img src="./spaceship.svg" alt="" height="50" width="50" style="rotate: @(Player.Ship.Heading)deg;">
-        <div>@Player.Name</div>
+        <div class="border-container" style="display: inline-block; position: relative;">
+            <div class="border rounded-circle border-primary bg-primary" style="opacity: @((Player.Ship.Shield))%; height: 50px; width: 50px; z-index=2"></div>
+            <img src="@Image" alt="" height="50" width="50" style="position: absolute; top: 0; left: 0; rotate: @(Player.Ship.Heading)deg; z-index=1">
+        </div>
+        <div class="text-truncate" style="width: 150%">@Player.Name</div>
     </div>
 </div>
 
@@ -25,4 +28,12 @@
 
     public float ShipX => Player.Ship.Location.X * 100.0f / Map.BoardWidth;
     public float ShipY => Player.Ship.Location.Y * 100.0f / Map.BoardHeight;
+    public string Image = "./spaceship.svg";
+
+    protected override void OnInitialized()
+    {
+        int totalNumberOfShips = 18;
+        int shipNumber = (Math.Abs(Player.Name.GetHashCode()) % totalNumberOfShips) + 1;
+        Image = $"Ships/svg/{shipNumber}.svg";
+    }
 }
