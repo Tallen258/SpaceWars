@@ -17,11 +17,17 @@ else
                     <ProgressBar Value="@Ship.Health" Color="bg-primary" />
                 </div>
                 <p> Ship Location: (@Ship.Location.X, @Ship.Location.Y)</p>
-                <label for="speed">Speed</label>
-                <h6>@Ship.Speed</h6>
-                <label for="heading">Heading</label>
-                <h6>@Ship.Heading&deg;</h6>
-                <Compass Heading="@Ship.Heading" />
+                <div class="row">
+                    <div class="col-6">
+                        <label for="speed">Speed</label>
+                        <h6>@Ship.Speed</h6>
+                        <label for="heading">Heading</label>
+                        <h6>@Ship.Heading&deg;</h6>
+                    </div>
+                    <div class="col-6">
+                        <Compass Heading="@Ship.Heading" />
+                    </div>
+                </div>
         </div>
 }
 

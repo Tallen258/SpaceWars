@@ -8,23 +8,35 @@
 }
 else
 {
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h2>Actions</h2>
-                <div class="row">
-                    @foreach (var action in PlayerActions)
-                    {
-                        <div class="col-md-4 col-sm-6 mb-3 col-lg-4 p-1 m-0">
-                            <div class="card rounded-pill">
-                                <div class="card-body ">
-                                    <h5 class="card-title h5 text-center">@action.Name</h5>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
+    <div class="row border border-3 rounded p-2 w-100">
+        <div>
+            <h2>Action Queue</h2>
+            <ul class="row">
+                @foreach (var action in PlayerActions)
+                {
+                    <li class="small">
+
+                        @switch (action)
+                        {
+                            case MoveForwardAction MFAction:
+                                <div>@MFAction.Name</div>
+                                break;
+                            case FireWeaponAction FWAction:
+                                <div>@FWAction.Name: @FWAction.WeaponName</div>
+                                break;
+                            case ChangeHeadingAction CHAction:
+                                <div>@CHAction.Name: @CHAction.NewHeading&deg;</div>
+                                break;
+                            case RepairAction RPAction:
+                                <div>@RPAction.Name: @RPAction.Amount</div>
+                                    break;
+                            default:
+                                 <div>@action.Name;</div>
+                                break;
+                        }
+                    </li>
+                }
+            </ul>
         </div>
     </div>
 }
@@ -40,6 +52,6 @@ else
             throw new Exception("Token is null");
         }
 
-        PlayerActions = Player.GetActions().ToList();
+        PlayerActions = Player.GetActions().Take(15).ToList();
     }
 }
