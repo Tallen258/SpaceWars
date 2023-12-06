@@ -1,8 +1,6 @@
 ﻿@using SpaceWars.Logic
 
 <div style="@($"position:absolute; right: {X}px; top: {Y}px;")">
-    <img src="@GetShipSvg()" alt="" height="80" width="80" style="@($"rotate: {Heading}deg;")">
-        <div style="font-size: 10px">@Player.Name</div>
     <div class="progress mb-1 rounded-0 bg-primary" style="height: 3px;">
         <div class="progress-bar bg-dark rounded-0" role="progressbar" style="width: @(100-Player.Ship.Shield)%;"
              aria-valuenow="@(100-Player.Ship.Shield)" aria-valuemin="0" aria-valuemax="100"></div>
@@ -11,6 +9,8 @@
         <div class="progress-bar bg-dark" role="progressbar" style="position:absolute; width: @(100-Player.Ship.Health)%"
              aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
+    <img src="@GetShipSvg()" alt="" height="80" width="80" style="@($"rotate: {Heading}deg;")">
+        <div style="font-size: 10px; color: white;">@Player.Name</div>
 </div>
 
 @code {

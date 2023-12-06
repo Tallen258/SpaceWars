@@ -3,7 +3,7 @@
 @using System.IO
 
 <div class="position-relative">
-    <div style="width: 800px; height: 800px; overflow: hidden;"  class="border border-3 rounded-circle position-relative">
+    <div style="width: 600px; height: 600px; overflow: hidden;"  class="border border-3 rounded-circle position-relative bg-dark">
         @foreach (var player in _game.GetOtherPlayers(_currentPlayer))
         {
             <ShipSprite Player="player"
@@ -13,8 +13,8 @@
                         Map="_game.Map" />
         }
         <ShipSprite Player="@_currentPlayer"
-                    X="400"
-                    Y="400"
+                    X="300"
+                    Y="300"
                     Heading="0"
                     Map="@_game.Map" />
     </div>
