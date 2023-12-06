@@ -8,16 +8,23 @@
 }
 else
 {
-    // show the player's actions
     <div class="container">
-        <div class="col-12">
-            <h2>Actions</h2>
-            <ol>
-                @foreach (var action in PlayerActions)
-                {
-                    <li>@action.Name</li>
-                }
-            </ol>
+        <div class="row">
+            <div class="col-12">
+                <h2>Actions</h2>
+                <div class="row">
+                    @foreach (var action in PlayerActions)
+                    {
+                        <div class="col-md-4 col-sm-6 mb-3 col-lg-4 p-1 m-0">
+                            <div class="card rounded-pill">
+                                <div class="card-body ">
+                                    <h5 class="card-title h5 text-center">@action.Name</h5>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 }
@@ -25,7 +32,7 @@ else
 @code {
     [Parameter] public PlayerToken? Token { get; set; }
     public List<GamePlayAction> PlayerActions { get; set; } = new List<GamePlayAction>();
-    
+
     protected override void OnInitialized()
     {
         if (Token == null)
@@ -34,7 +41,9 @@ else
         }
 
         Game.EnqueueAction(Token, new MoveForwardAction(10));
+        Game.EnqueueAction(Token, new MoveForwardAction(10));
+        Game.EnqueueAction(Token, new FireWeaponAction("Basic Cannon"));
+
         PlayerActions = Game.GetActionsForPlayer(Token).ToList();
     }
-
 }
