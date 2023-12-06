@@ -2,27 +2,27 @@
 @inject IJSRuntime JSRuntime
 @using System.IO
 
-<svg width="@_game.Map.BoardWidth" height="@_game.Map.BoardHeight" style="position: relative; border:1px solid black;">
-    @foreach (var player in _game.GetOtherPlayers(_currentPlayer))
-    {
-        <ShipSprite Player="player"
-                    X="@GetRelativeX(player.Ship.Location.X)"
-                    Y="@GetRelativeY(player.Ship.Location.Y)"
-                    Heading="@GetRelativeHeading(player.Ship.Heading)"
-                    Map="_game.Map" />
-    }
-    <ShipSprite Player="@_currentPlayer"
-                X="@(SvgWidth / 2)"
-                Y="@(SvgHeight / 2)"
-                Heading="0"
-                Map="@_game.Map" />
-</svg>
+<div class="position-relative">
+    <div style="width: 800px; height: 800px; overflow: hidden;"  class="border border-3 rounded-circle position-relative">
+        @foreach (var player in _game.GetOtherPlayers(_currentPlayer))
+        {
+            <ShipSprite Player="player"
+                        X="@GetZoomedRelativeX(player.Ship.Location.X)"
+                        Y="@GetZoomedRelativeY(player.Ship.Location.Y)"
+                        Heading="@GetRelativeHeading(player.Ship.Heading)"
+                        Map="_game.Map" />
+        }
+        <ShipSprite Player="@_currentPlayer"
+                    X="400"
+                    Y="400"
+                    Heading="0"
+                    Map="@_game.Map" />
+    </div>
+</div>
 
 @code {
     private Game _game;
     private Player _currentPlayer;
-    private const int SvgWidth = 2000;
-    private const int SvgHeight = 2000;
     private Random _random = new Random();
 
     [Parameter, EditorRequired]
@@ -53,28 +53,35 @@
         }
     }
 
-    private string GetShipSvg()
+    private string GetViewBox()
     {
-        int shipNumber = _random.Next(1, 19);
-        return $"Ships/svg/{shipNumber}.svg";
+        int viewBoxSize = 200; 
+        int halfViewBoxSize = viewBoxSize / 2;
+        int minX = _currentPlayer.Ship.Location.X - halfViewBoxSize;
+        int minY = _currentPlayer.Ship.Location.Y - halfViewBoxSize;
+
+        return $"{minX} {minY} {viewBoxSize} {viewBoxSize}";
     }
 
-    private int GetRelativeX(int x)
+    private int GetZoomedRelativeX(int x)
     {
-        return x - _currentPlayer.Ship.Location.X + SvgWidth / 2;
+        int scale = 5;
+        return (x * scale - (_currentPlayer.Ship.Location.X * scale) + 400);
     }
 
-    private int GetRelativeY(int y)
+    private int GetZoomedRelativeY(int y)
     {
-        return y - _currentPlayer.Ship.Location.Y + SvgHeight / 2;
+        int scale = 5;
+        return (y * scale - (_currentPlayer.Ship.Location.Y * scale) + 400); 
     }
-
+  
     private int GetRelativeHeading(int heading)
     {
         int relativeHeading = heading - _currentPlayer.Ship.Heading;
         if (relativeHeading < 0) relativeHeading += 360;
         return relativeHeading;
     }
-}
+
+  }
 
 

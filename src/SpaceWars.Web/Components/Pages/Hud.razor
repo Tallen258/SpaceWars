@@ -19,11 +19,11 @@ else
     <PageTitle>Space Wars | HUD</PageTitle>
 
     <h1>Player: @Player?.Name</h1>
+    <NearbyMap Game="@Game" CurrentPlayer="@Player" />
     <ShipStatus Ship="@Player?.Ship" />
     <ShipResources Ship="@Player?.Ship" />
     <PlayerActionQueue Player="Player" />
 
-    <NearbyMap Game="@Game" CurrentPlayer="@Player" />
 }
 
 @code {
