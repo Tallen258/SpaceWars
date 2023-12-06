@@ -12,23 +12,23 @@ public class GameMap
             playerLocations.Add(p.Ship.Location, p);
         }
 
-        this.players = players;
+        this.Players = players;
         this.BoardWidth = boardWidth;
         this.BoardHeight = boardHeight;
     }
 
     private Dictionary<Location, Player> playerLocations = new Dictionary<Location, Player>();
-    private readonly IEnumerable<Player> players;
+    public IEnumerable<Player> Players { get; private set; }
     public readonly int BoardWidth;
     public readonly int BoardHeight;
 
-    
+
 
     public IEnumerable<Player> GetPlayersInRange(Player player, int maxDistance)
     {
         var playerLocation = new Vector2(player.Ship.Location.X, player.Ship.Location.Y);
 
-        foreach (var otherPlayer in players)
+        foreach (var otherPlayer in Players)
         {
             if (otherPlayer == player)
                 continue;

@@ -1,0 +1,62 @@
+﻿@page "/spectatorview"
+@using SpaceWars.Logic
+@inject Game Game
+
+<div class="row bg-dark rounded">
+    <div style="height: 50px;" class="bg-dark rounded"></div>
+    <div class="col">
+        <div class="map">
+            @foreach (var player in Players)
+            {
+                <Ship Player="player" Map="Map"/>
+            }
+        </div>
+    </div>
+    <div class="col-auto" style="width: 35px;"></div>
+    <div class="border rounded text-light scoreboard bg-success"
+        style="position: fixed; top: 80px; right: 25px; width: 15em; height: 70ex;">
+        <div class="fs-5 text-center fw-bold">Scoreboard</div>
+    </div>
+</div>
+
+
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-y: hidden;
+    }
+
+    .map {
+        position: relative;
+        width: 100%;
+        height: 85vh;
+    }
+
+    .ship {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+    }
+
+    .scoreboard {
+        opacity: 0.5;
+    }
+
+    .scoreboard:hover {
+        opacity: 1;
+    }
+</style>
+
+@code {
+    public IEnumerable<Player>? Players;
+    public GameMap? Map;
+
+    protected override void OnInitialized()
+    {
+        Map = Game.Map;
+        Players = Map.Players;
+    }
+
+}

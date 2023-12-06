@@ -24,6 +24,11 @@ public class Player : IEquatable<Player?>
     public Ship Ship { get; }
     public PlayerToken Token { get; }
 
+    public IEnumerable<GamePlayAction> GetActions()
+    {
+        return actions;
+    }
+
     public void EnqueueAction(GamePlayAction action)
     {
         actions.Enqueue(action);
@@ -34,6 +39,11 @@ public class Player : IEquatable<Player?>
         if (actions.Any())
             return actions.Dequeue();
         return null;
+    }
+
+    public void ClearActions()
+    {
+        actions.Clear();
     }
 
     public void EnqueueMessage(PlayerMessage message)

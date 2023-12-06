@@ -9,12 +9,15 @@
 
 <h1>Player: @Player?.Name</h1>
 <ShipStatus Ship="@Player?.Ship" />
+<PlayerActionQueue Token="PlayerToken" />
 
 <NearbyMap Game="@Game" CurrentPlayer="@Player" />
 
 
 @code {
     public Player? Player;
+
+    public PlayerToken? PlayerToken = null;
 
     protected override void OnInitialized()
     {
@@ -29,7 +32,7 @@
     {
         var uri = new Uri(NavigationManager.Uri);
         var query = QueryHelpers.ParseQuery(uri.Query);
-        PlayerToken? playerToken = null;
+        PlayerToken = null;
 
         var result = Game.Join("Test Player");
         result = Game.Join("Test Player 2");
@@ -43,15 +46,15 @@
              {
                  throw new Exception("Token is empty");
              }
-             playerToken = new PlayerToken(token!);
+            PlayerToken = new PlayerToken(token!);
          }
 
-         if (playerToken == null)
+        if (PlayerToken == null)
          {
              throw new Exception("Player token not found");
          } *@
 
 
-        Player = Game.GetPlayerByToken(playerToken);
+        Player = Game.GetPlayerByToken(PlayerToken);
     }
 }
