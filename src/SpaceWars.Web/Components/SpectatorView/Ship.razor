@@ -2,20 +2,16 @@
 
 
 <div class="ship text-center text-white" style="left: calc(@(ShipX)% - 25px); bottom: calc(@(ShipY)% - 10px);">
-    <div class="progress mb-1 rounded-0 bg-primary" style="height: 3px;">
-        <div class="progress-bar bg-dark rounded-0" role="progressbar" style="width: @(100-Player.Ship.Shield)%;"
-            aria-valuenow="@(100-Player.Ship.Shield)" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
+    <div class="text-truncate small" style="width: 150%">@Player.Name</div>
     <div class="progress bg-success rounded-0" style="height: 3px;">
         <div class="progress-bar bg-dark" role="progressbar" style="width: @(100-Player.Ship.Health)%"
             aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <div>
-        <div class="border-container" style="display: inline-block; position: relative;">
-            <div class="border rounded-circle border-primary bg-primary" style="opacity: @((Player.Ship.Shield))%; height: 50px; width: 50px; z-index=2"></div>
-            <img src="@Image" alt="" height="50" width="50" style="position: absolute; top: 0; left: 0; rotate: @(Player.Ship.Heading)deg; z-index=1">
-        </div>
-        <div class="text-truncate" style="width: 150%">@Player.Name</div>
+    <div style="position: relative;">
+        <img src="@Image" alt="" height="50" width="50" style="position: absolute; top: 0; left: 0; rotate: @(Player.Ship.Heading)deg; z-index=1">
+        <svg width="150" height="150" style="position: absolute; top: -50px; left: -50px; opacity: @(Player.Ship.Shield / 2)%;">
+            <circle cx="75" cy="75" r="28" fill="blue" /> <!-- Adjust attributes as needed -->
+        </svg>
     </div>
 </div>
 
