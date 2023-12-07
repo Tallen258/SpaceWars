@@ -19,14 +19,14 @@ public class PurchaseAction : GamePlayAction
         // check if item is in shop 
         if (!map.CurrentShop.Any(i => i.Name == ItemToPurchase.Name))
         {
-            return new Result(false, "Item is not in shop");
+            return new Result(false, $"{ItemToPurchase.Name} is not in shop");
         }
 
         var targetItem = map.CurrentShop.First(i => i.Name == ItemToPurchase.Name);
 
         if (targetItem.Cost <= player.Ship.UpgradeCreditBalance)
         {
-            return new Result(false, "Not enough credit to purchase item");
+            return new Result(false, $"Not enough credit to purchase item {targetItem.Name}");
         }
 
         // check if player has prerequisites
