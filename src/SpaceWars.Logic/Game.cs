@@ -163,6 +163,11 @@ public class Game
 
         return shipLocation;
     }
+
+    public void UpdateFrequency(int newFrequency)
+    {
+        timer.Frequency = TimeSpan.FromMilliseconds(newFrequency);
+    }
 }
 
 record PlayerAction(Player Player, GamePlayAction? Action);
