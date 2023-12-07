@@ -1,0 +1,66 @@
+﻿@using SpaceWars.Logic
+@rendermode InteractiveServer
+@page "/admin"
+@inject Game Game
+
+@if (!isPasswordCorrect)
+{
+    <EditForm Model="@loginModel" OnValidSubmit="VerifyPassword" FormName="Login">
+        <label class="form-label">Password:</label>
+        <div class="row">
+            <div class="col-3">
+                <InputText @bind-Value="loginModel.Password" type="password" class="form-control" />
+            </div>
+            <div class="col-auto">
+                <button type="submit"
+                        class="btn btn-primary">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </EditForm>
+    @if (debugMessage != null)
+    {
+        <p>@debugMessage</p>
+    }
+}
+else
+{
+    <div>
+        <h2>Admin Page</h2>
+        <button class="btn btn-primary"
+            @onclick="StartGame">
+            Start Game
+        </button>
+    </div>
+}
+
+@code {
+    private LoginModel loginModel = new LoginModel();
+    private bool isPasswordCorrect = false;
+    private string debugMessage;
+
+
+    private void VerifyPassword()
+    {
+        if (loginModel.Password == "password") // Replace 'yourPassword' with the actual admin password
+        {
+            isPasswordCorrect = true;
+            debugMessage = "Password is correct. Admin page should be visible.";
+        }
+        else
+        {
+            debugMessage = "Password is incorrect.";
+        }
+    }
+
+    private class LoginModel
+    {
+        public string Password { get; set; }
+    }
+
+    private void StartGame()
+    {
+        Game.Start();
+    }
+}
