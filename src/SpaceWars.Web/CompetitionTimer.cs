@@ -28,6 +28,12 @@ public class CompetitionTimer : SpaceWars.Logic.ITimer
         timer = new Timer(state => tickAction.Invoke(), null, 0, (int)Frequency.TotalMilliseconds);
     }
 
+    public void UpdateFrequency(int newFrequency)
+    {
+        Frequency = TimeSpan.FromMilliseconds(newFrequency);
+        timer = new Timer(state => tickAction.Invoke(), null, 0, (int)Frequency.TotalMilliseconds);
+    }
+
     public void Stop()
     {
         timer?.Dispose();
