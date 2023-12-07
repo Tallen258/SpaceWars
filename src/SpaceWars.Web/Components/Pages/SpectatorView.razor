@@ -1,5 +1,5 @@
 ﻿@page "/spectatorview"
-@rendermode InteractiveServer
+@* @rendermode InteractiveServer *@
 @using SpaceWars.Logic
 @using SpaceWars.Web.Components.Layout;
 @using SpaceWars.Web.Components.SpectatorView;
@@ -14,21 +14,7 @@
             <Ship Player=@player Map=@Map />
         }
     </div>
-    <div class="border border-3 rounded text-light scoreboard border-success bg-dark"
-        style="position: fixed; top: 10px; right: 10px; width: 15em; height: 70ex;">
-        <div class="fs-5 text-center fw-bold">Scoreboard</div>
-        <div class="list-group">
-            @foreach (var player in Players)
-            {
-                <div class="list-group-item bg-dark">
-                    <div class="row text-white">
-                        <div class="col fw-bold">@player.Name</div>
-                        <div class="col-auto fw-bold">@CalculateScore(player)</div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
+    <Scoreboard Players=@Players />
 </div>
 
 
@@ -64,6 +50,7 @@
     {
         Map = Game.Map;
         Game.Ticked += GameTicked;
+        Game.Tick();
     }
 
     public void GameTicked(object? sender, EventArgs e)
@@ -72,10 +59,5 @@
         {
             StateHasChanged();
         });
-    }
-
-    public int CalculateScore(Player player)
-    {
-        return player.Ship.Health + player.Ship.Shield;
     }
 }

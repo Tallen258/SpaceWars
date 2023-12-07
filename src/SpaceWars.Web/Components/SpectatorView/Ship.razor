@@ -2,7 +2,7 @@
 
 
 <div class="ship text-center text-white" style="left: calc(@(ShipX)% - 25px); bottom: calc(@(ShipY)% - 10px);">
-    <div class="text-truncate small" style="width: 150%">@Player.Name</div>
+    <div class="text-truncate small text-start" style="width: 150%">@Player.Name</div>
     <div class="progress bg-success rounded-0 mb-1" style="height: 3px;">
         <div class="progress-bar bg-dark" role="progressbar" style="width: @(100-Player.Ship.Health)%"
             aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>

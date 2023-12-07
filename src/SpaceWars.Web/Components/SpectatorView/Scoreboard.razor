@@ -1,0 +1,46 @@
+﻿@using SpaceWars.Logic
+
+<div class="border border-3 rounded text-light scoreboard border-success bg-dark"
+     style="position: fixed; top: 10px; right: 10px; width: 15em; max-height: 33vh; overflow-y: auto;">
+    <div class="fs-5 text-center fw-bold">Scoreboard</div>
+    <div class="list-group">
+        @foreach (var player in SortedPlayers)
+        {
+            <div class="list-group-item bg-dark">
+                <div class="row text-white">
+                    <div class="col fw-bold">@player.Name</div>
+                    <div class="col-auto fw-bold">@CalculateScore(player)</div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .scoreboard {
+        opacity: 0.5;
+    }
+
+        .scoreboard:hover {
+            opacity: 1;
+        }
+</style>
+
+@code {
+    [Parameter, EditorRequired] public IEnumerable<Player> Players { get; set; }
+
+    public IEnumerable<Player> SortedPlayers;
+
+    protected override void OnInitialized()
+    {
+        SortedPlayers = Players
+            .OrderBy(p => p.Name)
+            .OrderByDescending(p => p.Ship.Health + p.Ship.Shield);
+    }
+
+    public int CalculateScore(Player player)
+    {
+        return player.Ship.Health + player.Ship.Shield;
+    }
+
+}
