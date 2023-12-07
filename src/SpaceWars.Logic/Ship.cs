@@ -21,6 +21,7 @@ public partial class Ship : ObservableObject, IEquatable<Ship?>
         Speed = 1;
         Shield = 100;
         Weapons = [new BasicCannon()];
+        Heading = Random.Shared.Next(0, 360);
     }
 
     public Location Location { get; set; }
