@@ -17,15 +17,17 @@ public class PurchaseAction : GamePlayAction
     {
         // check if player has enough money
         // check if item is in shop 
-        if (!map.CurrentShop.Any(i => i.Name == ItemToPurchase.Name))
-        {
+        if (map.CurrentShop != null && !map.CurrentShop.Any(i => i.Name == ItemToPurchase.Name))
+        {   
+            player.EnqueueMessage(new PlayerMessage(PlayerMessageType.FailedPurchase, $"{ItemToPurchase.Name} is not in shop"));
             return new Result(false, $"{ItemToPurchase.Name} is not in shop");
         }
 
-        var targetItem = map.CurrentShop.First(i => i.Name == ItemToPurchase.Name);
+        var targetItem = map.CurrentShop?.First(i => i.Name == ItemToPurchase.Name);
 
-        if (targetItem.Cost <= player.Ship.UpgradeCreditBalance)
+        if (targetItem != null && targetItem?.Cost <= player.Ship.UpgradeCreditBalance)
         {
+            player.EnqueueMessage(new PlayerMessage(PlayerMessageType.FailedPurchase, $"Not enough credit to purchase item {targetItem.Name}"));
             return new Result(false, $"Not enough credit to purchase item {targetItem.Name}");
         }
 
@@ -36,6 +38,7 @@ public class PurchaseAction : GamePlayAction
             {
                 if (!player.Ship.Weapons.Any(i => i.Name == item))
                 {
+                    player.EnqueueMessage(new PlayerMessage(PlayerMessageType.FailedPurchase, "Player does not have prerequisites"));
                     return new Result(false, "Player does not have prerequisites");
                 }
             }

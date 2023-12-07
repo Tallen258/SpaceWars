@@ -95,6 +95,7 @@ public record PlayerMessage (PlayerMessageType Type, string Message);
 public enum PlayerMessageType
 {
     RadarSweepResult,
+    FailedPurchase,
     MovementFailed,
 }
 
