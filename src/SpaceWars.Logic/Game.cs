@@ -1,9 +1,11 @@
 ﻿using SpaceWars.Logic.Actions;
+using SpaceWars.Logic.Weapons;
 
 namespace SpaceWars.Logic;
 
 public class Game
 {
+    private readonly List<IPurchaseable> Shop = new List<IPurchaseable>() { new BasicCannon() };
     private readonly Dictionary<PlayerToken, Player> players;
     private readonly IInitialLocationProvider locationProvider;
     private ITimer? timer;
@@ -20,7 +22,7 @@ public class Game
             timer = gameTimer;
             timer.RegisterAction(() => Tick());
         }
-        this.Map = new GameMap([], BoardWidth, BoardHeight);
+        this.Map = new GameMap([], Shop, BoardWidth, BoardHeight);
     }
 
     public event EventHandler Ticked;
@@ -75,7 +77,7 @@ public class Game
         //Check for collisions here
         checkCollision();
 
-        Map = new GameMap(players.Values, BoardWidth, BoardHeight);//initialize that here
+        Map = new GameMap(players.Values, Shop, BoardWidth, BoardHeight);//initialize that here
 
         foreach (var gamePlayAction in playerActions.Where(a => a.Action.Priority != 1))
         {
@@ -95,7 +97,7 @@ public class Game
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);
     public void ClearActions(PlayerToken token) => players[token].ClearActions();
 
-    public IEnumerable<Player> GetPlayersInRange(Player player, int maxDistance) => Map.GetPlayersInRange(player, maxDistance);
+    public IEnumerable<Player> GetPlayersInRange(Player player, int maxDistance) => Map.GetPlayersInWeaponRange(player, maxDistance);
     public IEnumerable<Player> GetOtherPlayers(Player player) => players.Values.Where(p => p != player);
     private void checkCollision()
     {

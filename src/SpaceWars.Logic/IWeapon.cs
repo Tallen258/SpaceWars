@@ -1,11 +1,9 @@
 ﻿
 namespace SpaceWars.Logic
 {
-    public interface IWeapon
+    public interface IWeapon : IPurchaseable
     {
         int ChargeTurns { get; init; }
-        int Cost { get; init; }
-        string Name { get; }
         int Power { get; init; }
         IEnumerable<WeaponRange> Ranges { get; init; }
         int ShotCost { get; init; }

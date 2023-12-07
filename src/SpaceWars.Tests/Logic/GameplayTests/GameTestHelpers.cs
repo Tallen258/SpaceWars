@@ -34,7 +34,7 @@ public static class GameTestHelpers
         }
 
         locationProviderMock
-            .SetupSequence(m => m.GetNewInitialLocation())
+            .SetupSequence(m => m.GetNewInitialLocation(borderWidth, borderHeight))
             .Returns(() => locationQueue.Dequeue())
             .Returns(() => locationQueue.Dequeue())
             .Returns(() => locationQueue.Dequeue())

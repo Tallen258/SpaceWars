@@ -16,7 +16,11 @@ else
         @foreach (var weapon in Ship.Weapons)
             {
                 <div class="col-12">
-                    <p>@weapon.Name: Power: @weapon.Power Cost: @weapon.Cost </p>
+                    <label>@weapon.Name</label>
+                    <ul>
+                        <li>Power: @weapon.Power </li>
+                        <li>Shot Cost: @weapon.ShotCost</li>
+                    </ul>
                 </div>
             }
         </div>

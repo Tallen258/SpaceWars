@@ -20,7 +20,7 @@ public class ShootingTests
         p1.Ship.Weapons.Add(basicCannon);
 
         var fireAction = new FireWeaponAction(fancyLaserMock.Object);
-        var map = new GameMap([p1]);
+        var map = new GameMap([p1], null);
 
         fireAction.Execute(p1, map).Should().Be(new Result(false, "You do not have the Fancy Laser"));
     }

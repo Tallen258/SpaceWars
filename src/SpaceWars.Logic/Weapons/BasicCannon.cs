@@ -36,7 +36,7 @@ public class BasicCannon : Weapon, IEquatable<BasicCannon?>
     public override void Fire(Player player, GameMap map)
     {
         var maxWeaponRange = Ranges.Last().Distance;
-        var playersInRange = map.GetPlayersInRange(player, maxWeaponRange);
+        var playersInRange = map.GetPlayersInWeaponRange(player, maxWeaponRange);
         if (TryHit(player, playersInRange, out var result) && result is not null)
         {
             var (hitPlayer, distance) = result.Value;

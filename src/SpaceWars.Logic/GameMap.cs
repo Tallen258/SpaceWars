@@ -1,17 +1,25 @@
 ﻿
+using SpaceWars.Logic.Weapons;
 using System.Numerics;
 
 namespace SpaceWars.Logic;
 
 public class GameMap
 {
-    public GameMap(IEnumerable<Player> players, int boardWidth = 2000, int boardHeight = 2000)
+    public GameMap(IEnumerable<Player> players, IEnumerable<IPurchaseable>? NewShop, int boardWidth = 2000, int boardHeight = 2000)
     {
         foreach (var p in players)
         {
             playerLocations.Add(p.Ship.Location, p);
         }
-
+        if (NewShop is not null)
+        {
+            this.CurrentShop = NewShop;
+        }
+        else
+        {
+            this.CurrentShop = new List<IPurchaseable>() { };
+        }
         this.Players = players;
         this.BoardWidth = boardWidth;
         this.BoardHeight = boardHeight;
@@ -19,12 +27,14 @@ public class GameMap
 
     private Dictionary<Location, Player> playerLocations = new Dictionary<Location, Player>();
     public IEnumerable<Player> Players { get; private set; }
+    public IEnumerable<IPurchaseable>? CurrentShop { get; private set; }
+
     public readonly int BoardWidth;
     public readonly int BoardHeight;
 
 
 
-    public IEnumerable<Player> GetPlayersInRange(Player player, int maxDistance)
+    public IEnumerable<Player> GetPlayersInWeaponRange(Player player, int maxDistance)
     {
         var playerLocation = new Vector2(player.Ship.Location.X, player.Ship.Location.Y);
 
@@ -45,9 +55,5 @@ public class GameMap
         //       where distance <= maxDistance
         //       select otherPlayer;
     }
-
-    //support for wrapping?
-
-    //edges that do damage?  5 rows or something that take 10% damage every tick that you're there
 
 }

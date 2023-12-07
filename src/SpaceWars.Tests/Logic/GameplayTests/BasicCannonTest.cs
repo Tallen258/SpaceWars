@@ -33,7 +33,7 @@ public class BasicCannonTest
             Heading = 90,
             Health = 100,
         });
-        var gameMap = new GameMap([p1, p2]);
+        var gameMap = new GameMap([p1, p2], null);
 
         var basicCannon = new BasicCannon();
 
@@ -62,7 +62,7 @@ public class BasicCannonTest
             Heading = 90,
             Health = 100,
         });
-        var gameMap = new GameMap([p1, p2]);
+        var gameMap = new GameMap([p1, p2], null);
 
         var basicCannon = new BasicCannon();
 
@@ -92,7 +92,7 @@ public class BasicCannonTest
             Heading = 90,
             Health = 100,
         });
-        var gameMap = new GameMap([p1, p2]);
+        var gameMap = new GameMap([p1, p2], null);
 
         var basicCannon = new BasicCannon();
 

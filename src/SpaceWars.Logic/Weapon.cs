@@ -116,6 +116,8 @@ public abstract class Weapon : IWeapon, IEquatable<Weapon?>
         }
     }
 
+    public IEnumerable<string> PurchasePrerequisites { get => PurchasePrerequisites; init => new List<string>() { }; }
+
     public static bool operator ==(Weapon? left, Weapon? right)
     {
         return EqualityComparer<Weapon>.Default.Equals(left, right);
