@@ -1,30 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace SpaceWars.Logic.Actions;
 
-namespace SpaceWars.Logic.Actions
+public class PurchaseAction : GamePlayAction
 {
-    internal class PurchaseAction : GamePlayAction
+    public override string Name => throw new NotImplementedException();
+
+    public override int Priority => 3;
+
+    public IPurchaseable ItemToPurchase { get; init; }
+
+    public PurchaseAction(IPurchaseable itemToPurchase)
     {
-        public override string Name => throw new NotImplementedException();
+        ItemToPurchase = itemToPurchase;
+    }
 
-        public override int Priority => 3;
-
-        public IPurchaseable ItemToPurchase { get; init; }
-
-        public PurchaseAction(IPurchaseable itemToPurchase)
+    public override Result Execute(Player player, GameMap map)
+    {
+        // check if player has enough money
+        // check if item is in shop 
+        if (!map.CurrentShop.Any(i => i.Name == ItemToPurchase.Name))
         {
-            ItemToPurchase = itemToPurchase;
+            return new Result(false, "Item is not in shop");
         }
 
-        public override Result Execute(Player player, GameMap map)
+        var targetItem = map.CurrentShop.First(i => i.Name == ItemToPurchase.Name);
+
+        if (targetItem.Cost <= player.Ship.UpgradeCreditBalance)
         {
-            // check if player has enough money
-            // check if player has prerequisites
-            // check if item is in shop 
-            throw new NotImplementedException();
+            return new Result(false, "Not enough credit to purchase item");
         }
+
+        // check if player has prerequisites
+        if (targetItem.PurchasePrerequisites.Any())
+        {
+            foreach (var item in targetItem.PurchasePrerequisites)
+            {
+                if (!player.Ship.Weapons.Any(i => i.Name == item))
+                {
+                    return new Result(false, "Player does not have prerequisites");
+                }
+            }
+        }
+
+        // buy item and put into the inventory
+        player.Ship.UpgradeCreditBalance -= targetItem.Cost;
+        if (targetItem is Weapon)
+        { 
+            player.Ship.Weapons.Add((Weapon)targetItem);
+            return new Result(true, "Item purchased");
+        }
+        // add to inventory later
+
+
+        return new Result(false, "Something happened");
     }
 }
