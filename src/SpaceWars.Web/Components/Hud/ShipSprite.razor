@@ -1,16 +1,17 @@
 ﻿@using SpaceWars.Logic
 
-<div style="@($"position:absolute; right: {X}px; top: {Y}px;")">
-    <div class="progress mb-1 rounded-0 bg-primary" style="height: 3px;">
-        <div class="progress-bar bg-dark rounded-0" role="progressbar" style="width: @(100-Player.Ship.Shield)%;"
-             aria-valuenow="@(100-Player.Ship.Shield)" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
+<div style="@($"position:absolute; left: {X}px; top: {Y}px; transform: translate(-50%, -60%);")">
+    <div class="text-truncate small text-white" style="width: 150%">@Player.Name</div>
     <div class="progress bg-success rounded-0" style="height: 3px;">
-        <div class="progress-bar bg-dark" role="progressbar" style="position:absolute; width: @(100-Player.Ship.Health)%"
-             aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar bg-dark" role="progressbar" style="width: @(100-Player.Ship.Health)%"
+            aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
+    <div class="position-relative"
     <img src="@GetShipSvg()" alt="" height="80" width="80" style="@($"rotate: {Heading}deg;")">
-        <div style="font-size: 10px; color: white;">@Player.Name</div>
+        <svg width="150" height="150" style="position: absolute; top: -36px; left: -36px; opacity: @(Player.Ship.Shield / 2)%;">
+            <circle cx="75" cy="75" r="40" fill="blue" /> <!-- Adjust attributes as needed -->
+        </svg>
+    </div>
 </div>
 
 @code {

@@ -3,27 +3,32 @@
 @using System.IO
 
 <div class="position-relative">
-    <div style="width: 600px; height: 600px; overflow: hidden;"  class="border border-3 rounded-circle position-relative bg-dark">
-        @foreach (var player in _game.GetOtherPlayers(_currentPlayer))
-        {
-            <ShipSprite Player="player"
-                        X="@GetZoomedRelativeX(player.Ship.Location.X)"
-                        Y="@GetZoomedRelativeY(player.Ship.Location.Y)"
-                        Heading="@GetRelativeHeading(player.Ship.Heading)"
-                        Map="_game.Map" />
-        }
-        <ShipSprite Player="@_currentPlayer"
-                    X="300"
-                    Y="300"
-                    Heading="0"
-                    Map="@_game.Map" />
-    </div>
+    <div style="width: @(size)px; height: @(size)px; overflow: hidden;"  class="border rounded-circle position-relative bg-dark">
+            @foreach (var player in _game.GetOtherPlayers(_currentPlayer))
+            {
+                <ShipSprite Player="player"
+                            X="@GetZoomedRelativeX(player.Ship.Location.X)"
+                            Y="@GetZoomedRelativeY(player.Ship.Location.Y)"
+                            Heading="@GetRelativeHeading(player.Ship.Heading)"
+                            Map="_game.Map" />
+            }
+            <ShipSprite Player="@_currentPlayer"
+                        X="300"
+                        Y="300"
+                        Heading="0"
+                        Map="@_game.Map" />
+
+            <!-- Uncomment this to see a center dot to center the ship -->
+           @* <div style="position: absolute; top: 300px; left: 300px;  transform: translate(-50%, -50%); width: 10px; height: 10px; background-color: red;"></div> *@
+        </div>
 </div>
 
 @code {
     private Game _game;
     private Player _currentPlayer;
     private Random _random = new Random();
+    private int size = 600;
+    private int zoomScale = 5;
 
     [Parameter, EditorRequired]
     public Game Game
@@ -53,26 +58,14 @@
         }
     }
 
-    private string GetViewBox()
-    {
-        int viewBoxSize = 200; 
-        int halfViewBoxSize = viewBoxSize / 2;
-        int minX = _currentPlayer.Ship.Location.X - halfViewBoxSize;
-        int minY = _currentPlayer.Ship.Location.Y - halfViewBoxSize;
-
-        return $"{minX} {minY} {viewBoxSize} {viewBoxSize}";
-    }
-
     private int GetZoomedRelativeX(int x)
     {
-        int scale = 5;
-        return (x * scale - (_currentPlayer.Ship.Location.X * scale) + 400);
+        return (x * zoomScale - (_currentPlayer.Ship.Location.X * zoomScale) + size/2);
     }
 
     private int GetZoomedRelativeY(int y)
     {
-        int scale = 5;
-        return (y * scale - (_currentPlayer.Ship.Location.Y * scale) + 400); 
+        return (y * zoomScale - (_currentPlayer.Ship.Location.Y * zoomScale) + size/2); 
     }
   
     private int GetRelativeHeading(int heading)

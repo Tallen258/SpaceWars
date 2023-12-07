@@ -6,6 +6,7 @@
 @inject NavigationManager NavigationManager
 @inject Game Game
 
+<PageTitle>Space Wars | HUD</PageTitle>
 @if (!IsValidToken)
 {
     <EditForm Model="TokenModel" OnValidSubmit="VerifyProvidedToken" FormName="tokeForm">
@@ -14,10 +15,12 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </EditForm>
 }
+else if (Player == null)
+{
+    <h1>Player not found</h1>
+}
 else
 {
-    <PageTitle>Space Wars | HUD</PageTitle>
-
     <h1>Player: @Player?.Name</h1>
     <div class="row">
         <div class="col-12 col-xl-3">
@@ -43,10 +46,6 @@ else
     protected override void OnInitialized()
     {
         GetPlayer();
-        if (Player == null)
-        {
-            throw new Exception("Player not found");
-        }
     }
 
     public void VerifyProvidedToken()
@@ -55,7 +54,7 @@ else
         try
         {
             // var playerToken = new PlayerToken(TokenModel.TokenValue); umcomment this line to use the token from the form
-            var gameRes= Game.Join("YOU"); // this is to hot wire the game so we can test the UI Just click submit
+            var gameRes= Game.Join("ME"); // this is to hot wire the game so we can test the UI Just click submit
             var playerToken = gameRes.Token;
             player = Game.GetPlayerByToken(playerToken);
 
@@ -84,27 +83,20 @@ else
         var query = QueryHelpers.ParseQuery(uri.Query);
         PlayerToken = null;
 
-        var result = Game.Join("Test Player");
-        result = Game.Join("Test Player 2");
-        result = Game.Join("Test Player 3");
-        result = Game.Join("Test Player 4");
-
-        PlayerToken = result.Token;
-
-         @* if (query.TryGetValue("token", out var token))
-         {
+        
+        if (query.TryGetValue("token", out var token))
+        {
              if (string.IsNullOrWhiteSpace(token))
              {
                  throw new Exception("Token is empty");
              }
             PlayerToken = new PlayerToken(token!);
-         }
+        }
 
         if (PlayerToken == null)
-         {
-             throw new Exception("Player token not found");
-         } *@
-
+        {
+            return;
+        }
 
         Player = Game.GetPlayerByToken(PlayerToken);
     }
