@@ -3,28 +3,28 @@
 
 <div class="ship text-center text-white" style="left: calc(@(ShipX)% - 25px); bottom: calc(@(ShipY)% - 10px);">
     <div class="text-truncate small" style="width: 150%">@Player.Name</div>
-    <div class="progress bg-success rounded-0" style="height: 3px;">
+    <div class="progress bg-success rounded-0 mb-1" style="height: 3px;">
         <div class="progress-bar bg-dark" role="progressbar" style="width: @(100-Player.Ship.Health)%"
             aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <div style="position: relative;">
-        <img src="@Image" alt="" height="50" width="50" style="position: absolute; top: 0; left: 0; rotate: @(Player.Ship.Heading)deg; z-index=1">
-        <svg width="150" height="150" style="position: absolute; top: -50px; left: -50px; opacity: @(Player.Ship.Shield / 2)%;">
-            <circle cx="75" cy="75" r="28" fill="blue" /> <!-- Adjust attributes as needed -->
+    <div class="position-relative">
+        <img src="@Image" alt="" height="50" width="50"
+            style="position: absolute; top: 0; left: 0; rotate: @(Player.Ship.Heading)deg; z-index=1">
+        <svg width="52" height="52"
+            style="position: absolute; top: -1px; left: -1px; opacity: @(Player.Ship.Shield / 2)%;">
+            <circle cx="26" cy="26" r="26" fill="blue" /> 
         </svg>
     </div>
+    adadfasdf
 </div>
 
 @code {
-    [Parameter]
-    public Player Player { get; set; }
+    [Parameter, EditorRequired] public Player Player { get; set; }
+    [Parameter, EditorRequired] public GameMap Map { get; set; }
 
-    [Parameter]
-    public GameMap Map { get; set; }
-
-    public float ShipX => Player.Ship.Location.X * 100.0f / Map.BoardWidth;
-    public float ShipY => Player.Ship.Location.Y * 100.0f / Map.BoardHeight;
-    public string Image = "./spaceship.svg";
+    private float ShipX => Player.Ship.Location.X * 100.0f / Map.BoardWidth;
+    private float ShipY => Player.Ship.Location.Y * 100.0f / Map.BoardHeight;
+    private string Image = "./spaceship.svg";
 
     protected override void OnInitialized()
     {
@@ -32,4 +32,5 @@
         int shipNumber = (Math.Abs(Player.Name.GetHashCode()) % totalNumberOfShips) + 1;
         Image = $"Ships/svg/{shipNumber}.svg";
     }
+
 }
