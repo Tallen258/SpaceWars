@@ -8,13 +8,17 @@
 @inject Game Game
 
 <PageTitle>Space Wars | HUD</PageTitle>
-@if (!IsValidToken)
+@if (!IsValidToken && Player == null)
 {
-    <EditForm Model="TokenModel" OnValidSubmit="VerifyProvidedToken" FormName="tokeForm">
-        <label for="token">Enter your token</label>
-        <InputText @bind-Value="TokenModel.TokenValue" />
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </EditForm>
+        <div style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80vh;">
+            <h2>Player HUD</h2>
+            <EditForm Model="TokenModel" OnValidSubmit="VerifyProvidedToken" FormName="tokeForm">
+                <div class="form-group">
+                <InputText class="mb-2" @bind-Value="TokenModel.TokenValue" placeholder="Enter a token"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </EditForm>
+        </div>
 }
 else if (Player == null)
 {
@@ -23,17 +27,14 @@ else if (Player == null)
 else
 {
     <button class="btn btn-primary" @onclick="JoinTestPlayers">Join Test Players</button>
-    <h1>Player: @Player?.Name</h1>
     <div class="row">
         <div class="col-12 col-xl-3">
             <ShipStatus Ship="@Player?.Ship" />
+            <ShipResources Ship="@Player?.Ship" />
             <PlayerActionQueue Player="Player" />
         </div>
-        <div class="col-12 col-xl-6">
+        <div class="col-12 col-xl-9">
             <NearbyMap Game="@Game" CurrentPlayer="@Player" />
-        </div>
-        <div class="col-12 col-xl-3">
-            <ShipResources Ship="@Player?.Ship" />
         </div>
     </div>
 }
@@ -109,7 +110,14 @@ else
             return;
         }
 
-        Player = Game.GetPlayerByToken(PlayerToken);
+        try
+        {
+            Player = Game.GetPlayerByToken(PlayerToken);
+        }
+        catch (KeyNotFoundException)
+        {
+            Player = null;
+        }
     }
 
     public void JoinTestPlayers()
@@ -126,4 +134,3 @@ else
     }
 
 }
-
