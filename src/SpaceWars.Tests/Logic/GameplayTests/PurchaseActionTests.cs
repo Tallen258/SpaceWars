@@ -20,6 +20,7 @@ public class PurchaseActionTests
         p1.Ship.Weapons.Should().HaveCount(2);
         p1.Ship.UpgradeCreditBalance.Should().Be(Math.Abs(new BasicCannon().Cost - startingCreditBalance));
         res.Success.Should().BeTrue();
+        res.Message.Should().Be("Basic Cannon purchased");
     }
 
     [Fact]
@@ -47,7 +48,7 @@ public class PurchaseActionTests
         {
             Heading = 0,
         });
-        int startingCreditBalance = 0;
+        int startingCreditBalance = 300;
         p1.Ship.UpgradeCreditBalance = startingCreditBalance;
 
         var purchaseAction = new PurchaseAction(new BasicCannon());
@@ -56,5 +57,49 @@ public class PurchaseActionTests
         var res = purchaseAction.Execute(p1, map);
         res.Success.Should().BeFalse();
         res.Message.Should().Be("Basic Cannon is not in shop");
+    }
+
+    [Fact]
+    public void CannotPurchaseItem_DoesntMeetPrereqs()
+    {
+        var p1 = new Player("Player 1", new Ship(new Location(0, 0))
+        {
+            Heading = 0,
+        });
+        int startingCreditBalance = int.MaxValue;
+        p1.Ship.UpgradeCreditBalance = startingCreditBalance;
+        var fancyLaserMock = new Mock<IWeapon>();
+        fancyLaserMock.Setup(m => m.Name).Returns("Fancy Laser");
+        fancyLaserMock.Setup(m => m.PurchasePrerequisites).Returns(new List<string>() { "Fake Weapon"});
+        fancyLaserMock.Setup(m => m.Cost).Returns(0);
+
+        var purchaseAction = new PurchaseAction(fancyLaserMock.Object);
+        var map = new GameMap([p1], new List<IPurchaseable> { new BasicCannon() });
+
+        var res = purchaseAction.Execute(p1, map);
+        res.Success.Should().BeFalse();
+        res.Message.Should().Be("Player does not have prerequisites");
+    }
+
+    [Fact]
+    public void CanPurchaseItem_MeetsPrereqs()
+    {
+        var p1 = new Player("Player 1", new Ship(new Location(0, 0))
+        {
+            Heading = 0,
+        });
+        int startingCreditBalance = int.MaxValue;
+        p1.Ship.UpgradeCreditBalance = startingCreditBalance;
+        var fancyLaserMock = new Mock<IWeapon>();
+        fancyLaserMock.Setup(m => m.Name).Returns("Fancy Laser");
+        fancyLaserMock.Setup(m => m.PurchasePrerequisites).Returns(new List<string>() { "Basic Cannon" });
+        fancyLaserMock.Setup(m => m.Cost).Returns(0);
+
+        var purchaseAction = new PurchaseAction(fancyLaserMock.Object);
+        var map = new GameMap([p1], new List<IPurchaseable> { new BasicCannon() });
+
+        var res = purchaseAction.Execute(p1, map);
+        res.Success.Should().BeTrue();
+        res.Message.Should().Be("Fancy Laser purchased");
     }
 }

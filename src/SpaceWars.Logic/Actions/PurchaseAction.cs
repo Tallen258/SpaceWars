@@ -49,10 +49,9 @@ public class PurchaseAction : GamePlayAction
         if (targetItem is Weapon)
         { 
             player.Ship.Weapons.Add((Weapon)targetItem);
-            return new Result(true, "Item purchased");
+            return new Result(true, $"{targetItem.Name}purchased");
         }
         // add to inventory later
-
 
         return new Result(false, "Something happened");
     }
