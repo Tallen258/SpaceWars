@@ -1,0 +1,105 @@
+﻿@using Microsoft.Extensions.Options
+@using SpaceWars.Logic
+@rendermode InteractiveServer
+@page "/admin"
+@inject Game Game
+@inject IOptions<GameConfig> Config
+@inject NavigationManager NavManager
+
+@if (!isPasswordCorrect)
+{
+    <EditForm Model="@loginModel" OnValidSubmit="VerifyPassword" FormName="Login">
+        <label class="form-label">Password:</label>
+        <div class="row">
+            <div class="col-3">
+                <InputText @bind-Value="loginModel.Password" 
+                type="password" 
+                class="form-control"
+                />
+            </div>
+            <div class="col-auto">
+                <button type="submit"
+                        class="btn btn-primary">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </EditForm>
+}
+else
+{
+    <div>
+        <h2>Admin Page</h2>
+        <div class="row">
+            <div class="col-3">
+                <InputNumber @bind-Value="frequency"
+                           type="number"
+                           class="form-control" />
+            </div>
+            <div class="col-auto">
+                <button @onclick="UpdateFrequency"
+                        class="btn btn-primary">
+                    save
+                </button>
+            </div>
+        </div>
+        <button class="btn btn-primary"
+                @onclick="StartGame">
+            Start Game
+        </button>
+    </div>
+}
+
+@if (errorMessage != null)
+{
+    <p class="small text-danger">@errorMessage</p>
+}
+
+@code {
+    private LoginModel loginModel = new LoginModel();
+    private bool isPasswordCorrect = false;
+    private string? errorMessage;
+    private int frequency = 0;
+
+    protected override void OnInitialized()
+    {
+        frequency = Config.Value.TickFrequencyMilliseconds;
+    }
+
+
+    private void VerifyPassword()
+    {
+        if (loginModel.Password == Config.Value.Password)
+        {
+            isPasswordCorrect = true;
+            errorMessage = null;
+        }
+        else
+        {
+            errorMessage = "Password is incorrect.";
+        }
+    }
+
+    private class LoginModel
+    {
+        public string Password { get; set; }
+    }
+
+    private void StartGame()
+    {
+        try
+        {
+            Game.Start();
+        }
+        catch
+        {
+            errorMessage = "Failed to start game.";
+        }
+        NavManager.NavigateTo("/spectatorview");
+    }
+
+    private void UpdateFrequency()
+    {
+        Game.UpdateFrequency(frequency);
+    }
+}

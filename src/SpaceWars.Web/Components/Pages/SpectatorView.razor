@@ -1,5 +1,5 @@
 ﻿@page "/spectatorview"
-@* @rendermode InteractiveServer *@
+@rendermode InteractiveServer
 @using SpaceWars.Logic
 @using SpaceWars.Web.Components.Layout;
 @using SpaceWars.Web.Components.SpectatorView;
@@ -50,7 +50,6 @@
     {
         Map = Game.Map;
         Game.Ticked += GameTicked;
-        Game.Tick();
     }
 
     public void GameTicked(object? sender, EventArgs e)

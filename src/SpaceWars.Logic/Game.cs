@@ -31,7 +31,8 @@ public class Game
     {
         var newPlayer = new Player(playerName, new Ship(locationProvider.GetNewInitialLocation(BoardWidth, BoardHeight)));
         players.Add(newPlayer.Token, newPlayer);
-        return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location);
+       
+        return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location, newPlayer.Ship.Heading);
     }
 
     public void Start()
@@ -165,7 +166,12 @@ public class Game
 
         return shipLocation;
     }
+
+    public void UpdateFrequency(int newFrequency)
+    {
+        timer.Frequency = TimeSpan.FromMilliseconds(newFrequency);
+    }
 }
 
 record PlayerAction(Player Player, GamePlayAction? Action);
-public record GameJoinResult(PlayerToken Token, Location Location);
+public record GameJoinResult(PlayerToken Token, Location Location, int heading);

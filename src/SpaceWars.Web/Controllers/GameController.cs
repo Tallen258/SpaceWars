@@ -24,6 +24,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
                 joinResult.Token.ToString(),
                 joinResult.Location.ToApiLocation(),
                 game.State.ToString(),
+                joinResult.heading,
                 game.BoardHeight,
                 game.BoardWidth
             );
