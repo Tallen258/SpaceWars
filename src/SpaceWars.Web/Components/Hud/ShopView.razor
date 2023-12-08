@@ -6,9 +6,8 @@
     return;
 }
 
-<div class=" border border-3 rounded p-2 w-100">
-    <div class="">
-        <div><h2>Shop</h2</div>
+<div class="border border-3 rounded p-2 w-100 bg-light">
+        <h4>Shop</h4>
         @foreach (var item in Game.Map.CurrentShop)
         {
             <div class="col-12">
@@ -19,7 +18,6 @@
                 </ul>
             </div>
         }
-    </div>
 </div>
 @code {
     [Parameter] public Game Game { get; set; }

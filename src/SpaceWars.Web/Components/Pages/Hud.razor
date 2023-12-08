@@ -27,12 +27,18 @@ else if (Player == null)
 }
 else
 {
-    <button class="btn btn-primary" @onclick="JoinTestPlayers">Join Test Players</button>
     <div class="row">
         <div class="col-12 col-xl-3">
-            <ShipStatus Ship="@Player?.Ship" />
-            <ShipResources Ship="@Player?.Ship" />
-            <PlayerActionQueue Player="Player" />
+            <div class="mb-2">
+                <ShipStatus Ship="@Player?.Ship" />
+            </div>
+            <div class="mb-2">
+                <ShipResources Ship="@Player?.Ship" />
+            </div>
+            <div class="mb-2">
+                <PlayerActionQueue Player="Player" />
+            </div>
+            <button class="btn btn-primary" @onclick="JoinTestPlayers">Join Test Players</button>
         </div>
         <div class="col-12 col-xl-6">
             <NearbyMap Game="@Game" CurrentPlayer="@Player" />
