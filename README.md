@@ -45,6 +45,16 @@ Provide two parts to the standard client:
   - The status of your ship, weapons, all your counters, etc.
   - More?
 
+## Scoring
+
+- score is an additional property on each player, starts at 0
+- x points per tick to all players
+- y points per hit for any player
+- Killing a player gives you z% of their score
+- Configure x, y, and z on the admin page
+- all increases to score also increase the credits balance.
+
+
 ## Questions for discussion
 
 - Repair cost / repair rate - spend $$$ to repair quickly, spend $ to repair slowly?
