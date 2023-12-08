@@ -34,8 +34,11 @@ else
             <ShipResources Ship="@Player?.Ship" />
             <PlayerActionQueue Player="Player" />
         </div>
-        <div class="col-12 col-xl-9">
+        <div class="col-12 col-xl-6">
             <NearbyMap Game="@Game" CurrentPlayer="@Player" />
+        </div>
+        <div class="col-12 col-xl-3">
+            <ShopView Game="@Game" />
         </div>
     </div>
 }
