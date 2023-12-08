@@ -75,7 +75,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     //POST /game/{token}/queue/[{type=move,request=250}]
     //POST /game/{token}/queue/[{type=fire,request=BasicCannon}]
     //POST /game/{token}/queue/[{type=repair,request=Null}]
-    //POST /game/{token}/queue/[{type=name,request=item}]
+    //POST /game/{token}/queue/[{type=purchase,request=item}]
     //POST /game/{token}/queue/[{type=name,request=item},{type=name,request=item}]
     //POST /game/{token}/queue/clear
     [HttpPost("{token}/queue")]
@@ -106,6 +106,13 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
                 case "repair":
                     RepairAction repairAction = new();
                     player.EnqueueAction(repairAction);
+                    break;
+                case "purchase":
+                    if (action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
+                
+                    PurchaseAction purchaseAction = new(action.Request); // asuming the request is just the name of the item to purchase
+                    player.EnqueueAction(purchaseAction);
+                
                     break;
                 case "clear":
                     player.ClearActions();
