@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.WebUtilities
 @using SpaceWars.Logic
 @using SpaceWars.Logic.Actions
+@using SpaceWars.Logic.Weapons
 @using SpaceWars.Web.Components.Hud
 @inject NavigationManager NavigationManager
 @inject Game Game
@@ -77,6 +78,7 @@ else
                 Game.EnqueueAction(playerToken, new MoveForwardAction(10));
                 Game.EnqueueAction(playerToken, new MoveForwardAction(10));
                 Game.EnqueueAction(playerToken, new FireWeaponAction("Basic Cannon"));
+                Game.EnqueueAction(playerToken, new PurchaseAction(new BasicCannon()));
             }
             else
             {

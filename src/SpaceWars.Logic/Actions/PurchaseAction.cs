@@ -2,7 +2,7 @@
 
 public class PurchaseAction : GamePlayAction
 {
-    public override string Name => throw new NotImplementedException();
+    public override string Name => "Purchase";
 
     public override int Priority => 3;
 
