@@ -7,8 +7,8 @@
         @foreach (var player in _game.GetOtherPlayers(_currentPlayer))
         {
             <ShipSprite Player="player"
-                        X="@GetZoomedRelativeX(player.Ship.Location.X)"
-                        Y="@GetZoomedRelativeY(player.Ship.Location.Y)"
+                        X="@(GetZoomedRelativeX(player.Ship.Location.X, player.Ship.Location.Y))"
+                        Y="@(GetZoomedRelativeY(player.Ship.Location.X, player.Ship.Location.Y))"
                         Heading="@GetRelativeHeading(player.Ship.Heading)"
                         Map="_game.Map" />
         }
@@ -25,7 +25,7 @@
     private Player _currentPlayer;
     private Random _random = new Random();
     private int size = 700;
-    private int zoomScale = 2;
+    private int zoomScale = 1;
 
     [Parameter, EditorRequired]
     public Game Game
@@ -55,14 +55,38 @@
         }
     }
 
-    private int GetZoomedRelativeX(int x)
+    private (int X, int Y) GetRotatedPosition(int otherX, int otherY, int centerX, int centerY, int heading)
     {
-        return (x * zoomScale - (_currentPlayer.Ship.Location.X * zoomScale) + size/2);
+        // Translate points to make the center ship the origin
+        double translatedX = otherX - centerX;
+        double translatedY = otherY - centerY;
+
+        // Convert heading to radians and rotate
+        double radians = (Math.PI / 180) * heading;
+        double cosAngle = Math.Cos(radians);
+        double sinAngle = Math.Sin(radians);
+
+        // Apply rotation
+        double rotatedX = translatedX * cosAngle + translatedY * sinAngle;
+        double rotatedY = -translatedX * sinAngle + translatedY * cosAngle;
+
+        // Translate back and apply zoomScale
+        rotatedX = rotatedX * zoomScale + size / 2;
+        rotatedY = rotatedY * zoomScale + size / 2;
+
+        return ((int)rotatedX, (int)rotatedY);
     }
 
-    private int GetZoomedRelativeY(int y)
+    private int GetZoomedRelativeX(int otherX, int otherY)
     {
-        return (y * zoomScale - (_currentPlayer.Ship.Location.Y * zoomScale) + size/2); 
+        var (rotatedX, _) = GetRotatedPosition(otherX, otherY, _currentPlayer.Ship.Location.X, _currentPlayer.Ship.Location.Y, _currentPlayer.Ship.Heading);
+        return rotatedX;
+    }
+
+    private int GetZoomedRelativeY(int otherX, int otherY)
+    {
+        var (_, rotatedY) = GetRotatedPosition(otherX, otherY, _currentPlayer.Ship.Location.X, _currentPlayer.Ship.Location.Y, _currentPlayer.Ship.Heading);
+        return rotatedY;
     }
   
     private int GetRelativeHeading(int heading)

@@ -85,7 +85,15 @@ else
                 Player = player;
                 IsValidToken = true;
                 Game.EnqueueAction(playerToken, new MoveForwardAction(10));
-                Game.EnqueueAction(playerToken, new MoveForwardAction(10));
+                Game.EnqueueAction(playerToken, new MoveForwardAction(20));
+                Game.EnqueueAction(playerToken, new MoveForwardAction(30));
+                Game.EnqueueAction(playerToken, new MoveForwardAction(40));
+                Game.EnqueueAction(playerToken, new MoveForwardAction(50));
+                Game.EnqueueAction(playerToken, new MoveForwardAction(60));
+                Game.EnqueueAction(playerToken, new MoveForwardAction(70));
+                Game.EnqueueAction(playerToken, new MoveForwardAction(80));
+                Game.EnqueueAction(playerToken, new MoveForwardAction(90));
+                Game.EnqueueAction(playerToken, new MoveForwardAction(100));
                 Game.EnqueueAction(playerToken, new FireWeaponAction("Basic Cannon"));
                 Game.EnqueueAction(playerToken, new PurchaseAction("Basic Cannon"));
             }
