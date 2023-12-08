@@ -10,7 +10,7 @@ else
 {
     <div class="row border border-3 rounded p-2 w-100">
         <div>
-            <h2>Action Queue</h2>
+            <h4>Action Queue</h4>
             <ul class="row">
                 @foreach (var action in PlayerActions)
                 {
@@ -48,7 +48,7 @@ else
     [Parameter] public Player? Player { get; set; }
     public List<GamePlayAction> PlayerActions { get; set; } = new List<GamePlayAction>();
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         if (Player == null)
         {

@@ -8,22 +8,35 @@
 else
 {
     <div class="row border border-3 rounded p-2 w-100">
-    <div class="col-6">
-        <label>Credit Balance</label>
-        <p>Repair: @Ship.RepairCreditBalance</p>
-        <p>Upgrade: @Ship.UpgradeCreditBalance</p>
-        <h4>Weapons</h4>
-        @foreach (var weapon in Ship.Weapons)
-            {
-                <div class="col-12">
-                    <label>@weapon.Name</label>
-                    <ul>
-                        <li>Power: @weapon.Power </li>
-                        <li>Shot Cost: @weapon.ShotCost</li>
-                    </ul>
-                </div>
-            }
+        <h4>Inventory</h4>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                <h6>Repair: $@Ship.RepairCreditBalance</h6>
+            </div>
+            <div class="col-6">
+                <h6>Upgrade: $@Ship.UpgradeCreditBalance</h6>
+            </div>
         </div>
+        <table class="table mx-2">
+            <thead>
+                <tr>
+                    <th>Weapons</th>
+                    <th>Power</th>
+                    <th>Shot Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var weapon in Ship.Weapons)
+                {
+                    <tr>
+                        <td>@weapon.Name</td>
+                        <td>@weapon.Power</td>
+                        <td>@weapon.ShotCost</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
     }
 @code {

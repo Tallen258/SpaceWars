@@ -8,6 +8,7 @@
 else
 {
     <div class="row border border-3 rounded p-2 w-100">
+        <h4>Ship Status</h4>
         <div class="mb-2">
             <h6>Shield: @Ship.Shield%</h6>
             <ProgressBar Value="@Ship.Shield" />
@@ -19,7 +20,7 @@ else
         <p> Ship Location: (@Ship.Location.X, @Ship.Location.Y)</p>
         <div class="row">
             <div class="col-6">
-                <h6>Speed: @Ship.Speed</h6>
+                <h6>Speed: Warp @Ship.Speed</h6>
                 <h6>Heading: @Ship.Heading&deg;</h6>
             </div>
             <div class="col-6">
