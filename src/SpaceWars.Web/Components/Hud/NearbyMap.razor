@@ -67,8 +67,8 @@
         double sinAngle = Math.Sin(radians);
 
         // Apply rotation
-        double rotatedX = translatedX * cosAngle + translatedY * sinAngle;
-        double rotatedY = -translatedX * sinAngle + translatedY * cosAngle;
+        double rotatedX = -translatedX * cosAngle + translatedY * sinAngle;
+        double rotatedY = -translatedX * sinAngle - translatedY * cosAngle;
 
         // Translate back and apply zoomScale
         rotatedX = rotatedX * zoomScale + size / 2;
