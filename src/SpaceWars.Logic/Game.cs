@@ -57,6 +57,14 @@ public class Game
         timer?.Stop();
     }
 
+    public void Reset()
+    {
+        state = GameState.Joining;
+        Map = new GameMap([], BoardWidth, BoardHeight);
+        players.Clear();
+        timer?.Stop();
+    }
+
     private GameState state;
 
     public GameState State => state;
