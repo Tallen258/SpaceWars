@@ -107,6 +107,13 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
                     RepairAction repairAction = new();
                     player.EnqueueAction(repairAction);
                     break;
+                case "purchase":
+                    if (action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
+                
+                    PurchaseAction purchaseAction = new(action.Request); // asuming the request is just the name of the item to purchase
+                    player.EnqueueAction(purchaseAction);
+                
+                    break;
                 case "clear":
                     player.ClearActions();
                     return new QueueActionResponse("Actions cleared");
