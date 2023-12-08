@@ -16,6 +16,7 @@ public abstract class Weapon : IWeapon, IEquatable<Weapon?>
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("Name cannot be null or empty.");
         Name = name;
+        PurchasePrerequisites = new List<string>() { };
     }
 
     public string Name { get; }
@@ -116,7 +117,7 @@ public abstract class Weapon : IWeapon, IEquatable<Weapon?>
         }
     }
 
-    public IEnumerable<string> PurchasePrerequisites { get => PurchasePrerequisites; init => new List<string>() { }; }
+    public IEnumerable<string> PurchasePrerequisites { get; set; }
 
     public static bool operator ==(Weapon? left, Weapon? right)
     {

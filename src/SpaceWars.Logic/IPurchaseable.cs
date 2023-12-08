@@ -10,6 +10,6 @@ namespace SpaceWars.Logic
     {
         int Cost { get; init; }
         string Name { get; }
-        IEnumerable<string> PurchasePrerequisites { get; init; }
+        IEnumerable<string> PurchasePrerequisites { get; set; }
     }
 }

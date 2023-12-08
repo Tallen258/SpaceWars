@@ -6,9 +6,9 @@ public class PurchaseAction : GamePlayAction
 
     public override int Priority => 3;
 
-    public IPurchaseable ItemToPurchase { get; init; }
+    public string ItemToPurchase { get; init; }
 
-    public PurchaseAction(IPurchaseable itemToPurchase)
+    public PurchaseAction(string itemToPurchase)
     {
         ItemToPurchase = itemToPurchase;
     }
@@ -17,22 +17,22 @@ public class PurchaseAction : GamePlayAction
     {
         // check if player has enough money
         // check if item is in shop 
-        if (map.CurrentShop != null && !map.CurrentShop.Any(i => i.Name == ItemToPurchase.Name))
+        if (map.CurrentShop != null && !map.CurrentShop.Any(i => i.Name == ItemToPurchase))
         {   
-            player.EnqueueMessage(new PlayerMessage(PlayerMessageType.FailedPurchase, $"{ItemToPurchase.Name} is not in shop"));
-            return new Result(false, $"{ItemToPurchase.Name} is not in shop");
+            player.EnqueueMessage(new PlayerMessage(PlayerMessageType.FailedPurchase, $"{ItemToPurchase} is not in shop"));
+            return new Result(false, $"{ItemToPurchase} is not in shop");
         }
 
-        var targetItem = map.CurrentShop?.First(i => i.Name == ItemToPurchase.Name);
+        var targetItem = map.CurrentShop?.First(i => i.Name == ItemToPurchase);
 
-        if (targetItem != null && targetItem?.Cost <= player.Ship.UpgradeCreditBalance)
+        if (targetItem != null && targetItem?.Cost >= player.Ship.UpgradeCreditBalance)
         {
             player.EnqueueMessage(new PlayerMessage(PlayerMessageType.FailedPurchase, $"Not enough credit to purchase item {targetItem.Name}"));
             return new Result(false, $"Not enough credit to purchase item {targetItem.Name}");
         }
 
         // check if player has prerequisites
-        if (targetItem.PurchasePrerequisites.Any())
+        if (targetItem != null && targetItem?.PurchasePrerequisites?.Count() != 0)
         {
             foreach (var item in targetItem.PurchasePrerequisites)
             {
@@ -45,11 +45,15 @@ public class PurchaseAction : GamePlayAction
         }
 
         // buy item and put into the inventory
-        player.Ship.UpgradeCreditBalance -= targetItem.Cost;
-        if (targetItem is Weapon)
+
+        if (targetItem != null)
         { 
-            player.Ship.Weapons.Add((Weapon)targetItem);
-            return new Result(true, $"{targetItem.Name}purchased");
+            player.Ship.UpgradeCreditBalance -= targetItem.Cost;
+            if (targetItem is Weapon)
+            { 
+                player.Ship.Weapons.Add((Weapon)targetItem);
+                return new Result(true, $"{targetItem.Name} purchased");
+            }
         }
         // add to inventory later
 

@@ -60,7 +60,7 @@ public class Game
     public void Reset()
     {
         state = GameState.Joining;
-        Map = new GameMap([], BoardWidth, BoardHeight);
+        Map = new GameMap([], null, BoardWidth, BoardHeight);
         players.Clear();
         timer?.Stop();
     }

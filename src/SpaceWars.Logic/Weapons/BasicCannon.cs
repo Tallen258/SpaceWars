@@ -16,6 +16,7 @@ public class BasicCannon : Weapon, IEquatable<BasicCannon?>
         ChargeTurns = 1;
     }
 
+    
     public override bool Equals(object? obj)
     {
         return Equals(obj as BasicCannon);
