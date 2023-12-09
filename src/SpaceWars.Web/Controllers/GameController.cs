@@ -110,8 +110,15 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
                 case "purchase":
                     if (action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
                 
-                    PurchaseAction purchaseAction = new(action.Request); // asuming the request is just the name of the item to purchase
+                    PurchaseAction purchaseAction = new(action.Request);
                     player.EnqueueAction(purchaseAction);
+                
+                    break;
+                case "changeHeading":
+                    if (action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
+                
+                    ChangeHeadingAction changeHeadingAction = new(Int32.Parse(action.Request));
+                    player.EnqueueAction(changeHeadingAction);
                 
                     break;
                 case "clear":
