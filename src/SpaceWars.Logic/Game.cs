@@ -99,7 +99,11 @@ public class Game
             player.Ship.RepairCreditBalance += 1;
             player.Ship.UpgradeCreditBalance += 1;
         }
-
+        var playersToRemove = players.Where(p => p.Value.Ship.Health <= 0).ToList();
+        foreach (var player in playersToRemove)
+        {
+            players.Remove(player.Key);
+        }
         Ticked?.Invoke(this, EventArgs.Empty);
     }
 
