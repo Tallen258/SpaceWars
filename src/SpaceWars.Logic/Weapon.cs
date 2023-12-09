@@ -36,6 +36,8 @@ public abstract class Weapon : IWeapon, IEquatable<Weapon?>
 
     public abstract void Fire(Player player, GameMap map);
 
+    public abstract IEnumerable<TargetedLocation> GetPotentialTargets(Player player, GameMap map);
+
     public override bool Equals(object? obj)
     {
         return Equals(obj as Weapon);

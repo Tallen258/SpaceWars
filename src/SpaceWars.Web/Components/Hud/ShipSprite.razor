@@ -11,7 +11,7 @@
         <svg width="150" height="150" style="position: absolute; top: -35px; left: -36px; opacity: @(Player.Ship.Shield / 2)%;">
             <circle cx="75" cy="75" r="40" fill="blue" /> <!-- Adjust attributes as needed -->
         </svg>
-        @if (Targeted)
+        @if (Targeted != null)
         {
             <img src="crosshair.svg" height="90px" width="90px" style="position: absolute; top:-5px; left:-5px;" />
         }
@@ -25,14 +25,14 @@
     [Parameter, EditorRequired] public int Y { get; set; }
     [Parameter, EditorRequired] public Player Player { get; set; }
     [Parameter, EditorRequired] public GameMap Map { get; set; }
-    [Parameter] public bool Targeted { get; set; } = false;
+    [Parameter] public TargetedLocation? Targeted { get; set; } = null;
 
 
-   private string GetShipSvg()
-   {
-       int totalNumberOfShips = 18;
-       int shipNumber = (Math.Abs(Player.Name.GetHashCode()) % totalNumberOfShips) + 1;
-       return $"Ships/svg/{shipNumber}.svg";
+    private string GetShipSvg()
+    {
+        int totalNumberOfShips = 18;
+        int shipNumber = (Math.Abs(Player.Name.GetHashCode()) % totalNumberOfShips) + 1;
+        return $"Ships/svg/{shipNumber}.svg";
    }
 
 }

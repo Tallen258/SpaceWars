@@ -46,6 +46,21 @@ public class BasicCannon : Weapon, IEquatable<BasicCannon?>
         }
     }
 
+    public override IEnumerable<TargetedLocation> GetPotentialTargets(Player player, GameMap map)
+    {
+        var maxWeaponRange = Ranges.Last().Distance;
+        var playersInRange = map.GetPlayersInWeaponRange(player, maxWeaponRange);
+        foreach (var otherPlayer in playersInRange)
+        {
+            if (TryHit(player, playersInRange, out var result) && result is not null)
+            {
+                var (predictedTarget, distance) = result.Value;
+                var predictedDamage = (int)(Ranges.First(r => r.Distance >= distance).Effectiveness / 100.0 * Power);
+                yield return new(predictedTarget.Ship.Location, predictedDamage);
+            }
+        }
+    }
+
     public override int GetHashCode()
     {
         return HashCode.Combine(base.GetHashCode(), Name, Ranges, Power, Cost, ShotCost, ChargeTurns);

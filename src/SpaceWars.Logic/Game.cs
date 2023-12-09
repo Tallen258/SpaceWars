@@ -109,6 +109,7 @@ public class Game
 
     public IEnumerable<Player> GetPlayersInRange(Player player, int maxDistance) => Map.GetPlayersInWeaponRange(player, maxDistance);
     public IEnumerable<Player> GetOtherPlayers(Player player) => players.Values.Where(p => p != player);
+    public IEnumerable<TargetedLocation> GetPotentialTargets(Player player, Weapon weapon) => weapon.GetPotentialTargets(player, Map);
     private void checkCollision()
     {
         List<Player> collidedPlayers = new();

@@ -10,7 +10,9 @@
                         X="@(GetZoomedRelativeX(player.Ship.Location.X, player.Ship.Location.Y))"
                         Y="@(GetZoomedRelativeY(player.Ship.Location.X, player.Ship.Location.Y))"
                         Heading="@GetRelativeHeading(player.Ship.Heading)"
-                        Map="_game.Map" />
+                        Map="_game.Map" 
+                        Targeted="@(PotentialTargets.FirstOrDefault(t => t.Location == player.Ship.Location))"
+                        />
         }
         <ShipSprite Player="@_currentPlayer"
                     X="400"
@@ -25,7 +27,13 @@
     private Player _currentPlayer;
     private Random _random = new Random();
     private int size = 800;
-    private int zoomScale = 2;
+    private int zoomScale = 5;
+    private IEnumerable<TargetedLocation> PotentialTargets = new List<TargetedLocation>();
+
+    protected override void OnParametersSet()
+    {
+        PotentialTargets = _game.GetPotentialTargets(_currentPlayer, _currentPlayer.Ship.Weapons.First());
+    }
 
     [Parameter, EditorRequired]
     public Game Game

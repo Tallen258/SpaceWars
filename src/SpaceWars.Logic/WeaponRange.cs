@@ -33,3 +33,5 @@ public record WeaponRange
         return true;
     }
 }
+
+public record TargetedLocation(Location Location, int PredictedDamage);
