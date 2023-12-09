@@ -9,38 +9,36 @@
 else
 {
     <div class="row border border-3 rounded p-2 w-100 bg-light">
-        <div>
-            <h4>Action Queue</h4>
-            <ul class="row">
-                @foreach (var action in PlayerActions)
-                {
-                    <li class="small">
+        <h4>Action Queue</h4>
+        <ul>
+            @foreach (var action in PlayerActions)
+            {
+                <li class="small">
 
-                        @switch (action)
-                        {
-                            case MoveForwardAction MFAction:
-                                <div>@MFAction.Name</div>
-                                break;
-                            case FireWeaponAction FWAction:
-                                <div>@FWAction.Name: @FWAction.WeaponName</div>
-                                break;
-                            case ChangeHeadingAction CHAction:
-                                <div>@CHAction.Name: @CHAction.NewHeading&deg;</div>
-                                break;
-                            case RepairAction RPAction:
-                                <div>@RPAction.Name: @RPAction.Amount</div>
-                                    break;
-                            case PurchaseAction PUAction:
-                                <div>@PUAction.Name: @PUAction.ItemToPurchase</div>
-                                break;
-                            default:
-                                 <div>@action.Name;</div>
-                                break;
-                        }
-                    </li>
-                }
-            </ul>
-        </div>
+                    @switch (action)
+                    {
+                        case MoveForwardAction MFAction:
+                            <div>@MFAction.Name</div>
+                            break;
+                        case FireWeaponAction FWAction:
+                            <div>@FWAction.Name: @FWAction.WeaponName</div>
+                            break;
+                        case ChangeHeadingAction CHAction:
+                            <div>@CHAction.Name: @CHAction.NewHeading&deg;</div>
+                            break;
+                        case RepairAction RPAction:
+                            <div>@RPAction.Name: @RPAction.Amount</div>
+                            break;
+                        case PurchaseAction PUAction:
+                            <div>@PUAction.Name: @PUAction.ItemToPurchase</div>
+                            break;
+                        default:
+                            <div>@action.Name;</div>
+                            break;
+                    }
+                </li>
+            }
+        </ul>
     </div>
 }
 

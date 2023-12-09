@@ -16,13 +16,13 @@ public class PlayerTests
         player.EnqueueMessage(new PlayerMessage(PlayerMessageType.RadarSweepResult, "{test result 1}"));
         player.EnqueueMessage(new PlayerMessage(PlayerMessageType.RadarSweepResult, "{test result 2}"));
 
-        var messages = player.GetMessages();
+        var messages = player.DequeueMessages();
 
         Assert.Equal(2, messages.Count());
         Assert.Equal("{test result 1}", messages.First().Message);
         Assert.Equal("RadarSweepResult", messages.First().Type.ToString());
         Assert.Equal("{test result 2}", messages.Last().Message);
 
-        Assert.False(player.GetMessages().Any());
+        Assert.False(player.DequeueMessages().Any());
     }
 }

@@ -101,6 +101,7 @@ public class Game
     public int BoardHeight { get; }
 
     public IEnumerable<GamePlayAction> GetActionsForPlayer(PlayerToken playerToken) => players[playerToken].GetActions();
+    public IEnumerable<PlayerMessage> GetPlayerMessages(PlayerToken playerToken) => players[playerToken].ReadMessages();
     public GameMap Map { get; private set; }
 
     public void EnqueueAction(PlayerToken token, GamePlayAction action) => players[token].EnqueueAction(action);

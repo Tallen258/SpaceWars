@@ -1,0 +1,24 @@
+﻿@using SpaceWars.Logic
+@using SpaceWars.Logic.Actions
+
+<div class="row border border-3 rounded p-2 w-100 bg-light">
+    <h4>Messages</h4>
+    <ul>
+        @if (Messages.Count == 0)
+        {
+            <li class="small">No messages</li>
+        }
+        @foreach (var message in Messages.Take(10))
+        {
+            <li class="small">@message.Type @message.Message</li>
+        }
+        @if (Messages.Count > 10)
+        {
+            <li class="small">...</li>
+        }
+    </ul>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public List<PlayerMessage> Messages { get; set; } = new List<PlayerMessage>();
+}

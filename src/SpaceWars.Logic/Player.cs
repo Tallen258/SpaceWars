@@ -51,7 +51,7 @@ public class Player : IEquatable<Player?>
         playerMessages.Enqueue(message);
     }
 
-    public IEnumerable<PlayerMessage> GetMessages()
+    public IEnumerable<PlayerMessage> DequeueMessages()
     {
         var messages = new List<PlayerMessage>();
         while (playerMessages.Any())
@@ -59,6 +59,11 @@ public class Player : IEquatable<Player?>
             messages.Add(playerMessages.Dequeue());
         }
         return messages;
+    }
+
+    public IEnumerable<PlayerMessage> ReadMessages()
+    {
+        return playerMessages;
     }
 
     public override bool Equals(object? obj)

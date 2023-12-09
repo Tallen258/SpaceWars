@@ -68,7 +68,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     public async Task<IEnumerable<PlayerMessageResponse>> GetPlayerMessagesAsync(string token)
     {
         var player = game.GetPlayerByToken(new PlayerToken(token));
-        return player.GetMessages().Select(m => new PlayerMessageResponse(m.Type.ToString(), m.Message));
+        return player.DequeueMessages().Select(m => new PlayerMessageResponse(m.Type.ToString(), m.Message));
     }
 
 
