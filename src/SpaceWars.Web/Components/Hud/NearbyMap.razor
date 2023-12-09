@@ -13,8 +13,8 @@
                         Map="_game.Map" />
         }
         <ShipSprite Player="@_currentPlayer"
-                    X="300"
-                    Y="300"
+                    X="400"
+                    Y="400"
                     Heading="0"
                     Map="@_game.Map" />
     </div>
@@ -24,8 +24,8 @@
     private Game _game;
     private Player _currentPlayer;
     private Random _random = new Random();
-    private int size = 700;
-    private int zoomScale = 1;
+    private int size = 800;
+    private int zoomScale = 2;
 
     [Parameter, EditorRequired]
     public Game Game
