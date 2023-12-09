@@ -11,16 +11,21 @@
         <svg width="150" height="150" style="position: absolute; top: -35px; left: -36px; opacity: @(Player.Ship.Shield / 2)%;">
             <circle cx="75" cy="75" r="40" fill="blue" /> <!-- Adjust attributes as needed -->
         </svg>
+        @if (Targeted)
+        {
+            <img src="crosshair.svg" height="90px" width="90px" style="position: absolute; top:-5px; left:-5px;" />
+        }
     </div>
 </div>
 
 @code {
     private Random _random = new Random();
-    [Parameter, EditorRequired] public int Heading  {get; set;}
-    [Parameter, EditorRequired] public int X  {get; set;}
-    [Parameter, EditorRequired] public int Y  {get; set;}
-    [Parameter, EditorRequired] public Player Player {get; set;}
-    [Parameter, EditorRequired] public GameMap Map {get; set;}
+    [Parameter, EditorRequired] public int Heading { get; set; }
+    [Parameter, EditorRequired] public int X { get; set; }
+    [Parameter, EditorRequired] public int Y { get; set; }
+    [Parameter, EditorRequired] public Player Player { get; set; }
+    [Parameter, EditorRequired] public GameMap Map { get; set; }
+    [Parameter] public bool Targeted { get; set; } = false;
 
 
    private string GetShipSvg()
