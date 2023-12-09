@@ -11,12 +11,15 @@ public class Player : IEquatable<Player?>
     {
         Name = name;
         Ship = ship;
+        Score = 0;
         Token = PlayerToken.Generate();
         actions = new Queue<GamePlayAction>();
         playerMessages = new Queue<PlayerMessage>();
     }
 
     public string Name { get; }
+
+    public int Score { get; set;  }
 
     //token (is this only a concern on the api?)
     //hud url (is this only a concern on the api?)

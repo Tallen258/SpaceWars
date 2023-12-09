@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using Microsoft.Extensions.Options;
+using System.Numerics;
 
 namespace SpaceWars.Logic.Weapons;
 
@@ -43,6 +44,9 @@ public class BasicCannon : Weapon, IEquatable<BasicCannon?>
             var (hitPlayer, distance) = result.Value;
             var damage = (int)(Ranges.First(r => r.Distance >= distance).Effectiveness / 100.0 * Power);
             hitPlayer.Ship.TakeDamage(damage);
+            player.Score += 10;
+            player.Ship.UpgradeCreditBalance += 10;
+            player.Ship.RepairCreditBalance += 10;
         }
     }
 
