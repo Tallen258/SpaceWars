@@ -77,7 +77,6 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     //POST /game/{token}/queue/[{type=repair,request=Null}]
     //POST /game/{token}/queue/[{type=purchase,request=item}]
     //POST /game/{token}/queue/[{type=name,request=item},{type=name,request=item}]
-    //POST /game/{token}/queue/clear
     [HttpPost("{token}/queue")]
     public async Task<QueueActionResponse> QueuePlayerAction(string token, IEnumerable<QueueActionRequest> actions)
     {
@@ -133,6 +132,16 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
 
     }
 
+
+    [HttpDelete("{token}/queue/clear")]
+    public async Task<QueueActionResponse> ClearPlayerQueue(string token)
+    {
+        var player = game.GetPlayerByToken(new PlayerToken(token));
+
+        if (player == null) { return new QueueActionResponse("Player token invalid"); }
+        player.ClearActions();
+        return new QueueActionResponse("Actions cleared");
+    }
 }
 
 public static class Extensions
