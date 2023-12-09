@@ -114,6 +114,13 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
                     player.EnqueueAction(purchaseAction);
                 
                     break;
+                case "changeHeading":
+                    if (action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
+                
+                    ChangeHeadingAction changeHeadingAction = new(Int32.Parse(action.Request));
+                    player.EnqueueAction(changeHeadingAction);
+                
+                    break;
                 case "clear":
                     player.ClearActions();
                     return new QueueActionResponse("Actions cleared");
