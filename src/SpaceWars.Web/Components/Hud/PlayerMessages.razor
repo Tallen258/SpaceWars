@@ -3,7 +3,7 @@
 
 <div class="row border border-3 rounded p-2 w-100 bg-light">
     <h4>Messages</h4>
-    <ul>
+    <ul class="px-1" style="max-height:200px; overflow-y:auto; display: flex; flex-direction: column-reverse;">
         @if (Messages.Count == 0)
         {
             <li class="small">No messages</li>
@@ -11,10 +11,6 @@
         @foreach (var message in Messages.Take(10))
         {
             <li class="small">@message.Type @message.Message</li>
-        }
-        @if (Messages.Count > 10)
-        {
-            <li class="small">...</li>
         }
     </ul>
 </div>
