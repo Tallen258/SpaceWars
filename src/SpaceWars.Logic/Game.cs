@@ -93,6 +93,13 @@ public class Game
             gamePlayAction.Action.Execute(gamePlayAction.Player, Map);
         }
 
+        foreach (var player in Map.Players)
+        {
+            player.Score += 1;
+            player.Ship.RepairCreditBalance += 1;
+            player.Ship.UpgradeCreditBalance += 1;
+        }
+
         Ticked?.Invoke(this, EventArgs.Empty);
     }
 

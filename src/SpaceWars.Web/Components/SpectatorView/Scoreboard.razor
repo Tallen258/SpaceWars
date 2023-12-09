@@ -9,7 +9,7 @@
             <div class="list-group-item bg-dark">
                 <div class="row text-white">
                     <div class="col fw-bold">@player.Name</div>
-                    <div class="col-auto fw-bold">@CalculateScore(player)</div>
+                    <div class="col-auto fw-bold">@player.Score</div>
                 </div>
             </div>
         }
@@ -37,10 +37,4 @@
             .OrderBy(p => p.Name)
             .OrderByDescending(p => p.Ship.Health + p.Ship.Shield);
     }
-
-    public int CalculateScore(Player player)
-    {
-        return player.Ship.Health + player.Ship.Shield;
-    }
-
 }

@@ -114,4 +114,9 @@ public class GameConfig
     [Range(10, 100_000)]
     public int ApiLimitPerSecond { get; set; } = 50;
     public int TickFrequencyMilliseconds = 333;
+
+    // Need to make configurable on admin page
+    public int PointsPerTick = 1; // Replace hard coded value in Game.cs Tick()
+    public int PointsPerHit = 10; // Replace hard coded value BasicCannon.cs Fire()
+    public int PercentOfKilledPlayersPoints = 25; // Not being used. Ships never die, just break game? See Ship.cs Health setter
 }
