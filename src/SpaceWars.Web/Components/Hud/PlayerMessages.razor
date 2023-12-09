@@ -8,9 +8,9 @@
         {
             <li class="small">No messages</li>
         }
-        @foreach (var message in Messages.Take(10))
+        @foreach (var message in Messages)
         {
-            <li class="small">@message.Type @message.Message</li>
+            <li class="small">@(DateTime.Now.ToShortTimeString()): @message.Type - @message.Message</li>
         }
     </ul>
 </div>

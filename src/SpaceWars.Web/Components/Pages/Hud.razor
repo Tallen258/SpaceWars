@@ -45,7 +45,7 @@ else
         </div>
         <div class="col-12 col-xl-3">
             <ShopView Game="@Game" />
-            <PlayerMessages Messages="Player?.ReadMessages().Take(15).ToList()" />
+            <PlayerMessages Messages="Player?.ReadMessages().ToList()" />
         </div>
     </div>
 }
