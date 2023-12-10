@@ -3,6 +3,8 @@ using Microsoft.Extensions.Options;
 using SpaceWars.Logic;
 using SpaceWars.Logic.Actions;
 using SpaceWars.Web.Types;
+using System.Runtime.Serialization.Json;
+using System.Text.Json;
 
 namespace SpaceWars.Web.Controllers;
 
@@ -20,12 +22,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
         try
         {
             var joinResult = game.Join(name);
-            var shopItems = joinResult.Shop.Select(item => new PurchasableItem
-            {
-                Cost = item.Cost,
-                Name = item.Name,
-                PurchasePrerequisites = item.PurchasePrerequisites
-            }).ToList();
+            var shopItems = joinResult.Shop.Select(item => new PurchasableItem(item.Cost, item.Name, item.PurchasePrerequisites)).ToList();
 
             return new JoinGameResponse(
                 joinResult.Token.ToString(),
@@ -34,7 +31,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
                 joinResult.heading,
                 game.BoardHeight,
                 game.BoardWidth, 
-                joinResult.Shop
+                shopItems
             );
         }
         catch (TooManyPlayersException)
