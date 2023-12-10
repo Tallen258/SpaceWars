@@ -32,7 +32,7 @@ public class Game
         var newPlayer = new Player(playerName, new Ship(locationProvider.GetNewInitialLocation(BoardWidth, BoardHeight)));
         players.Add(newPlayer.Token, newPlayer);
        
-        return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location, newPlayer.Ship.Heading);
+        return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location, newPlayer.Ship.Heading, Shop);
     }
 
     public void Start()
@@ -195,4 +195,4 @@ public class Game
 }
 
 record PlayerAction(Player Player, GamePlayAction? Action);
-public record GameJoinResult(PlayerToken Token, Location Location, int heading);
+public record GameJoinResult(PlayerToken Token, Location Location, int heading, List<IPurchaseable> Shop);

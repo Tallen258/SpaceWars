@@ -20,13 +20,21 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
         try
         {
             var joinResult = game.Join(name);
+            var shopItems = joinResult.Shop.Select(item => new PurchaseableItem
+            {
+                Cost = item.Cost,
+                Name = item.Name,
+                PurchasePrerequisites = item.PurchasePrerequisites
+            }).ToList();
+
             return new JoinGameResponse(
                 joinResult.Token.ToString(),
                 joinResult.Location.ToApiLocation(),
                 game.State.ToString(),
                 joinResult.heading,
                 game.BoardHeight,
-                game.BoardWidth
+                game.BoardWidth, 
+                joinResult.Shop
             );
         }
         catch (TooManyPlayersException)

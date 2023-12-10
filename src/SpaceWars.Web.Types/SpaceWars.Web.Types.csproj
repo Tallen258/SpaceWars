@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpaceWars.Logic\SpaceWars.Logic.csproj" />
+  </ItemGroup>
+
 </Project>
