@@ -2,7 +2,7 @@
 
 namespace SpaceWars.Logic
 {
-    public class PurchaseableItem : IPurchaseable
+    public class PurchasableItem : IPurchasable
     {
         public int Cost { get; init; }
         public string Name { get; init; }

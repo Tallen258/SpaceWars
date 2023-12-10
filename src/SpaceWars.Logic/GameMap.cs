@@ -4,7 +4,7 @@ namespace SpaceWars.Logic;
 
 public class GameMap
 {
-    public GameMap(IEnumerable<Player> players, IEnumerable<IPurchaseable>? NewShop, int boardWidth = 2000, int boardHeight = 2000)
+    public GameMap(IEnumerable<Player> players, IEnumerable<IPurchasable>? NewShop, int boardWidth = 2000, int boardHeight = 2000)
     {
         foreach (var p in players)
         {
@@ -16,7 +16,7 @@ public class GameMap
         }
         else
         {
-            this.CurrentShop = new List<IPurchaseable>() { };
+            this.CurrentShop = new List<IPurchasable>() { };
         }
         this.Players = players;
         this.BoardWidth = boardWidth;
@@ -25,7 +25,7 @@ public class GameMap
 
     private Dictionary<Location, Player> playerLocations = new Dictionary<Location, Player>();
     public IEnumerable<Player> Players { get; private set; }
-    public IEnumerable<IPurchaseable>? CurrentShop { get; private set; }
+    public IEnumerable<IPurchasable>? CurrentShop { get; private set; }
 
     public readonly int BoardWidth;
     public readonly int BoardHeight;

@@ -14,7 +14,7 @@ public class PurchaseActionTests
         p1.Ship.UpgradeCreditBalance = startingCreditBalance;
 
         var purchaseAction = new PurchaseAction("Basic Cannon");
-        var map = new GameMap([p1], new List<IPurchaseable> { new BasicCannon() });
+        var map = new GameMap([p1], new List<IPurchasable> { new BasicCannon() });
 
         var res = purchaseAction.Execute(p1, map);
         p1.Ship.Weapons.Should().HaveCount(2);
@@ -34,7 +34,7 @@ public class PurchaseActionTests
         p1.Ship.UpgradeCreditBalance = startingCreditBalance;
 
         var purchaseAction = new PurchaseAction("Basic Cannon");
-        var map = new GameMap([p1], new List<IPurchaseable> { new BasicCannon() });
+        var map = new GameMap([p1], new List<IPurchasable> { new BasicCannon() });
 
         var res = purchaseAction.Execute(p1, map);
         res.Success.Should().BeFalse();
@@ -52,7 +52,7 @@ public class PurchaseActionTests
         p1.Ship.UpgradeCreditBalance = startingCreditBalance;
 
         var purchaseAction = new PurchaseAction("Basic Cannon");
-        var map = new GameMap([p1], new List<IPurchaseable> { });
+        var map = new GameMap([p1], new List<IPurchasable> { });
 
         var res = purchaseAction.Execute(p1, map);
         res.Success.Should().BeFalse();
@@ -72,7 +72,7 @@ public class PurchaseActionTests
         bc.PurchasePrerequisites = new List<string> { "Fancy Laser" };
 
         var purchaseAction = new PurchaseAction("Basic Cannon");
-        var map = new GameMap([p1], new List<IPurchaseable> { bc });
+        var map = new GameMap([p1], new List<IPurchasable> { bc });
 
         var res = purchaseAction.Execute(p1, map);
         res.Success.Should().BeFalse();
@@ -91,7 +91,7 @@ public class PurchaseActionTests
         var bc = new BasicCannon();
         bc.PurchasePrerequisites = new List<string> { "Basic Cannon" };
         var purchaseAction = new PurchaseAction("Basic Cannon");
-        var map = new GameMap([p1], new List<IPurchaseable> { bc });
+        var map = new GameMap([p1], new List<IPurchasable> { bc });
 
         var res = purchaseAction.Execute(p1, map);
         res.Success.Should().BeTrue();

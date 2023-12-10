@@ -20,7 +20,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
         try
         {
             var joinResult = game.Join(name);
-            var shopItems = joinResult.Shop.Select(item => new PurchaseableItem
+            var shopItems = joinResult.Shop.Select(item => new PurchasableItem
             {
                 Cost = item.Cost,
                 Name = item.Name,

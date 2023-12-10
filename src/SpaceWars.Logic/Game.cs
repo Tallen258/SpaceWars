@@ -5,7 +5,7 @@ namespace SpaceWars.Logic;
 
 public class Game
 {
-    private readonly List<IPurchaseable> Shop = new List<IPurchaseable>() { new BasicCannon() };
+    private readonly List<IPurchasable> Shop = new List<IPurchasable>() { new BasicCannon() };
     private readonly Dictionary<PlayerToken, Player> players;
     private readonly IInitialLocationProvider locationProvider;
     private ITimer? timer;
@@ -195,4 +195,4 @@ public class Game
 }
 
 record PlayerAction(Player Player, GamePlayAction? Action);
-public record GameJoinResult(PlayerToken Token, Location Location, int heading, List<IPurchaseable> Shop);
+public record GameJoinResult(PlayerToken Token, Location Location, int heading, List<IPurchasable> Shop);

@@ -1,6 +1,6 @@
 ﻿namespace SpaceWars.Logic;
 
-public interface IPurchaseable
+public interface IPurchasable
 {
     int Cost { get; init; }
     string Name { get; }

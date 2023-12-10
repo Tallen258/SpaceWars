@@ -1,7 +1,7 @@
 ﻿
 namespace SpaceWars.Logic
 {
-    public interface IWeapon : IPurchaseable
+    public interface IWeapon : IPurchasable
     {
         int ChargeTurns { get; init; }
         int Power { get; init; }
