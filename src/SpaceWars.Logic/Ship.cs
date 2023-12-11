@@ -63,8 +63,10 @@ public partial class Ship : ObservableObject, IEquatable<Ship?>
         get => shield;
         set
         {
-            if (value < 0 || value > 100)
-                throw new ArgumentOutOfRangeException(nameof(Shield), $"{nameof(Shield)} must be between 0 and 100.");
+            if (value < 0)
+                value = 0;
+            else if (value > 100)
+                value = 100;
             SetProperty(ref shield, value);
         }
     }
@@ -148,6 +150,11 @@ public partial class Ship : ObservableObject, IEquatable<Ship?>
         {
             Health -= Math.Min(Health, remainingDamage);
         }
+    }
+
+    public void RepairDamage(int repairAmount)
+    {
+        Shield += Math.Min(100-Shield, repairAmount);
     }
 
     public static bool operator ==(Ship? left, Ship? right)

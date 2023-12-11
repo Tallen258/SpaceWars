@@ -10,7 +10,7 @@ public class Game
     private readonly IInitialLocationProvider locationProvider;
     private ITimer? timer;
 
-    public Game(IInitialLocationProvider locationProvider, ITimer gameTimer = null, int boardWidth = 2000, int boardHeight = 2000)
+    public Game(IInitialLocationProvider locationProvider, ITimer gameTimer = null, int boardWidth = 500, int boardHeight = 500)
     {
         this.players = new();
         this.locationProvider = locationProvider;

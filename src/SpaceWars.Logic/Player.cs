@@ -120,6 +120,7 @@ public enum PlayerMessageType
     FailedPurchase,
     MovementFailed,
     TargetedWarning,
+    SuccessfulPurchase,
 }
 
 public class PlayerToken : IEquatable<PlayerToken?>

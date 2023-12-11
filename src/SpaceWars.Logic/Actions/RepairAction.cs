@@ -7,6 +7,10 @@ public class RepairAction : GamePlayAction
     public override int Priority => 3;
     public override Result Execute(Player player, GameMap _)
     {
-        throw new NotImplementedException();
+        var repairAmount = Math.Min(player.Ship.UpgradeCreditBalance, 50);
+        player.Ship.RepairDamage(repairAmount);
+        player.Ship.UpgradeCreditBalance -= repairAmount;
+        player.EnqueueMessage(new PlayerMessage(PlayerMessageType.SuccessfulPurchase, $"Ship repaired. Health: {player.Ship.Health}; Shield: {player.Ship.Shield}"));
+        return new Result(true, "Upgraded successfully.");
     }
 }
