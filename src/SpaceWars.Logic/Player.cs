@@ -1,4 +1,5 @@
 ﻿using SpaceWars.Logic.Actions;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace SpaceWars.Logic;
@@ -78,7 +79,7 @@ public class Player : IEquatable<Player?>
 
     public IEnumerable<PlayerMessage> ReadMessages()
     {
-        return playerMessages;
+        return playerMessages.ToImmutableArray();
     }
 
     public override bool Equals(object? obj)

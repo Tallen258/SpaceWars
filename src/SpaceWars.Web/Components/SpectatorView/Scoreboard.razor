@@ -34,7 +34,6 @@
     protected override void OnInitialized()
     {
         SortedPlayers = Players
-            .OrderBy(p => p.Name)
             .OrderByDescending(p => p.Ship.Health + p.Ship.Shield);
     }
 }

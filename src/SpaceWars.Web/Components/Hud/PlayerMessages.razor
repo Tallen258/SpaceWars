@@ -4,17 +4,20 @@
 <div class="row p-2 w-100" style="color: #39FF14; border: 3px solid #39FF14;">
     <h4>Messages</h4>
     <ul class="px-1" style="max-height:200px; overflow-y:auto; display: flex; flex-direction: column-reverse;">
-        @if (Messages.Count == 0)
+        @if (!Messages.Any())
         {
             <li class="small">No messages</li>
         }
-        @foreach (var message in Messages)
+        else
         {
-            <li class="small">@(DateTime.Now.ToShortTimeString()): @message.Type - @message.Message</li>
+            foreach (var message in Messages)
+            {
+                <li class="small">@(DateTime.Now.ToShortTimeString()): @message.Type - @message.Message</li>
+            }
         }
     </ul>
 </div>
 
 @code {
-    [Parameter, EditorRequired] public List<PlayerMessage> Messages { get; set; } = new List<PlayerMessage>();
+    [Parameter, EditorRequired] public IEnumerable<PlayerMessage> Messages { get; set; } = new List<PlayerMessage>();
 }
