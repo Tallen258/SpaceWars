@@ -19,7 +19,10 @@ public class Player : IEquatable<Player?>
 
     public string Name { get; }
 
-    public bool IsAlive { get; set; } = true;
+    public bool IsAlive
+    {
+        get => Ship.Health > 0;
+    }
 
     public int Score { get; set;  }
 

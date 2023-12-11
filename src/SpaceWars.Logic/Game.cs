@@ -88,15 +88,6 @@ public class Game
 
         Map = new GameMap(players.Values, Shop, BoardWidth, BoardHeight);//initialize that here
 
-        foreach (var player in Map.Players)
-        {
-            if (player.Ship.Health <= 0)
-            { 
-                player.IsAlive = false;
-            
-            }
-        }
-
         foreach (var gamePlayAction in playerActions.Where(a => a.Action.Priority != 1))
         {
             gamePlayAction.Action.Execute(gamePlayAction.Player, Map);

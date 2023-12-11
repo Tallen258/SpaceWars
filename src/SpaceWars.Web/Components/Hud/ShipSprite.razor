@@ -7,7 +7,7 @@
             aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <div class="position-relative">
-        @if(Player.Ship.Health == 0)
+        @if(!Player.IsAlive)
         {
             <img src="explosion.png" height="90px" width="90px" style="position: absolute; top:-46px; left:-26px;" />
         }
