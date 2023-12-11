@@ -2,8 +2,8 @@
 @inject IJSRuntime JSRuntime
 @using System.IO
 
-<div class="position-relative" style="display: flex; justify-content: center; align-items: center; z-index:-1;">
-    <div style="width: @(size)px; height: @(size)px; min-width:@(size)px; overflow: hidden;"  class="border rounded-circle position-relative bg-dark">
+<div class="position-relative" style="display: flex; justify-content: center; align-items: center;">
+    <div style="width: @(size)px; height: @(size)px; min-width:@(size)px; overflow: hidden; border: 1px solid #39FF14; border-radius: 50%"  class="position-relative bg-dark">
         @foreach (var player in _game.GetOtherPlayers(_currentPlayer))
         {
             <ShipSprite Player="player"
