@@ -2,18 +2,25 @@
 
 <div style="@($"position:absolute; right: {X}px; top: {Y}px; transform: translate(52%, -61%);")">
     <div class="text-truncate small text-white" style="width: 150%">@Player.Name</div>
-    <div class="progress bg-success rounded-0" style="height: 3px;">
+    <div class="progress bg-success rounded-0" style="height: 3px; transform: translate(0px, -4px);">
         <div class="progress-bar bg-dark" role="progressbar" style="width: @(100-Player.Ship.Health)%"
             aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <div class="position-relative"
-        <img src="@GetShipSvg()" alt="" height="80" width="80" style="rotate: @(Heading)deg;">
-        <svg width="150" height="150" style="position: absolute; top: -35px; left: -36px; opacity: @(Player.Ship.Shield / 2)%;">
-            <circle cx="75" cy="75" r="40" fill="blue" /> <!-- Adjust attributes as needed -->
-        </svg>
-        @if (Targeted != null)
+    <div class="position-relative">
+        @if(Player.Ship.Health == 0)
         {
-            <img src="crosshair.svg" height="90px" width="90px" style="position: absolute; top:-5px; left:-5px;" />
+            <img src="explosion.png" height="90px" width="90px" style="position: absolute; top:-46px; left:-26px;" />
+        }
+        else
+        {
+            <img src="@GetShipSvg()" alt="" height="80" width="80" style="rotate: @(Heading)deg;">
+            <svg width="150" height="150" style="position: absolute; top: -35px; left: -36px; opacity: @(Player.Ship.Shield / 2)%;">
+            <circle cx="75" cy="75" r="40" fill="blue" /> <!-- Adjust attributes as needed -->
+            </svg>
+            @if (Targeted != null)
+            {
+                <img src="crosshair.svg" height="90px" width="90px" style="position: absolute; top:-5px; left:-5px;" />
+            }
         }
     </div>
 </div>
