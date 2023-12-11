@@ -27,6 +27,13 @@ public class Player : IEquatable<Player?>
     public Ship Ship { get; }
     public PlayerToken Token { get; }
 
+    public event EventHandler Targeted;
+
+    public void NotifyTargeted()
+    {
+        Targeted?.Invoke(this, EventArgs.Empty);
+    }
+
     public IEnumerable<GamePlayAction> GetActions()
     {
         return actions;
@@ -105,6 +112,7 @@ public enum PlayerMessageType
     RadarSweepResult,
     FailedPurchase,
     MovementFailed,
+    TargetedWarning,
 }
 
 public class PlayerToken : IEquatable<PlayerToken?>

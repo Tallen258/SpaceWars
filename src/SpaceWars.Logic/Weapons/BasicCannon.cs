@@ -54,14 +54,12 @@ public class BasicCannon : Weapon, IEquatable<BasicCannon?>
     {
         var maxWeaponRange = Ranges.Last().Distance;
         var playersInRange = map.GetPlayersInWeaponRange(player, maxWeaponRange);
-        foreach (var otherPlayer in playersInRange)
+        if (TryHit(player, playersInRange, out var result) && result is not null)
         {
-            if (TryHit(player, playersInRange, out var result) && result is not null)
-            {
-                var (predictedTarget, distance) = result.Value;
-                var predictedDamage = (int)(Ranges.First(r => r.Distance >= distance).Effectiveness / 100.0 * Power);
-                yield return new(predictedTarget.Ship.Location, predictedDamage);
-            }
+            var (predictedTarget, distance) = result.Value;
+            predictedTarget.NotifyTargeted();
+            var predictedDamage = (int)(Ranges.First(r => r.Distance >= distance).Effectiveness / 100.0 * Power);
+            yield return new(predictedTarget.Ship.Location, predictedDamage);
         }
     }
 

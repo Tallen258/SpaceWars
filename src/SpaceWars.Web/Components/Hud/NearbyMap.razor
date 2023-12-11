@@ -19,6 +19,11 @@
                     Y="400"
                     Heading="0"
                     Map="@_game.Map" />
+
+        @if(playerTargeted)
+        {
+            <div class="flashing position-absolute text-danger border border-1 border-danger p-1 text-center small" style="bottom: 320px; left: 334px">MISSLE WARNING</div>
+        }
     </div>
 </div>
 
@@ -29,10 +34,12 @@
     private int size = 800;
     private int zoomScale = 5;
     private IEnumerable<TargetedLocation> PotentialTargets = new List<TargetedLocation>();
+    private bool playerTargeted = false;
 
     protected override void OnParametersSet()
     {
         PotentialTargets = _game.GetPotentialTargets(_currentPlayer, _currentPlayer.Ship.Weapons.First());
+        _currentPlayer.Targeted += OnTargeted;
     }
 
     [Parameter, EditorRequired]
@@ -96,12 +103,25 @@
         var (_, rotatedY) = GetRotatedPosition(otherX, otherY, _currentPlayer.Ship.Location.X, _currentPlayer.Ship.Location.Y, _currentPlayer.Ship.Heading);
         return rotatedY;
     }
-  
+
     private int GetRelativeHeading(int heading)
     {
         int relativeHeading = heading - _currentPlayer.Ship.Heading;
         if (relativeHeading < 0) relativeHeading += 360;
         return relativeHeading;
+    }
+
+    private void OnTargeted(object? _, EventArgs e)
+    {
+        InvokeAsync(() =>
+        {
+            if (!playerTargeted)
+            {
+                playerTargeted = true;
+                StateHasChanged();
+                Task.Delay(2000).ContinueWith(t => playerTargeted = false);
+            }
+        });
     }
 
   }
