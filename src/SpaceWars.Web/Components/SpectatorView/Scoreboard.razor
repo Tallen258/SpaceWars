@@ -7,7 +7,7 @@
         @foreach (var player in SortedPlayers)
         {
             <div class="list-group-item bg-dark">
-                <div class="row text-white">
+                <div class="row @(player.IsAlive ? "text-white" : "text-danger")">
                     <div class="col fw-bold">@player.Name</div>
                     <div class="col-auto fw-bold">@player.Score</div>
                 </div>
@@ -21,9 +21,9 @@
         opacity: 0.5;
     }
 
-        .scoreboard:hover {
-            opacity: 1;
-        }
+    .scoreboard:hover {
+        opacity: 1;
+    }
 </style>
 
 @code {

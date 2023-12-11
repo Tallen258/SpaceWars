@@ -19,6 +19,8 @@ public class Player : IEquatable<Player?>
 
     public string Name { get; }
 
+    public bool IsAlive { get; set; } = true;
+
     public int Score { get; set;  }
 
     //token (is this only a concern on the api?)
@@ -79,7 +81,8 @@ public class Player : IEquatable<Player?>
         return other is not null &&
                EqualityComparer<Queue<GamePlayAction>>.Default.Equals(actions, other.actions) &&
                Name == other.Name &&
-               EqualityComparer<Ship>.Default.Equals(Ship, other.Ship);
+               EqualityComparer<Ship>.Default.Equals(Ship, other.Ship) && 
+               IsAlive == other.IsAlive;
     }
 
     public override int GetHashCode()

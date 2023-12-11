@@ -74,7 +74,7 @@ public class Game
     public void Tick()
     {
         var playerActions = players.Values.Select(p => new PlayerAction(p, p.DequeueAction()))
-            .Where(playerAction => playerAction.Action != null)
+            .Where(playerAction => playerAction.Action != null && playerAction.Player.IsAlive)
             .OrderBy(playerAction => playerAction.Action!.Priority)
             .ToList();
 
@@ -88,6 +88,15 @@ public class Game
 
         Map = new GameMap(players.Values, Shop, BoardWidth, BoardHeight);//initialize that here
 
+        foreach (var player in Map.Players)
+        {
+            if (player.Ship.Health <= 0)
+            { 
+                player.IsAlive = false;
+            
+            }
+        }
+
         foreach (var gamePlayAction in playerActions.Where(a => a.Action.Priority != 1))
         {
             gamePlayAction.Action.Execute(gamePlayAction.Player, Map);
@@ -95,15 +104,14 @@ public class Game
 
         foreach (var player in Map.Players)
         {
-            player.Score += 1;
-            player.Ship.RepairCreditBalance += 1;
-            player.Ship.UpgradeCreditBalance += 1;
+            if (player.IsAlive)
+            {
+                player.Score += 1;
+                player.Ship.RepairCreditBalance += 1;
+                player.Ship.UpgradeCreditBalance += 1;
+            }
         }
-        var playersToRemove = players.Where(p => p.Value.Ship.Health <= 0).ToList();
-        foreach (var player in playersToRemove)
-        {
-            players.Remove(player.Key);
-        }
+
         Ticked?.Invoke(this, EventArgs.Empty);
     }
 
