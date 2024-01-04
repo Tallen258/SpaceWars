@@ -38,8 +38,10 @@ public class ShipTests
     public void Ship_ShieldMustBeBetween0And100()
     {
         var ship = new Ship();
-        Assert.Throws<ArgumentOutOfRangeException>(() => ship.Shield = -1);
-        Assert.Throws<ArgumentOutOfRangeException>(() => ship.Shield = 101);
+        ship.Shield = -1;
+        Assert.Equal(0, ship.Shield);
+        ship.Shield = 101;
+        Assert.Equal(100,ship.Shield);
     }
 
     [Fact]

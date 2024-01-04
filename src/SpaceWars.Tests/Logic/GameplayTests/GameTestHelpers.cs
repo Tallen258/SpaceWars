@@ -45,7 +45,11 @@ public static class GameTestHelpers
             .Returns(() => locationQueue.Dequeue());
 
         var g = new Game(locationProvider: locationProviderMock.Object, boardWidth: borderWidth, boardHeight: borderHeight);
-        var joinResults = players?.Select(p => g.Join(p.Name)).ToList() ?? [];
+        var joinResults = players?.Select(p =>{
+            var result = g.Join(p.Name);
+            g.GetPlayerByToken(result.Token).Ship.Heading = p.Ship.Heading;
+            return result;
+        }).ToList() ?? [];
 
         return new CreateGameResult(g, joinResults);
     }
