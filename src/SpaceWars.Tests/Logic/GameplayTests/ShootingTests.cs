@@ -50,34 +50,7 @@ public class ShootingTests
         game.Tick();
 
         //Assert
-        game.GetPlayerByToken(joinResults.Last().Token).Ship.Shield.Should().Be(50);
-    }
-
-    [Fact]
-    public void HitDamageDecreasesAsRangeIncreases()
-    {
-        //Arrange
-        var p1 = new Player("Player 1", new Ship(new Location(0, 0))
-        {
-            Heading = 0,
-            Health = 100,
-        });
-
-        var p2 = new Player("Player 2", new Ship(new Location(0, 250))
-        {
-            Heading = 90,
-            Health = 100,
-        });
-
-        (var game, var joinResults) = CreateGame(players: [p1, p2]);
-
-        game.EnqueueAction(joinResults.First().Token, new FireWeaponAction(p1.Ship.Weapons.First()));
-
-        //Act
-        game.Tick();
-
-        //Assert
-        game.GetPlayerByToken(joinResults.Last().Token).Ship.Shield.Should().Be(75);
+        game.GetPlayerByToken(joinResults.Last().Token).Ship.Shield.Should().Be(98);
     }
 
     [Fact]
@@ -98,17 +71,17 @@ public class ShootingTests
             Heading = 180,
         });
 
-        (var game, var joinResults) = CreateGame(players:[p1, p2]);
+        (var game, var joinResults) = CreateGame(players: [p1, p2]);
 
         game.EnqueueAction(joinResults.First().Token, new FireWeaponAction(p1.Ship.Weapons.First()));
-        game.EnqueueAction(joinResults.Last().Token, new FireWeaponAction(p1.Ship.Weapons.First()));
+        game.EnqueueAction(joinResults.Last().Token, new FireWeaponAction(p2.Ship.Weapons.First()));
 
         //Act
         game.Tick();
 
         //Assert
-        game.GetPlayerByToken(joinResults.First().Token).Ship.Shield.Should().Be(50);
-        game.GetPlayerByToken(joinResults.Last().Token).Ship.Shield.Should().Be(50);
+        game.GetPlayerByToken(joinResults.First().Token).Ship.Shield.Should().Be(98);
+        game.GetPlayerByToken(joinResults.Last().Token).Ship.Shield.Should().Be(98);
 
         //game.HasPlayer(p1).Should().BeFalse();//not sure the best way to represent that
         //game.HasPlayer(p2).Should().BeFalse();//not sure the best way to represent that

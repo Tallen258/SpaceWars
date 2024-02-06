@@ -5,7 +5,7 @@ namespace SpaceWars.Logic;
 
 public class Game
 {
-    private readonly List<IPurchasable> Shop = new List<IPurchasable>() { new BasicCannon() };
+    private readonly List<IPurchasable> Shop = [new BasicCannon(), new PowerFist()];
     private readonly Dictionary<PlayerToken, Player> players;
     private readonly IInitialLocationProvider locationProvider;
     private ITimer? timer;

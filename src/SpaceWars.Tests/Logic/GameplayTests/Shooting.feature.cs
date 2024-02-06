@@ -159,8 +159,8 @@ this.FeatureBackground();
                             "0",
                             "3",
                             "90",
-                            "0",
-                            "50"});
+                            "94",
+                            "100"});
 #line 15
  testRunner.Then("I have the following game state", ((string)(null)), table2, "Then ");
 #line hidden
@@ -234,7 +234,7 @@ this.FeatureBackground();
                             "Player 2",
                             "0",
                             "3",
-                            "50",
+                            "98",
                             "100"});
 #line 29
  testRunner.Then("I have the following game state", ((string)(null)), table4, "Then ");
@@ -310,7 +310,7 @@ this.FeatureBackground();
                             "0",
                             "3",
                             "90",
-                            "50",
+                            "98",
                             "100"});
 #line 40
  testRunner.Then("I have the following game state", ((string)(null)), table6, "Then ");
@@ -334,7 +334,7 @@ this.FeatureBackground();
                             "Player 2",
                             "0",
                             "3",
-                            "0",
+                            "96",
                             "100"});
 #line 45
  testRunner.Then("I have the following game state", ((string)(null)), table7, "Then ");
@@ -407,7 +407,7 @@ this.FeatureBackground();
                             "Player 2",
                             "0",
                             "3",
-                            "50",
+                            "98",
                             "100"});
 #line 56
  testRunner.Then("I have the following game state", ((string)(null)), table9, "Then ");
@@ -431,7 +431,7 @@ this.FeatureBackground();
                             "Player 2",
                             "0",
                             "3",
-                            "0",
+                            "96",
                             "100"});
 #line 61
  testRunner.Then("I have the following game state", ((string)(null)), table10, "Then ");
@@ -455,10 +455,125 @@ this.FeatureBackground();
                             "Player 2",
                             "0",
                             "3",
-                            "0",
-                            "50"});
+                            "94",
+                            "100"});
 #line 66
  testRunner.Then("I have the following game state", ((string)(null)), table11, "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="shoot power fist")]
+        [Xunit.TraitAttribute("FeatureTitle", "Shooting")]
+        [Xunit.TraitAttribute("Description", "shoot power fist")]
+        public void ShootPowerFist()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("shoot power fist", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 71
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 5
+this.FeatureBackground();
+#line hidden
+                TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Player Name",
+                            "X",
+                            "Y",
+                            "Heading",
+                            "Shield",
+                            "Health"});
+                table12.AddRow(new string[] {
+                            "Player 1",
+                            "0",
+                            "0",
+                            "0",
+                            "100",
+                            "100"});
+                table12.AddRow(new string[] {
+                            "Player 2",
+                            "0",
+                            "3",
+                            "90",
+                            "100",
+                            "100"});
+#line 72
+ testRunner.Given("the following game state", ((string)(null)), table12, "Given ");
+#line hidden
+#line 76
+ testRunner.When("Player 1 purchases the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 77
+ testRunner.And("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Player Name",
+                            "X",
+                            "Y",
+                            "Shield",
+                            "Health"});
+                table13.AddRow(new string[] {
+                            "Player 1",
+                            "0",
+                            "0",
+                            "100",
+                            "100"});
+                table13.AddRow(new string[] {
+                            "Player 2",
+                            "0",
+                            "3",
+                            "67",
+                            "100"});
+#line 78
+ testRunner.Then("I have the following game state", ((string)(null)), table13, "Then ");
+#line hidden
+#line 82
+ testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 83
+ testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 84
+ testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 85
+ testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 86
+ testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 87
+ testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Player Name",
+                            "X",
+                            "Y",
+                            "Shield",
+                            "Health"});
+                table14.AddRow(new string[] {
+                            "Player 1",
+                            "0",
+                            "0",
+                            "100",
+                            "100"});
+                table14.AddRow(new string[] {
+                            "Player 2",
+                            "0",
+                            "3",
+                            "0",
+                            "12"});
+#line 88
+ testRunner.Then("I have the following game state", ((string)(null)), table14, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

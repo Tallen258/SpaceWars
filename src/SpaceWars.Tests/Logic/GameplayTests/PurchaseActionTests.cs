@@ -38,7 +38,7 @@ public class PurchaseActionTests
 
         var res = purchaseAction.Execute(p1, map);
         res.Success.Should().BeFalse();
-        res.Message.Should().Be("Not enough credit to purchase item Basic Cannon");
+        res.Message.Should().Be("Upgrade Credit Balance insufficient to purchase Basic Cannon");
     }
 
     [Fact]
@@ -60,21 +60,40 @@ public class PurchaseActionTests
     }
 
     [Fact]
-    public void CanPurchaseItem_MeetsPrereqs()
+    public void CanPurchaseBasicCannonButInsufficientFundsForPowerFist()
     {
         var p1 = new Player("Player 1", new Ship(new Location(0, 0))
         {
             Heading = 0,
         });
-        int startingCreditBalance = int.MaxValue;
-        p1.Ship.UpgradeCreditBalance = startingCreditBalance;
-        var bc = new BasicCannon();
-        bc.PurchasePrerequisites = new List<string> { "Basic Cannon" };
-        var purchaseAction = new PurchaseAction("Basic Cannon");
-        var map = new GameMap([p1], new List<IPurchasable> { bc });
+        p1.Ship.UpgradeCreditBalance = 15;
+        var map = new GameMap([p1], [new BasicCannon(), new PowerFist()]);
 
-        var res = purchaseAction.Execute(p1, map);
+        var res = new PurchaseAction("Basic Cannon").Execute(p1, map);
         res.Success.Should().BeTrue();
         res.Message.Should().Be("Basic Cannon purchased");
+
+        var res2 = new PurchaseAction("Power Fist").Execute(p1, map);
+        res2.Success.Should().BeFalse();
+        res2.Message.Should().Be("Upgrade Credit Balance insufficient to purchase Power Fist");
+    }
+
+    [Fact]
+    public void CanPurchaseBasicCannonAndPowerFist()
+    {
+        var p1 = new Player("Player 1", new Ship(new Location(0, 0))
+        {
+            Heading = 0,
+        });
+        p1.Ship.UpgradeCreditBalance = 1500;
+        var map = new GameMap([p1], [new BasicCannon(), new PowerFist()]);
+
+        var res = new PurchaseAction("Basic Cannon").Execute(p1, map);
+        res.Success.Should().BeTrue();
+        res.Message.Should().Be("Basic Cannon purchased");
+
+        var res2 = new PurchaseAction("Power Fist").Execute(p1, map);
+        res2.Success.Should().BeTrue();
+        res2.Message.Should().Be("Power Fist purchased");
     }
 }

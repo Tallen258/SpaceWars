@@ -7,7 +7,7 @@ namespace SpaceWars.Logic;
 public class Player : IEquatable<Player?>
 {
     private Queue<GamePlayAction> actions;
-    private Queue<PlayerMessage> playerMessages; 
+    private Queue<PlayerMessage> playerMessages;
     public Player(string name, Ship ship)
     {
         Name = name;
@@ -25,7 +25,7 @@ public class Player : IEquatable<Player?>
         get => Ship.Health > 0;
     }
 
-    public int Score { get; set;  }
+    public int Score { get; set; }
 
     //token (is this only a concern on the api?)
     //hud url (is this only a concern on the api?)
@@ -92,7 +92,7 @@ public class Player : IEquatable<Player?>
         return other is not null &&
                EqualityComparer<Queue<GamePlayAction>>.Default.Equals(actions, other.actions) &&
                Name == other.Name &&
-               EqualityComparer<Ship>.Default.Equals(Ship, other.Ship) && 
+               EqualityComparer<Ship>.Default.Equals(Ship, other.Ship) &&
                IsAlive == other.IsAlive;
     }
 
@@ -112,7 +112,7 @@ public class Player : IEquatable<Player?>
     }
 }
 
-public record PlayerMessage (PlayerMessageType Type, string Message);
+public record PlayerMessage(PlayerMessageType Type, string Message);
 
 public enum PlayerMessageType
 {
@@ -121,6 +121,7 @@ public enum PlayerMessageType
     MovementFailed,
     TargetedWarning,
     SuccessfulPurchase,
+    WeaponSelectionFailed,
 }
 
 public class PlayerToken : IEquatable<PlayerToken?>

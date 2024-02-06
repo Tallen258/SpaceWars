@@ -27,8 +27,9 @@ public class PurchaseAction : GamePlayAction
 
         if (targetItem != null && targetItem?.PurchaseCost >= player.Ship.UpgradeCreditBalance)
         {
-            player.EnqueueMessage(new PlayerMessage(PlayerMessageType.FailedPurchase, $"Not enough credit to purchase item {targetItem.Name}"));
-            return new Result(false, $"Not enough credit to purchase item {targetItem.Name}");
+            var msg = $"Upgrade Credit Balance insufficient to purchase {targetItem.Name}";
+            player.EnqueueMessage(new PlayerMessage(PlayerMessageType.FailedPurchase, msg));
+            return new Result(false, msg);
         }
 
         // buy item and put into the inventory
