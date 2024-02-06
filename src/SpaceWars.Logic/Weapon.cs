@@ -7,19 +7,21 @@ public abstract class Weapon : IWeapon, IEquatable<Weapon?>
     private string name;
     private List<WeaponRange> ranges;
     private int power;
-    private int cost;
+    private int purchaseCost;
     private int shotCost;
     private int chargeTurns;
 
-    public Weapon(string name)
+    public Weapon(string name, string description)
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("Name cannot be null or empty.");
         Name = name;
-        PurchasePrerequisites = new List<string>() { };
+        Description = description;
+        PurchasePrerequisites = [];
     }
 
     public string Name { get; }
+    public string Description { get; }
 
     public IEnumerable<WeaponRange> Ranges
     {
@@ -49,15 +51,13 @@ public abstract class Weapon : IWeapon, IEquatable<Weapon?>
                name == other.name &&
                EqualityComparer<IEnumerable<WeaponRange>>.Default.Equals(ranges, other.ranges) &&
                power == other.power &&
-               cost == other.cost &&
+               purchaseCost == other.purchaseCost &&
                shotCost == other.shotCost &&
                chargeTurns == other.chargeTurns &&
                Name == other.Name &&
                EqualityComparer<IEnumerable<WeaponRange>>.Default.Equals(Ranges, other.Ranges) &&
-               Power == other.Power &&
-               Cost == other.Cost &&
-               ShotCost == other.ShotCost &&
-               ChargeTurns == other.ChargeTurns;
+               MaxDamage == other.MaxDamage &&
+               PurchaseCost == other.PurchaseCost;
     }
 
     public override int GetHashCode()
@@ -66,56 +66,34 @@ public abstract class Weapon : IWeapon, IEquatable<Weapon?>
         hash.Add(name);
         hash.Add(ranges);
         hash.Add(power);
-        hash.Add(cost);
+        hash.Add(purchaseCost);
         hash.Add(shotCost);
         hash.Add(chargeTurns);
         hash.Add(Name);
         hash.Add(Ranges);
-        hash.Add(Power);
-        hash.Add(Cost);
-        hash.Add(ShotCost);
-        hash.Add(ChargeTurns);
+        hash.Add(MaxDamage);
+        hash.Add(PurchaseCost);
         return hash.ToHashCode();
     }
 
-    public int Power
+    public int MaxDamage
     {
         get { return power; }
         init
         {
             if (value <= 0)
-                throw new ArgumentOutOfRangeException(nameof(Power), "Power must be greater than 0.");
+                throw new ArgumentOutOfRangeException(nameof(MaxDamage), "Power must be greater than 0.");
             power = value;
         }
     }
-    public int Cost
+    public int PurchaseCost
     {
-        get => cost;
+        get => purchaseCost;
         init
         {
             if (value < 0)
-                throw new ArgumentOutOfRangeException(nameof(Cost), "Cost must be greater than or equal to 0.");
-            cost = value;
-        }
-    }
-    public int ShotCost
-    {
-        get => shotCost;
-        init
-        {
-            if (value < 0)
-                throw new ArgumentOutOfRangeException(nameof(ShotCost), "ShotCost must be greater than or equal to 0.");
-            shotCost = value;
-        }
-    }
-    public int ChargeTurns
-    {
-        get => chargeTurns;
-        init
-        {
-            if (value < 0)
-                throw new ArgumentOutOfRangeException(nameof(ChargeTurns), "ChargeTurns must be greater than or equal to 0.");
-            chargeTurns = value;
+                throw new ArgumentOutOfRangeException(nameof(PurchaseCost), "Cost must be greater than or equal to 0.");
+            purchaseCost = value;
         }
     }
 

@@ -31,7 +31,7 @@ public class Game
     {
         var newPlayer = new Player(playerName, new Ship(locationProvider.GetNewInitialLocation(BoardWidth, BoardHeight)));
         players.Add(newPlayer.Token, newPlayer);
-       
+
         return new GameJoinResult(newPlayer.Token, newPlayer.Ship.Location, newPlayer.Ship.Heading, Shop);
     }
 
@@ -129,7 +129,7 @@ public class Game
             var player1 = players.Values.ElementAt(i);
             if (collidedPlayers.Contains(player1)) { continue; }
 
-            for (int j = i+1; j < players.Count; j++)
+            for (int j = i + 1; j < players.Count; j++)
             {
                 var player2 = players.Values.ElementAt(j);
                 if (collidedPlayers.Contains(player2)) { continue; }
@@ -155,7 +155,7 @@ public class Game
 
     private bool isSpotOpen(Location location)
     {
-        foreach(var player in players)
+        foreach (var player in players)
         {
             if (player.Value.Ship.Location == location)
             {

@@ -3,8 +3,6 @@ using Microsoft.Extensions.Options;
 using SpaceWars.Logic;
 using SpaceWars.Logic.Actions;
 using SpaceWars.Web.Types;
-using System.Runtime.Serialization.Json;
-using System.Text.Json;
 
 namespace SpaceWars.Web.Controllers;
 
@@ -22,7 +20,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
         try
         {
             var joinResult = game.Join(name);
-            var shopItems = joinResult.Shop.Select(item => new PurchasableItem(item.Cost, item.Name, item.PurchasePrerequisites)).ToList();
+            var shopItems = joinResult.Shop.Select(item => new PurchasableItem(item.Name, item.MaxDamage, item.PurchaseCost, item.Ranges)).ToList();
 
             return new JoinGameResponse(
                 joinResult.Token.ToString(),
@@ -30,7 +28,7 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
                 game.State.ToString(),
                 joinResult.heading,
                 game.BoardHeight,
-                game.BoardWidth, 
+                game.BoardWidth,
                 shopItems
             );
         }
@@ -64,7 +62,10 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<GameStateResponse> GameStateResponse()
     {
-        return new GameStateResponse(game.State.ToString(), game.PlayerLocations.Select(l => l.ToApiLocation()));
+        return new GameStateResponse(
+            game.State.ToString(),
+            game.PlayerLocations.Select(l => l.ToApiLocation())
+        );
     }
 
     [HttpGet("playermessages")]
@@ -85,27 +86,27 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
     [HttpPost("{token}/queue")]
     public async Task<QueueActionResponse> QueuePlayerAction(string token, IEnumerable<QueueActionRequest> actions)
     {
-        var player = game.GetPlayerByToken(new PlayerToken(token));       
-        
-        if(player == null) { return new QueueActionResponse("Player token invalid"); }
+        var player = game.GetPlayerByToken(new PlayerToken(token));
 
-        foreach(var action in actions)
+        if (player == null) { return new QueueActionResponse("Player token invalid"); }
+
+        foreach (var action in actions)
         {
-            switch(action.Type)
+            switch (action.Type)
             {
                 case "move":
-                    if(action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
-                
+                    if (action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
+
                     MoveForwardAction moveAction = new(Int32.Parse(action.Request));
                     player.EnqueueAction(moveAction);
-                
+
                     break;
                 case "fire":
                     if (action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
-                
+
                     FireWeaponAction fireAction = new(action.Request);
                     player.EnqueueAction(fireAction);
-                
+
                     break;
                 case "repair":
                     RepairAction repairAction = new();
@@ -113,17 +114,17 @@ public partial class GameController(ILogger<GameController> logger, Game game, I
                     break;
                 case "purchase":
                     if (action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
-                
+
                     PurchaseAction purchaseAction = new(action.Request);
                     player.EnqueueAction(purchaseAction);
-                
+
                     break;
                 case "changeHeading":
                     if (action.Request == null) { return new QueueActionResponse("Failed to queue action"); }
-                
+
                     ChangeHeadingAction changeHeadingAction = new(Int32.Parse(action.Request));
                     player.EnqueueAction(changeHeadingAction);
-                
+
                     break;
                 case "clear":
                     player.ClearActions();

@@ -18,7 +18,7 @@ public class PurchaseActionTests
 
         var res = purchaseAction.Execute(p1, map);
         p1.Ship.Weapons.Should().HaveCount(2);
-        p1.Ship.UpgradeCreditBalance.Should().Be(Math.Abs(new BasicCannon().Cost - startingCreditBalance));
+        p1.Ship.UpgradeCreditBalance.Should().Be(Math.Abs(new BasicCannon().PurchaseCost - startingCreditBalance));
         res.Success.Should().BeTrue();
         res.Message.Should().Be("Basic Cannon purchased");
     }
@@ -57,26 +57,6 @@ public class PurchaseActionTests
         var res = purchaseAction.Execute(p1, map);
         res.Success.Should().BeFalse();
         res.Message.Should().Be("Basic Cannon is not in shop");
-    }
-
-    [Fact]
-    public void CannotPurchaseItem_DoesntMeetPrereqs()
-    {
-        var p1 = new Player("Player 1", new Ship(new Location(0, 0))
-        {
-            Heading = 0,
-        });
-        int startingCreditBalance = 1000;
-        p1.Ship.UpgradeCreditBalance = startingCreditBalance;
-        var bc = new BasicCannon();
-        bc.PurchasePrerequisites = new List<string> { "Fancy Laser" };
-
-        var purchaseAction = new PurchaseAction("Basic Cannon");
-        var map = new GameMap([p1], new List<IPurchasable> { bc });
-
-        var res = purchaseAction.Execute(p1, map);
-        res.Success.Should().BeFalse();
-        res.Message.Should().Be("Player does not have prerequisites");
     }
 
     [Fact]

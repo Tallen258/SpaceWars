@@ -1,23 +1,19 @@
-﻿using Microsoft.Extensions.Options;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace SpaceWars.Logic.Weapons;
 
 public class BasicCannon : Weapon, IEquatable<BasicCannon?>
 {
-    public BasicCannon() : base("Basic Cannon")
+    public BasicCannon() : base("Basic Cannon", "Narrow, medium-range weapon with small hit box.")
     {
         Ranges = [
             new WeaponRange(200, 100),
             new WeaponRange(300, 50)
         ];
-        Power = 50;
-        Cost = 200;
-        ShotCost = 25;
-        ChargeTurns = 1;
+        MaxDamage = 50;
+        PurchaseCost = 200;
     }
 
-    
     public override bool Equals(object? obj)
     {
         return Equals(obj as BasicCannon);
@@ -29,10 +25,13 @@ public class BasicCannon : Weapon, IEquatable<BasicCannon?>
                base.Equals(other) &&
                Name == other.Name &&
                EqualityComparer<IEnumerable<WeaponRange>>.Default.Equals(Ranges, other.Ranges) &&
-               Power == other.Power &&
-               Cost == other.Cost &&
-               ShotCost == other.ShotCost &&
-               ChargeTurns == other.ChargeTurns;
+               MaxDamage == other.MaxDamage &&
+               PurchaseCost == other.PurchaseCost;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(base.GetHashCode(), Name, Ranges, MaxDamage, PurchaseCost);
     }
 
     public override void Fire(Player player, GameMap map)
@@ -42,7 +41,7 @@ public class BasicCannon : Weapon, IEquatable<BasicCannon?>
         if (TryHit(player, playersInRange, out var result) && result is not null)
         {
             var (hitPlayer, distance) = result.Value;
-            var damage = (int)(Ranges.First(r => r.Distance >= distance).Effectiveness / 100.0 * Power);
+            var damage = (int)(Ranges.First(r => r.Distance >= distance).Effectiveness / 100.0 * MaxDamage);
             hitPlayer.Ship.TakeDamage(damage);
             player.Score += 10;
             player.Ship.UpgradeCreditBalance += 10;
@@ -58,14 +57,9 @@ public class BasicCannon : Weapon, IEquatable<BasicCannon?>
         {
             var (predictedTarget, distance) = result.Value;
             predictedTarget.NotifyTargeted();
-            var predictedDamage = (int)(Ranges.First(r => r.Distance >= distance).Effectiveness / 100.0 * Power);
+            var predictedDamage = (int)(Ranges.First(r => r.Distance >= distance).Effectiveness / 100.0 * MaxDamage);
             yield return new(predictedTarget.Ship.Location, predictedDamage);
         }
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(base.GetHashCode(), Name, Ranges, Power, Cost, ShotCost, ChargeTurns);
     }
 
     public bool TryHit(Player player, IEnumerable<Player> playersInRange, out (Player hitPlayer, int distance)? result)

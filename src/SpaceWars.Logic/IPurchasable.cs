@@ -2,7 +2,9 @@
 
 public interface IPurchasable
 {
-    int Cost { get; init; }
+    int PurchaseCost { get; init; }
+    int MaxDamage { get; init; }
+    IEnumerable<WeaponRange> Ranges { get; init; }
     string Name { get; }
-    IEnumerable<string> PurchasePrerequisites { get; set; }
+    string Description { get; }
 }

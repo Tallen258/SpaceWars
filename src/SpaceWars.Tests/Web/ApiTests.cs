@@ -13,12 +13,13 @@ public class ApiTests : IClassFixture<SpaceWarsWebApplicationFactory>
     }
 
     [Fact]
-    public async Task CanJoinGameAndGetUniqueToken()
+    public async Task JoiningGameGivesTokenAndShopItems()
     {
         var response = await httpClient.GetAsync("/game/join?name=jonathan");
         response.EnsureSuccessStatusCode();
         var result = await response.Content.ReadFromJsonAsync<JoinGameResponse>();
         result.Token.Should().NotBeNullOrWhiteSpace();
+        result.Shop.Any(s => s.Name == "Basic Cannon");
     }
 
     [Fact]
@@ -50,7 +51,7 @@ public class ApiTests : IClassFixture<SpaceWarsWebApplicationFactory>
     [Fact]
     public async Task MoveActionQueueManyForPlayer()
     {
-        List<QueueActionRequest> actionRequest = [new("move", "250"), new("move","0")];
+        List<QueueActionRequest> actionRequest = [new("move", "250"), new("move", "0")];
 
         var response = await httpClient.GetAsync("/game/join?name=zack");
         response.EnsureSuccessStatusCode();
