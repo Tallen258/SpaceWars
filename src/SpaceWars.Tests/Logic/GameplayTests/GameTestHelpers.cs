@@ -48,6 +48,7 @@ public static class GameTestHelpers
         var joinResults = players?.Select(p =>{
             var result = g.Join(p.Name);
             g.GetPlayerByToken(result.Token).Ship.Heading = p.Ship.Heading;
+            g.GetPlayerByToken(result.Token).Ship.Weapons = p.Ship.Weapons;
             return result;
         }).ToList() ?? [];
 

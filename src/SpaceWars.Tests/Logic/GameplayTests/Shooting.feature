@@ -73,7 +73,7 @@ Scenario: shoot power fist
 	| Player Name | X | Y | Heading | Shield | Health | Additional Weapons |
 	| Player 1    | 0 | 0 | 0       | 100    | 100    | Power Fist         |
 	| Player 2    | 0 | 3 | 90      | 100    | 100    |                    |
-	And Player 1 shoots the Power Fist
+	When Player 1 shoots the Power Fist
 	Then I have the following game state
 	| Player Name | X | Y | Shield | Health |
 	| Player 1    | 0 | 0 | 100    | 100    |
@@ -83,8 +83,7 @@ Scenario: shoot power fist
 	When Player 1 shoots the Power Fist
 	When Player 1 shoots the Power Fist
 	When Player 1 shoots the Power Fist
-	When Player 1 shoots the Power Fist
 	Then I have the following game state
 	| Player Name | X | Y | Shield | Health |
 	| Player 1    | 0 | 0 | 100    | 100    |
-	| Player 2    | 0 | 3 | 0      | 12     |
+	| Player 2    | 0 | 3 | 0      | 2      |

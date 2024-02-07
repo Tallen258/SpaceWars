@@ -491,29 +491,29 @@ this.FeatureBackground();
                             "Y",
                             "Heading",
                             "Shield",
-                            "Health"});
+                            "Health",
+                            "Additional Weapons"});
                 table12.AddRow(new string[] {
                             "Player 1",
                             "0",
                             "0",
                             "0",
                             "100",
-                            "100"});
+                            "100",
+                            "Power Fist"});
                 table12.AddRow(new string[] {
                             "Player 2",
                             "0",
                             "3",
                             "90",
                             "100",
-                            "100"});
+                            "100",
+                            ""});
 #line 72
  testRunner.Given("the following game state", ((string)(null)), table12, "Given ");
 #line hidden
 #line 76
- testRunner.When("Player 1 purchases the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 77
- testRunner.And("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
                             "Player Name",
@@ -533,8 +533,11 @@ this.FeatureBackground();
                             "3",
                             "67",
                             "100"});
-#line 78
+#line 77
  testRunner.Then("I have the following game state", ((string)(null)), table13, "Then ");
+#line hidden
+#line 81
+ testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 82
  testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -546,12 +549,6 @@ this.FeatureBackground();
  testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 85
- testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 86
- testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 87
  testRunner.When("Player 1 shoots the Power Fist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -571,8 +568,8 @@ this.FeatureBackground();
                             "0",
                             "3",
                             "0",
-                            "12"});
-#line 88
+                            "2"});
+#line 86
  testRunner.Then("I have the following game state", ((string)(null)), table14, "Then ");
 #line hidden
             }

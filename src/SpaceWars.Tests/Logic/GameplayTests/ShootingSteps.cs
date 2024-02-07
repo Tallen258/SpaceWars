@@ -20,6 +20,7 @@ public class ShootingSteps
         var players = playersFromTable(table);
         _scenarioContext.Set(players);
         (var game, var joinResults) = CreateGame(players: players);
+
         _scenarioContext.Set(game);
         var playerTokens = new Dictionary<string, PlayerToken>();
         for (var i = 0; i < players.Count(); i++)
@@ -31,17 +32,32 @@ public class ShootingSteps
 
     private IEnumerable<Player> playersFromTable(Table table)
     {
-        return table.Rows.Select(row => new Player(row["Player Name"], new Ship(new Location(int.Parse(row["X"]), int.Parse(row["Y"])))
+        return table.Rows.Select(row =>
         {
-            Heading = int.Parse(row["Heading"]),
-            Health = int.Parse(row["Health"]),
-            Shield = int.Parse(row["Shield"]),
-            Weapons = [new BasicCannon()]
-        }));
+            var weapons = new List<Weapon>([new BasicCannon()]);
+            if (row.ContainsKey("Additional Weapons") && row["Additional Weapons"].IsNotNullOrWhitespace())
+            {
+                foreach(var additionalWeapon in row["Additional Weapons"].Split(","))
+                {
+                    weapons.Add(additionalWeapon switch
+                    {
+                        "Power Fist" => new PowerFist(),
+                        _ => throw new Exception($"Unknown weapon: {additionalWeapon}")
+                    });
+                }
+            }
+            return new Player(row["Player Name"], new Ship(new Location(int.Parse(row["X"]), int.Parse(row["Y"])))
+            {
+                Heading = int.Parse(row["Heading"]),
+                Health = int.Parse(row["Health"]),
+                Shield = int.Parse(row["Shield"]),
+                Weapons = weapons
+            });
+        });
     }
 
     [When(@"(.*) shoots the (.*)")]
-    public void WhenPlayerShootsTheBasicCannon(string playerName, string weaponName)
+    public void WhenPlayerShootsThe_____(string playerName, string weaponName)
     {
         var game = _scenarioContext.Get<Game>();
         var playerTokens = _scenarioContext.Get<Dictionary<string, PlayerToken>>();
