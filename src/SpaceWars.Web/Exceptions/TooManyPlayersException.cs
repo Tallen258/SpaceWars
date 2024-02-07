@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace SpaceWars.Web.Controllers
+namespace SpaceWars.Web.Exceptions
 {
     [Serializable]
     internal class TooManyPlayersException : Exception

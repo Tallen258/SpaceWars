@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using SpaceWars.Logic;
 using SpaceWars.Logic.Actions;
+using SpaceWars.Web.Exceptions;
 using SpaceWars.Web.Types;
 
 namespace SpaceWars.Web.Controllers;

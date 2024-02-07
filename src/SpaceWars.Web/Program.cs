@@ -22,7 +22,18 @@ builder.Services.AddOptions<GameConfig>()
     .ValidateOnStart();
 
 builder.Services.AddSingleton<SpaceWars.Logic.ITimer, CompetitionTimer>();
-builder.Services.AddSingleton<Game>();
+builder.Services.AddSingleton<Game>(s =>
+{
+    var config = s.GetRequiredService<IConfiguration>();
+    var boardWidth = config.GetValue<int?>("BoardWidth") ?? 500;
+    var boardHeight = config.GetValue<int?>("BoardHeight") ?? 500;
+    var game = new Game(s.GetRequiredService<IInitialLocationProvider>(), s.GetRequiredService<SpaceWars.Logic.ITimer>(), boardWidth, boardHeight);
+    if(config.GetValue<bool>("AutoStartGame"))
+    {
+        game.Start();
+    }
+    return game;
+});
 builder.Services.AddSingleton<IInitialLocationProvider, DefaultInitialLocationProvider>();
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

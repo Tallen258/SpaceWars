@@ -10,6 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Logic\GameplayTests\NewFolder\**" />
+    <EmbeddedResource Remove="Logic\GameplayTests\NewFolder\**" />
+    <None Remove="Logic\GameplayTests\NewFolder\**" />
+    <SpecFlowFeatureFiles Remove="Logic\GameplayTests\NewFolder\**" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Logic\GameplayTests\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
@@ -30,10 +38,6 @@
     <ProjectReference Include="..\SpaceWars.Logic\SpaceWars.Logic.csproj" />
     <ProjectReference Include="..\SpaceWars.Web.Types\SpaceWars.Web.Types.csproj" />
     <ProjectReference Include="..\SpaceWars.Web\SpaceWars.Web.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Logic\GameplayTests\NewFolder\" />
   </ItemGroup>
 
 </Project>
