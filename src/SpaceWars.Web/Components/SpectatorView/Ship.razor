@@ -1,7 +1,27 @@
 ﻿@using SpaceWars.Logic
 
+<style>
+    .fade-out {
+        animation: fadeOut 8s linear forwards;
+        opacity: 1;
+    }
 
-<div class="ship text-center text-white" style="left: calc(@(ShipX)% - 25px); bottom: calc(@(ShipY)% - 10px);">
+    @@keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+
+        60% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+</style>
+
+<div class=@($"ship text-center text-white {(Player.IsAlive ? "" : "fade-out")}") style="left: calc(@(ShipX)% - 25px); bottom: calc(@(ShipY)% - 10px);">
     <div class="text-truncate small text-start" style="width: 150%">@Player.Name</div>
     <div class="progress bg-success rounded-0 mb-1" style="height: 3px;">
         <div class="progress-bar bg-dark" role="progressbar" style="width: @(100-Player.Ship.Health)%"
@@ -12,7 +32,7 @@
             style="position: absolute; top: 0; left: 0; rotate: @(Player.Ship.Heading)deg; z-index=1">
         <svg width="52" height="52"
             style="position: absolute; top: -1px; left: -1px; opacity: @(Player.Ship.Shield / 2)%;">
-            <circle cx="26" cy="26" r="26" fill="blue" /> 
+            <circle cx="26" cy="26" r="26" fill="blue" />
         </svg>
     </div>
 </div>

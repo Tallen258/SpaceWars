@@ -1,5 +1,24 @@
 ﻿@using SpaceWars.Logic
 
+<style>
+    .fade-out {
+        animation: fadeOut 8s linear forwards;
+        opacity: 1;
+    }
+
+    @@keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+        60% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+</style>
+
 <div style="@($"position:absolute; right: {X}px; top: {Y}px; transform: translate(52%, -61%);")">
     <div class="text-truncate small text-white" style="width: 150%">@Player.Name</div>
     <div class="progress bg-success rounded-0" style="height: 3px; transform: translate(0px, -4px);">
@@ -7,11 +26,7 @@
             aria-valuenow="@(100-Player.Ship.Health)" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <div class="position-relative">
-        @if(!Player.IsAlive)
-        {
-            <img src="explosion.png" height="90px" width="90px" style="position: absolute; top:-46px; left:-26px;" />
-        }
-        else
+        @if(Player.IsAlive)
         {
             <img src="@GetShipSvg()" alt="" height="80" width="80" style="rotate: @(Heading)deg;">
             <svg width="150" height="150" style="position: absolute; top: -35px; left: -36px; opacity: @(Player.Ship.Shield / 2)%;">
@@ -21,6 +36,10 @@
             {
                 <img src="crosshair.svg" height="90px" width="90px" style="position: absolute; top:-5px; left:-5px;" />
             }
+        }
+        else
+        {
+            <img src="explosion.png" class="fade-out" height="90px" width="90px" style="position: absolute; top:-46px; left:-26px;" />
         }
     </div>
 </div>
@@ -33,7 +52,6 @@
     [Parameter, EditorRequired] public Player Player { get; set; }
     [Parameter, EditorRequired] public GameMap Map { get; set; }
     [Parameter] public TargetedLocation? Targeted { get; set; } = null;
-
 
     private string GetShipSvg()
     {

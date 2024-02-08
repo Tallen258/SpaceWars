@@ -10,7 +10,7 @@ public class RepairAction : GamePlayAction
         var repairAmount = Math.Min(player.Ship.UpgradeCreditBalance, 50);
         player.Ship.RepairDamage(repairAmount);
         player.Ship.UpgradeCreditBalance -= repairAmount;
-        player.EnqueueMessage(new PlayerMessage(PlayerMessageType.SuccessfulPurchase, $"Ship repaired. Health: {player.Ship.Health}; Shield: {player.Ship.Shield}"));
+        player.EnqueueMessage(new PlayerMessage(PlayerMessageType.SuccessfulRepair, $"Ship repaired. Health: {player.Ship.Health}; Shield: {player.Ship.Shield}"));
         return new Result(true, "Upgraded successfully.");
     }
 }

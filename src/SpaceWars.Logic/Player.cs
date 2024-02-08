@@ -122,6 +122,8 @@ public enum PlayerMessageType
     TargetedWarning,
     SuccessfulPurchase,
     WeaponSelectionFailed,
+    SuccessfulRepair,
+    SuccessfulWeaponPurchase,
 }
 
 public class PlayerToken : IEquatable<PlayerToken?>

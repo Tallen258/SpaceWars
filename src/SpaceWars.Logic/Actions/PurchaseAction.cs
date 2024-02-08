@@ -40,7 +40,8 @@ public class PurchaseAction : GamePlayAction
             if (targetItem is Weapon)
             {
                 player.Ship.Weapons.Add((Weapon)targetItem);
-                return new Result(true, $"{targetItem.Name} purchased");
+                player.EnqueueMessage(new PlayerMessage(PlayerMessageType.SuccessfulWeaponPurchase, targetItem.Name));
+                return new Result(true, targetItem.Name);
             }
         }
         // add to inventory later
