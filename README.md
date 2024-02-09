@@ -1,11 +1,11 @@
 # SpaceWars
-2024 Coding Challenge
+2024 Coding Challenge for the [Snow College Software Engineering program](https://engineering.snow.edu/).
 
 ## Premise
 
-Turn-based (tick-based) game where players can queue up actions, and once every tick each player's next action is dequeued and executed.  Actions have an order of precedence, where moving happens first, then hits are calculated, then another other action (ship upgrades, weapons upgrades, ship repairs).
+Turn-based (tick-based) game where players can queue up actions, and once every tick each player's next action is dequeued and executed.  Actions have an order of precedence, where movement happens first, then hits are calculated and other actions (ship upgrades, weapons upgrades, ship repairs, etc.).
 
-Every ship starts off with a certain number of repair credits, and a certain number of upgrade credits.
+Every ship starts off with a certain number of repair credits, and a certain number of upgrade credits.  Credits (and your score) increase over time, and every time you hit (or destroy) an opponent.
 
 As long as ships have > 0 health, they can always move at a default speed, and can always fire a default (weak) weapon, regardless of how many upgrade or repair credits they have.
 
@@ -36,15 +36,11 @@ As long as ships have > 0 health, they can always move at a default speed, and c
 
 Provide two parts to the standard client:
 
-1. A console program from a repo they can clone/fork.  This would have all the interfaces necessary for contestants to add their own logic, their own programmability.  This is what would listen to keyboard events and actually send the player's network requests to the server.
-  - Basic actions implemented (join game, send moves, etc.)
-  - Basic movements are available
-  - Make it easy to plug in custom functionality, something like subclass a 'GameShortcut' abstract class that requires a key / key combination, and has some method you can run to modify the player's action queue, or even have access to a raw HttpClient to send your own requests.
-2. A visual dashboard / heads-up-dispaly running in the browser.  A player would join the game from their console app, get a token, and then be able to use that token to open up _their_ dashboard/HUD.  The player's HUD would show:
+1. A [console program](https://github.com/snowse/SpaceWars.Client) the contestant can clone/fork.  This has all the interfaces necessary for contestants to add their own macros and hotkeys.  This is what would listen to keyboard events and actually send the player's network requests to the server.
+2. A heads-up-dispaly running in the browser.  A player would join the game from their console app, get a token, and then be able to use that token to open up _their_ dashboard/HUD.  The player's HUD would show:
   - A more high-resolution of what is aroud their ship (this is how we implement the fog of war - the full map shown to everyone up on the projectors is just a rough/inaccurate map, if you want to make good moves you'll base that off of the map in your HUD).
   - The status of your ship, weapons, all your counters, etc.
-  - More?
-
+  
 ## Scoring
 
 - score is an additional property on each player, starts at 0
@@ -60,8 +56,6 @@ Provide two parts to the standard client:
 - Repair cost / repair rate - spend $$$ to repair quickly, spend $ to repair slowly?
 - Is there a self-healing rate, where you are rewarded x repair value every y ticks?
 - How much repair & upgrade credits do you get when you kill someone?  (all of their credits + what else?)
-- 
-
      
 ## API Endpoints
 - /game
