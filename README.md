@@ -13,9 +13,9 @@ As long as ships have > 0 health, they can always move at a default speed, and c
 
 - Ship
     - Location (x,y) (where you are)
-    - Orientation (0-359) (where you are pointing) **or should this be just Up/UpRight/Right/RightDown/Down/DownLeft/Left/LeftUp? **
+    - Orientation (0-359) (where you are pointing)
     - Health (0-100) (once this reaches 0 you are out of the game)
-    - Speed (1-100) (how far you can move in any given tick.  Starts off at 1 but can be upgraded)
+    - Speed (1-100) (how far you can move in any given tick.  Starts off at 1 but can be upgraded) (not yet implemented)
     - Shield (0-100) (hits first take out the shield, once the shield is at 0 then remaining hit points go against the ship health)
     - Weapons (a list of available weapons)
     - RepairCreditBalance
@@ -25,8 +25,8 @@ As long as ships have > 0 health, they can always move at a default speed, and c
     - Range (a list of distance and effectiveness, i.e. within 5 distance the weapon is 100% effective, from 5-10 it's 60% effective, 10-12 it's 20% effective, 12+ 0% effective)
     - Power (how many hit points at 100% effectiveness)
     - Cost (how many upgrade points it takes to acquire the weapon)
-    - ShotCost (how many upgrade points it takes to fire the weapon)
-    - ChargeTurns (how many game ticks it takes to charge the weapon)
+    - ShotCost (how many upgrade points it takes to fire the weapon) (not yet implemented)
+    - ChargeTurns (how many game ticks it takes to charge the weapon) (not yet implemented)
 - PowerUp (*not in initial version*)
     - Location (where it is on the map)
     - UpgradeCredits (how many bonus credits you get)
