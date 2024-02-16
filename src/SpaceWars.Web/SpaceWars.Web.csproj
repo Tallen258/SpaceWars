@@ -29,4 +29,8 @@
     <ProjectReference Include="..\SpaceWars.Web.Types\SpaceWars.Web.Types.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
 </Project>

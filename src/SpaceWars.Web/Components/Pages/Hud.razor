@@ -38,7 +38,10 @@ else
             <div class="mb-2">
                 <PlayerActionQueue Player="Player" />
             </div>
-            <button class="btn btn-primary" @onclick="JoinTestPlayers">Join Test Players</button>
+            @if(showJoinTestPlayersButton)
+            {
+                <button class="btn btn-primary" @onclick="JoinTestPlayers">Join Test Players</button>
+            }
         </div>
         <div class="col-12 col-xl-6">
             <NearbyMap Game="@Game" CurrentPlayer="@Player" />
@@ -56,11 +59,14 @@ else
     public PlayerTokenModel TokenModel { get; set; } = new PlayerTokenModel();
     public PlayerToken? PlayerToken = null;
     public bool IsValidToken = false;
+    bool showJoinTestPlayersButton = true;
+    const int MaxTestPlayers = 20;
 
     protected override void OnInitialized()
     {
         GetPlayer();
         Game.Ticked += GameTicked;
+        showJoinTestPlayersButton = Game.PlayerLocations.Count() < MaxTestPlayers;
     }
 
     public void GameTicked(object? sender, EventArgs e)
@@ -115,7 +121,6 @@ else
         var query = QueryHelpers.ParseQuery(uri.Query);
         PlayerToken = null;
 
-
         if (query.TryGetValue("token", out var token))
         {
             if (string.IsNullOrWhiteSpace(token))
@@ -142,15 +147,16 @@ else
 
     public void JoinTestPlayers()
     {
-        for (int i = 0; i < 10; i++)
+        showJoinTestPlayersButton = Game.PlayerLocations.Count() < MaxTestPlayers;
+        var playersToJoin = MaxTestPlayers - Game.PlayerLocations.Count();
+        for (int i = 0; i < playersToJoin; i++)
         {
             Game.Join($"Test Player {i}");
-        }
+        }        
     }
 
     public class PlayerTokenModel
     {
         public string TokenValue { get; set; }
     }
-
 }

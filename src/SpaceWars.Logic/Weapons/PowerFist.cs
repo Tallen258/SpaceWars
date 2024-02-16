@@ -11,4 +11,3 @@ public class PowerFist : Weapon
         PurchaseCost = 500;
     }
 }
-
